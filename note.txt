@@ -16,3 +16,8 @@ ik본
 
 낮 밤 힌트
 
+
+
+r.Shadow.Virtual.Cache.DrawInvalidatingBounds 1 (액터 경계 스케일 표시)
+
+
