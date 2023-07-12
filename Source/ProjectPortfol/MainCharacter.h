@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "ZedEnums.h"
 #include "MainCharacter.generated.h"
 
 UCLASS()
@@ -28,6 +29,10 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	void AttackAction();
+	void JumpAction();
+	//void JumpAxis(float Rate);
+
 	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
 		virtual void MoveForward(float Val);
 
@@ -49,5 +54,19 @@ public:
 	/** Base lookup rate, in deg/sec. Other scaling may affect final lookup rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AMainCharacter")
 		float BaseLookUpRate;
+
+
+	UPROPERTY(Category = "AMainCharacter", EditAnywhere, BlueprintReadWrite)
+		ZEDAniState AniState = ZEDAniState::Idle;
+
+	UPROPERTY(Category = "AMainCharacter", EditAnywhere, BlueprintReadWrite)
+		TMap<ZEDAniState, class UAnimMontage*> AllAnimations;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UStaticMeshComponent* WeaponMesh;
+
+	// 블루프린트
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TArray<UStaticMesh*> WeaponArrays;
 
 };
