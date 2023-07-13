@@ -2,6 +2,7 @@
 
 
 #include "MainCharacter.h"
+#include "ZedGameInstance.h"
 
 void AMainCharacter::MoveForward(float Val)
 {
@@ -84,6 +85,7 @@ AMainCharacter::AMainCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+
 }
 
 // Called when the game starts or when spawned
@@ -91,6 +93,14 @@ void AMainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	UZedGameInstance* Inst = GetGameInstance<UZedGameInstance>();
+
+	WeaponArrays.Add(GetGameInstance<UZedGameInstance>()->GetMesh(TEXT("Staff")));
+	//WeaponArrays.Add(GetGameInstance<UZedGameInstance>()->GetMesh(TEXT("Staff2")));
+	//WeaponArrays.Add(GetGameInstance<UZedGameInstance>()->GetMesh(TEXT("Staff3")));
+
+
+	WeaponMesh->SetStaticMesh(WeaponArrays[0]);
 }
 
 // Called every frame

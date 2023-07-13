@@ -3,20 +3,50 @@
 
 #include "ZedGameInstance.h"
 #include "ObjDataTable.h"
+#include "WeaponDataTable.h"
 
 
 UZedGameInstance::UZedGameInstance() {
 
-	FString DataPath = TEXT("/Script/Engine.DataTable'/Game/Data/DataTable_Object.DataTable_Object'");
+	FString DataPath = TEXT("/Script/Engine.DataTable'/Game/Data/DT_Weapon.DT_Weapon'");
 	ConstructorHelpers::FObjectFinder<UDataTable> DataTable(*DataPath);
-
+	
 	if (DataTable.Succeeded())
 	{
-		int i = 0;
+		WeaponMeshData = DataTable.Object;
+
+		TArray<FName> ArrayName = WeaponMeshData->GetRowNames();
+
+		for (size_t i = 0; i < ArrayName.Num(); i++)
+		{
+			FObjDataTable* FindTable = WeaponMeshData->FindRow<FObjDataTable>(ArrayName[i], ArrayName[i].ToString());
+
+			int a = 0;
+		}
+
+
 	}
+
 
 }
 
 UZedGameInstance::~UZedGameInstance() {
 
+}
+
+UStaticMesh* UZedGameInstance::GetMesh(FName name)
+{
+	if (nullptr == WeaponMeshData)
+	{
+		return nullptr;
+	}
+
+	FObjDataTable* FindTable = WeaponMeshData->FindRow<FObjDataTable>(name, name.ToString());
+
+	if (nullptr == FindTable)
+	{
+		return nullptr;
+	}
+
+	return FindTable->Mesh;
 }

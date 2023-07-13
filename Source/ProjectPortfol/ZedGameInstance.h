@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-
+#include <Engine/DataTable.h>
 #include "Engine/GameInstance.h"
 #include "ZedGameInstance.generated.h"
 
@@ -19,5 +19,10 @@ class PROJECTPORTFOL_API UZedGameInstance : public UGameInstance
 	~UZedGameInstance();
 
 public:
+	UStaticMesh* GetMesh(FName name);
+	
 
+private:
+	UDataTable* WeaponMeshData;
+	TArray<UStaticMesh*> ArrWeaponMesh;
 };

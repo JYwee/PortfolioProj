@@ -20,10 +20,7 @@ struct PROJECTPORTFOL_API FObjDataTable : public FTableRowBase
 
 public:
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DataObj")
-		FName ActorName;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DataObj")
-		TSubclassOf<AActor> mActor;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MeshData")
+		UStaticMesh* Mesh;
 
 };
