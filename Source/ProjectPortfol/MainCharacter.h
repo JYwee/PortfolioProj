@@ -29,6 +29,14 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	/** Camera boom positioning the camera behind the character */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	class USpringArmComponent* mSpringArmComp;
+
+	/** Follow camera */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	class UCameraComponent* mFollowCamera;
+
 	void AttackAction();
 	void JumpAction();
 	//void JumpAxis(float Rate);
@@ -47,6 +55,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
 		virtual void LookUpAtRate(float Rate);
+
+	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+		void FocusTurn(float Rate);
+
+	//UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+	//	void AMainCharacter::Look(const FInputActionValue& Value);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AMainCharacter")
 		float BaseTurnRate;
@@ -68,5 +82,16 @@ public:
 	// 블루프린트
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		TArray<UStaticMesh*> WeaponArrays;
+
+
+
+private:
+		int mHealthPoint;
+
+		float mStaminaPoint;
+
+		int mAttack;
+
+		int mDefense;
 
 };

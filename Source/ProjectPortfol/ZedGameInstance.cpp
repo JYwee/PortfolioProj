@@ -19,7 +19,7 @@ UZedGameInstance::UZedGameInstance() {
 
 		for (size_t i = 0; i < ArrayName.Num(); i++)
 		{
-			FObjDataTable* FindTable = WeaponMeshData->FindRow<FObjDataTable>(ArrayName[i], ArrayName[i].ToString());
+			FWeaponDataTable* FindTable = WeaponMeshData->FindRow<FWeaponDataTable>(ArrayName[i], ArrayName[i].ToString());
 
 			int a = 0;
 		}
@@ -41,12 +41,12 @@ UStaticMesh* UZedGameInstance::GetMesh(FName name)
 		return nullptr;
 	}
 
-	FObjDataTable* FindTable = WeaponMeshData->FindRow<FObjDataTable>(name, name.ToString());
+	FWeaponDataTable* FindTable = WeaponMeshData->FindRow<FWeaponDataTable>(name, name.ToString());
 
 	if (nullptr == FindTable)
 	{
 		return nullptr;
 	}
 
-	return FindTable->Mesh;
+	return FindTable->weaponMesh;
 }

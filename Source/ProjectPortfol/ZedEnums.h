@@ -14,3 +14,12 @@ enum class ZEDAniState : uint8
 	Jump UMETA(DisplayName = "점프"),
 	Attack UMETA(DisplayName = "공격"),
 };
+
+UENUM(BlueprintType)
+enum class ZEDElementalState : uint8
+{
+	None UMETA(DisplayName = "무속성"),
+	FIRE UMETA(DisplayName = "불속성"),
+	WATER UMETA(DisplayName = "물속성"),
+	ICE UMETA(DisplayName = "얼음속성"),
+};
