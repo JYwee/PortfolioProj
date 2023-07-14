@@ -3,8 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/CapsuleComponent.h"
 #include "GameFramework/Pawn.h"
 #include "NpcPawn.generated.h"
+
 
 UCLASS()
 class PROJECTPORTFOL_API ANpcPawn : public APawn
@@ -26,7 +28,8 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-
+	/** Name of the CapsuleComponent. */
+	static FName CapsuleComponentName;
 
 private:
 		int mHealthPoint;
@@ -43,12 +46,13 @@ private:
 //		//UPROPERTY(Category = Character, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 //		//	TObjectPtr<UCharacterMovementComponent> CharacterMovement;
 //
-//		UPROPERTY(Category = Character, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-//			TObjectPtr<UCapsuleComponent> CapsuleComponent;
+		UPROPERTY(Category = Character, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+			TObjectPtr<UCapsuleComponent> CapsuleComponent;
 //
 ////		UPROPERTY()
 //			//TObjectPtr<UArrowComponent> ArrowComponent;
 
+		UFUNCTION(BlueprintCallable, Category = NpcCollision)
 		void BeginOverLap(
 			UPrimitiveComponent* OverlappedComponent,
 			AActor* OtherActor,

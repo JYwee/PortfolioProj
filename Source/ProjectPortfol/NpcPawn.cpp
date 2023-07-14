@@ -2,7 +2,10 @@
 
 
 #include "NpcPawn.h"
-#include "Components/CapsuleComponent.h"
+//#include "Components/CapsuleComponent.h"
+
+
+FName ANpcPawn::CapsuleComponentName(TEXT("CollisionCylinder"));
 
 // Sets default values
 ANpcPawn::ANpcPawn()
@@ -10,6 +13,16 @@ ANpcPawn::ANpcPawn()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+
+	CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(ANpcPawn::CapsuleComponentName);
+	CapsuleComponent->InitCapsuleSize(34.0f, 88.0f);
+	CapsuleComponent->SetCollisionProfileName(UCollisionProfile::Pawn_ProfileName);
+
+	CapsuleComponent->CanCharacterStepUpOn = ECB_No;
+	CapsuleComponent->SetShouldUpdatePhysicsVolume(true);
+	CapsuleComponent->SetCanEverAffectNavigation(false);
+	CapsuleComponent->bDynamicObstacle = true;
+	RootComponent = CapsuleComponent;
 }
 
 // Called when the game starts or when spawned
@@ -19,7 +32,7 @@ void ANpcPawn::BeginPlay()
 	
 	
 	
-	//GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ANpcPawn::BeginOverLap);
+	CapsuleComponent->OnComponentBeginOverlap.AddDynamic(this, &ANpcPawn::BeginOverLap);
 }
 
 // Called every frame
@@ -47,6 +60,10 @@ void ANpcPawn::BeginOverLap(
 {
 
 	if (OtherActor->ActorHasTag(TEXT("Weapon")))
+	{
+		this->Destroy();
+	}
+	if (OtherComp->ComponentHasTag(TEXT("Weapon")))
 	{
 		this->Destroy();
 	}
