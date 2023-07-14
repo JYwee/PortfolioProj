@@ -1,0 +1,46 @@
+질문1. monster가 상속받는 부모 npc cpp 클래스를 만들려고 하는데
+
+npc가 pawn 클래스를 상속받는 경우 콜리전이 없어서 get콜리전을 못받아 오기에 만들어야 한다
+
+character 경우에는 콜리전이 이미 만들어져 있는데
+
+
+어떤쪽을 선택해야 하나요
+
+
+질문2. playercharacter의 카메라 움직임을 수정하기위해
+
+a, d를 캐릭터의 좌우 rotate를 하고
+
+
+x 마우스는 캐릭터를 바라보는 카메라의 위치(스프링 암)를 캐릭터 기준으로 돌리고 싶은데,
+
+좌우 회전은 PlayerInputComponent에서 AMainCharacter::AddControllerYawInput
+
+로 처리되는것 같은데
+
+PlayerInputComponent->BindAxis("MainPlayer_LookUp", this, &AMainCharacter::AddControllerPitchInput)
+
+위아래 회전은 캐릭터 기준으로 회전하는데,  그래서 비슷하게 작동하지 않을까 싶었는데
+
+mouse. x 에 대한 처리를 하면
+
+카메라의 위아래 회전과 다르게 좌우는 캐릭터도 같이 회전합니다.
+
+bp 디폴트 세팅에서 rotate yaw 체크를 하면 카메라컴포넌트만 mouse.x값을 따로 받는것도 아니라서...
+
+당연하게도 input이 아예 안들어갑니다.
+
+player컨트롤러 cpp를 따로 만들어서 따로 처리해야 하는건가요?
+
+
+
+질문3. 
+
+상속받는 부모 클래스에서
+
+콜리전 생성하는 부분을 긁어오려고 하다보니까
+
+TObjectPtr<class UCapsuleComponent> 같은 꼴이 있는데,
+
+언리얼에서 쓰는 UCapsuleComponent* 라고 이해해도 되는건가요
