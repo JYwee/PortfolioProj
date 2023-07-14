@@ -44,3 +44,14 @@ player컨트롤러 cpp를 따로 만들어서 따로 처리해야 하는건가�
 TObjectPtr<class UCapsuleComponent> 같은 꼴이 있는데,
 
 언리얼에서 쓰는 UCapsuleComponent* 라고 이해해도 되는건가요
+
+
+질문4.
+
+level map 에 스태틱 매쉬가 다 만들어져 있는 상황에서
+
+특정 스태틱 매쉬들에 대한 상호작용을 일괄적으로 만들려고 한다면(예를들어 콜리전 같은)
+
+staticmesh액터를 상속받는 cpp 클래스나 bp를 만들어서 level에 배치되어 있는 스태틱 매쉬들이
+
+일괄적으로 상속받도록 해서 처리하는건가요??
