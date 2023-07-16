@@ -14,6 +14,8 @@ AMainCharacter::AMainCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	BaseTurnRate = 65.f;
+	BaseLookUpRate = 65.f;
 	//
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
@@ -78,13 +80,18 @@ void AMainCharacter::MoveRight(float Val)
 		return;
 	}
 
+	
+	
 	if (Val != 0.f)
 	{
+		//float axisValue = Val * BaseTurnRate * GetWorld()->GetDeltaSeconds() * CustomTimeDilation;
+		//this->AddActorWorldRotation(FRotator(0.0f, axisValue, 0.0f));
+
 		if (Controller)
 		{
 			FRotator const ControlSpaceRot = Controller->GetControlRotation();
 			const FRotator YawRotation(0, ControlSpaceRot.Yaw, 0);
-
+			
 			// transform to world space and add it
 			AddMovementInput(FRotationMatrix(YawRotation).GetScaledAxis(EAxis::Y), Val); //ControlSpaceRot
 
@@ -175,8 +182,8 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveRight", EKeys::A, -1.f));
 		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveRight", EKeys::D, 1.f));
 
-		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_TurnRate", EKeys::A, -1.f));
-		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_TurnRate", EKeys::D, 1.f));
+		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_TurnRate", EKeys::A, -1.f));
+		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_TurnRate", EKeys::D, 1.f));
 		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_Turn", EKeys::A, -1.f));
 		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_Turn", EKeys::D, 1.f));
 
@@ -204,6 +211,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerAttack"), EKeys::LeftMouseButton));
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerJumpAction"), EKeys::SpaceBar));
+
 	}
 	PlayerInputComponent->BindAxis("MainPlayer_MoveForward", this, &AMainCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MainPlayer_MoveRight", this, &AMainCharacter::MoveRight);
