@@ -3,3 +3,6 @@
 
 #include "MyPlayerController.h"
 
+void AMyPlayerController::SetupInputComponent()
+{
+}
