@@ -6,6 +6,10 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
+#include "Components/StaticMeshComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "NpcCharacter.h"
 //#include "Math/Vector.h"
 #include "GameFramework/SpringArmComponent.h"
 
@@ -21,6 +25,9 @@ AMainCharacter::AMainCharacter()
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
 
+	//캐릭터 이동 모션 관련
+	GetCharacterMovement()->bOrientRotationToMovement = false;
+
 	mSpringArmComp = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComp"));
 	mSpringArmComp->SetupAttachment(RootComponent);
 	mSpringArmComp->TargetArmLength = 400.0f; // The camera follows at this distance behind the character	
@@ -30,6 +37,10 @@ AMainCharacter::AMainCharacter()
 	mFollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	mFollowCamera->SetupAttachment(mSpringArmComp, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	mFollowCamera->bUsePawnControlRotation = false;
+
+
+	
+
 
 	//
 	WeaponMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WeaponMesh"));
@@ -136,6 +147,26 @@ void AMainCharacter::FocusTurn(float Rate)
 	//AddControllerPitchInput();
 }
 
+void AMainCharacter::LockOnTarget()
+{
+	UZedGameInstance* Inst = GetGameInstance<UZedGameInstance>();
+
+	for (int i = 0; i < Inst->AllNpcCharac.Num(); ++i)
+	{
+		//UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation());
+
+		
+		SetActorRotation(UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation()));
+		Inst->AllNpcCharac[i]->mLockOnSphere->SetVisibility(true);
+		GetCharacterMovement()->bOrientRotationToMovement = false;
+
+
+
+		mSpringArmComp->AddLocalRotation(this->GetActorRotation());
+		mSpringArmComp->AddLocalRotation(this->GetControlRotation());
+	}
+}
+
 // Sets default values
 
 // Called when the game starts or when spawned
@@ -211,6 +242,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerAttack"), EKeys::LeftMouseButton));
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerJumpAction"), EKeys::SpaceBar));
+		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("Lock_On"), EKeys::Q));
 
 	}
 	PlayerInputComponent->BindAxis("MainPlayer_MoveForward", this, &AMainCharacter::MoveForward);
@@ -228,6 +260,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 	PlayerInputComponent->BindAction("PlayerAttack", EInputEvent::IE_Pressed, this, &AMainCharacter::AttackAction);
 	PlayerInputComponent->BindAction("PlayerJumpAction", EInputEvent::IE_Pressed, this, &AMainCharacter::JumpAction);
+	PlayerInputComponent->BindAction("Lock_On", EInputEvent::IE_Pressed, this, &AMainCharacter::LockOnTarget);
 }
 
 void AMainCharacter::AttackAction()

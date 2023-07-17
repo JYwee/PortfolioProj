@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "ZedEnums.h"
+
 #include "Animation/AnimInstance.h"
 #include "ZedAnimInstance.generated.h"
 
@@ -26,6 +27,8 @@ public:
 
 	UFUNCTION(Category = "Anime", BlueprintCallable)
 		void MontageEnd(UAnimMontage* aniMontage, bool inter);
+
+	
 
 protected:
 	void NativeBeginPlay() override;

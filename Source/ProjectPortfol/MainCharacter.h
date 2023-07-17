@@ -37,6 +37,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* mFollowCamera;
 
+	
+
+
 	void AttackAction();
 	void JumpAction();
 	//void JumpAxis(float Rate);
@@ -58,6 +61,10 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
 		void FocusTurn(float Rate);
+
+	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+		void LockOnTarget();
+
 
 	//UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
 	//	void AMainCharacter::Look(const FInputActionValue& Value);

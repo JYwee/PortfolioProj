@@ -21,6 +21,8 @@ class PROJECTPORTFOL_API UZedGameInstance : public UGameInstance
 public:
 	UStaticMesh* GetMesh(FName name);
 	
+	UPROPERTY(Category = "NpcCharacters", EditAnywhere, BlueprintReadWrite)
+		TArray<class ANpcCharacter*> AllNpcCharac;
 
 private:
 	UDataTable* WeaponMeshData;

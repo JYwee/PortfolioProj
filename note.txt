@@ -37,3 +37,9 @@ camera 락온.
 
 https://github.com/donanroherty/UE4_DarkSoulsCamera/blob/master/Source/DarkSoulsCamera/Private/DSCharacter.cpp
 
+
+
+
+orient Rotation to Movement 체크
+
+use Controller rotation yaw 체크
