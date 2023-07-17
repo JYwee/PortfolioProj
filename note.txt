@@ -21,3 +21,19 @@ ik본
 r.Shadow.Virtual.Cache.DrawInvalidatingBounds 1 (액터 경계 스케일 표시)
 
 
+
+game instance에 
+
+TArray<UStaticMesh*> ArrMesh;
+
+식으로 적 obj 포인터 배열을 저장
+
+
+그걸 전부 긁어와서 
+
+1000범위 안쪽의 적에게 
+
+camera 락온.
+
+https://github.com/donanroherty/UE4_DarkSoulsCamera/blob/master/Source/DarkSoulsCamera/Private/DSCharacter.cpp
+
