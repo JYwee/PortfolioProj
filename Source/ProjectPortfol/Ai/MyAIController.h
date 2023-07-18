@@ -17,6 +17,7 @@ class PROJECTPORTFOL_API AMyAIController : public AAIController
 public:
 	AMyAIController();
 
+protected:
 	void OnPossess(APawn* InPawn) override;
 
 private:

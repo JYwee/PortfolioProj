@@ -11,7 +11,7 @@ AMyAIController::AMyAIController()
 
 }
 
-void AAIController::OnPossess(APawn* InPawn)
+void AMyAIController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
 
