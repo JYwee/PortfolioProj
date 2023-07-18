@@ -54,98 +54,98 @@ AMainCharacter::AMainCharacter()
 		WeaponArrays.Add(MeshLoader.Object);
 	}
 }
-void AMainCharacter::MoveForward(float Val)
-{
-	if (AniState == ZEDAniState::Attack || AniState == ZEDAniState::Jump) {
-		return;
-	}
-
-
-	if (Val != 0.f)
-	{
-		if (Controller)
-		{
-			FRotator const ControlSpaceRot = Controller->GetControlRotation();
-			const FRotator YawRotation(0, ControlSpaceRot.Yaw, 0);
-
-			// transform to world space and add it
-			AddMovementInput(FRotationMatrix(YawRotation).GetScaledAxis(EAxis::X), Val); //ControlSpaceRot
-
-			AniState = Val > 0.f ? ZEDAniState::ForwardMove : ZEDAniState::BackwardMove;
-			return;
-		}
-	}
-	else {
-		if (AniState == ZEDAniState::ForwardMove || AniState == ZEDAniState::BackwardMove)
-		{
-			AniState = ZEDAniState::Idle;
-		}
-	}
-
-
-}
-
-void AMainCharacter::MoveRight(float Val)
-{
-	if (AniState == ZEDAniState::Attack || AniState == ZEDAniState::Jump) {
-		return;
-	}
-
-	
-	
-	if (Val != 0.f)
-	{
-		//float axisValue = Val * BaseTurnRate * GetWorld()->GetDeltaSeconds() * CustomTimeDilation;
-		//this->AddActorWorldRotation(FRotator(0.0f, axisValue, 0.0f));
-
-		if (Controller)
-		{
-			FRotator const ControlSpaceRot = Controller->GetControlRotation();
-			const FRotator YawRotation(0, ControlSpaceRot.Yaw, 0);
-			
-			// transform to world space and add it
-			AddMovementInput(FRotationMatrix(YawRotation).GetScaledAxis(EAxis::Y), Val); //ControlSpaceRot
-
-			AniState = Val > 0.f ? ZEDAniState::RightMove : ZEDAniState::LeftMove;
-			return;
-		}
-	}
-	else {
-		if (AniState == ZEDAniState::RightMove || AniState == ZEDAniState::LeftMove)
-		{
-			AniState = ZEDAniState::Idle;
-		}
-	}
-}
-
-void AMainCharacter::MoveUp_World(float Val)
-{
-	if (Val != 0.f)
-	{
-		AddMovementInput(FVector::UpVector, Val);
-	}
-}
-
-void AMainCharacter::TurnAtRate(float Rate)
-{
-	AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds() * CustomTimeDilation);
-}
-
-void AMainCharacter::LookUpAtRate(float Rate)
-{
-	//AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds() * CustomTimeDilation);
-	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds() * CustomTimeDilation);
-}
-
-void AMainCharacter::FocusTurn(float Rate)
-{
-	
-	float axisValue = Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds() * CustomTimeDilation;
-	mFollowCamera->AddLocalRotation(FRotator(0.0f, axisValue, 0.0f));
-
-	//AddActorLocalRotation();
-	//AddControllerPitchInput();
-}
+//void AMainCharacter::MoveForward(float Val)
+//{
+//	if (AniState == ZEDAniState::Attack || AniState == ZEDAniState::Jump) {
+//		return;
+//	}
+//
+//
+//	if (Val != 0.f)
+//	{
+//		if (Controller)
+//		{
+//			FRotator const ControlSpaceRot = Controller->GetControlRotation();
+//			const FRotator YawRotation(0, ControlSpaceRot.Yaw, 0);
+//
+//			// transform to world space and add it
+//			AddMovementInput(FRotationMatrix(YawRotation).GetScaledAxis(EAxis::X), Val); //ControlSpaceRot
+//
+//			AniState = Val > 0.f ? ZEDAniState::ForwardMove : ZEDAniState::BackwardMove;
+//			return;
+//		}
+//	}
+//	else {
+//		if (AniState == ZEDAniState::ForwardMove || AniState == ZEDAniState::BackwardMove)
+//		{
+//			AniState = ZEDAniState::Idle;
+//		}
+//	}
+//
+//
+//}
+//
+//void AMainCharacter::MoveRight(float Val)
+//{
+//	if (AniState == ZEDAniState::Attack || AniState == ZEDAniState::Jump) {
+//		return;
+//	}
+//
+//	
+//	
+//	if (Val != 0.f)
+//	{
+//		//float axisValue = Val * BaseTurnRate * GetWorld()->GetDeltaSeconds() * CustomTimeDilation;
+//		//this->AddActorWorldRotation(FRotator(0.0f, axisValue, 0.0f));
+//
+//		if (Controller)
+//		{
+//			FRotator const ControlSpaceRot = Controller->GetControlRotation();
+//			const FRotator YawRotation(0, ControlSpaceRot.Yaw, 0);
+//			
+//			// transform to world space and add it
+//			AddMovementInput(FRotationMatrix(YawRotation).GetScaledAxis(EAxis::Y), Val); //ControlSpaceRot
+//
+//			AniState = Val > 0.f ? ZEDAniState::RightMove : ZEDAniState::LeftMove;
+//			return;
+//		}
+//	}
+//	else {
+//		if (AniState == ZEDAniState::RightMove || AniState == ZEDAniState::LeftMove)
+//		{
+//			AniState = ZEDAniState::Idle;
+//		}
+//	}
+//}
+//
+//void AMainCharacter::MoveUp_World(float Val)
+//{
+//	if (Val != 0.f)
+//	{
+//		AddMovementInput(FVector::UpVector, Val);
+//	}
+//}
+//
+//void AMainCharacter::TurnAtRate(float Rate)
+//{
+//	AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds() * CustomTimeDilation);
+//}
+//
+//void AMainCharacter::LookUpAtRate(float Rate)
+//{
+//	//AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds() * CustomTimeDilation);
+//	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds() * CustomTimeDilation);
+//}
+//
+//void AMainCharacter::FocusTurn(float Rate)
+//{
+//	
+//	float axisValue = Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds() * CustomTimeDilation;
+//	mFollowCamera->AddLocalRotation(FRotator(0.0f, axisValue, 0.0f));
+//
+//	//AddActorLocalRotation();
+//	//AddControllerPitchInput();
+//}
 
 void AMainCharacter::LockOnTarget()
 {
@@ -194,86 +194,86 @@ void AMainCharacter::Tick(float DeltaTime)
 
 }
 
-// Called to bind functionality to input
-void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
+ //Called to bind functionality to input
+//void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+//{
+//	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	static bool bBindingsAdded = false;
-	if (!bBindingsAdded)
-	{
-		bBindingsAdded = true;
+	//static bool bBindingsAdded = false;
+	//if (!bBindingsAdded)
+	//{
+	//	bBindingsAdded = true;
 
-		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveForward", EKeys::W, 1.f));
-		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveForward", EKeys::S, -1.f));
+	//	UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveForward", EKeys::W, 1.f));
+	//	UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveForward", EKeys::S, -1.f));
 
-		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveForward", EKeys::Gamepad_LeftY, 1.f));
+	//	//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveForward", EKeys::Gamepad_LeftY, 1.f));
 
-		//왼쪽 오른쪽 움직임
-		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveRight", EKeys::A, -1.f));
-		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveRight", EKeys::D, 1.f));
+	//	//왼쪽 오른쪽 움직임
+	//	UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveRight", EKeys::A, -1.f));
+	//	UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveRight", EKeys::D, 1.f));
 
-		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_TurnRate", EKeys::A, -1.f));
-		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_TurnRate", EKeys::D, 1.f));
-		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_Turn", EKeys::A, -1.f));
-		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_Turn", EKeys::D, 1.f));
+	//	//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_TurnRate", EKeys::A, -1.f));
+	//	//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_TurnRate", EKeys::D, 1.f));
+	//	//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_Turn", EKeys::A, -1.f));
+	//	//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_Turn", EKeys::D, 1.f));
 
 
-		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveRight", EKeys::Gamepad_LeftX, 1.f));
+	//	//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveRight", EKeys::Gamepad_LeftX, 1.f));
 
-		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveUp", EKeys::Gamepad_LeftThumbstick, 1.f));
-		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveUp", EKeys::Gamepad_RightThumbstick, -1.f));
-		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveUp", EKeys::Gamepad_FaceButton_Bottom, 1.f));
-		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveUp", EKeys::LeftControl, -1.f));
-		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveUp", EKeys::SpaceBar, 1.f));
-		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("DefaultPawn_MoveUp", EKeys::C, -1.f));
-		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("DefaultPawn_MoveUp", EKeys::E, 1.f));
-		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("DefaultPawn_MoveUp", EKeys::Q, -1.f));
+	//	//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveUp", EKeys::Gamepad_LeftThumbstick, 1.f));
+	//	//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveUp", EKeys::Gamepad_RightThumbstick, -1.f));
+	//	//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveUp", EKeys::Gamepad_FaceButton_Bottom, 1.f));
+	//	//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveUp", EKeys::LeftControl, -1.f));
+	//	//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveUp", EKeys::SpaceBar, 1.f));
+	//	//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("DefaultPawn_MoveUp", EKeys::C, -1.f));
+	//	//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("DefaultPawn_MoveUp", EKeys::E, 1.f));
+	//	//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("DefaultPawn_MoveUp", EKeys::Q, -1.f));
 
-		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_TurnRate", EKeys::Gamepad_RightX, 1.f));
-		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_TurnRate", EKeys::Left, -1.f));
-		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_TurnRate", EKeys::Right, 1.f));
-		
-		
-		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_Turn", EKeys::MouseX, 1.f));
+	//	//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_TurnRate", EKeys::Gamepad_RightX, 1.f));
+	//	//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_TurnRate", EKeys::Left, -1.f));
+	//	//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_TurnRate", EKeys::Right, 1.f));
+	//	
+	//	
+	//	UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_Turn", EKeys::MouseX, 1.f));
 
-		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_LookUpRate", EKeys::Gamepad_RightY, 1.f));
-		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_LookUp", EKeys::MouseY, -1.f));
+	//	//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_LookUpRate", EKeys::Gamepad_RightY, 1.f));
+	//	UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_LookUp", EKeys::MouseY, -1.f));
 
-		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerAttack"), EKeys::LeftMouseButton));
-		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerJumpAction"), EKeys::SpaceBar));
-		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("Lock_On"), EKeys::Q));
+	//	UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerAttack"), EKeys::LeftMouseButton));
+	//	UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerJumpAction"), EKeys::SpaceBar));
+	//	UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("Lock_On"), EKeys::Q));
 
-	}
-	PlayerInputComponent->BindAxis("MainPlayer_MoveForward", this, &AMainCharacter::MoveForward);
-	PlayerInputComponent->BindAxis("MainPlayer_MoveRight", this, &AMainCharacter::MoveRight);
-	//PlayerInputComponent->BindAxis("MainPlayer_MoveUp", this, &AMainCharacter::MoveUp_World);
-	PlayerInputComponent->BindAxis("MainPlayer_TurnRate", this, &AMainCharacter::TurnAtRate);
+	//}
+	//PlayerInputComponent->BindAxis("MainPlayer_MoveForward", this, &AMainCharacter::MoveForward);
+	//PlayerInputComponent->BindAxis("MainPlayer_MoveRight", this, &AMainCharacter::MoveRight);
+	////PlayerInputComponent->BindAxis("MainPlayer_MoveUp", this, &AMainCharacter::MoveUp_World);
+	//PlayerInputComponent->BindAxis("MainPlayer_TurnRate", this, &AMainCharacter::TurnAtRate);
 
-	//수정필요
-	PlayerInputComponent->BindAxis("MainPlayer_Turn", this, &AMainCharacter::AddControllerYawInput);
-	//PlayerInputComponent->BindAxis("MainPlayer_FocusTurn", this, &AMainCharacter::AddControllerYawInput);
+	////수정필요
+	//PlayerInputComponent->BindAxis("MainPlayer_Turn", this, &AMainCharacter::AddControllerYawInput);
+	////PlayerInputComponent->BindAxis("MainPlayer_FocusTurn", this, &AMainCharacter::AddControllerYawInput);
 
-	PlayerInputComponent->BindAxis("MainPlayer_LookUp", this, &AMainCharacter::AddControllerPitchInput);//LookUpDown
-	//PlayerInputComponent->BindAxis("MainPlayer_LookUp", this, &AMainCharacter::AddControllerPitchInput);
-	//PlayerInputComponent->BindAxis("MainPlayer_LookUpRate", this, &AMainCharacter::LookUpAtRate);
+	//PlayerInputComponent->BindAxis("MainPlayer_LookUp", this, &AMainCharacter::AddControllerPitchInput);//LookUpDown
+	////PlayerInputComponent->BindAxis("MainPlayer_LookUp", this, &AMainCharacter::AddControllerPitchInput);
+	////PlayerInputComponent->BindAxis("MainPlayer_LookUpRate", this, &AMainCharacter::LookUpAtRate);
 
-	PlayerInputComponent->BindAction("PlayerAttack", EInputEvent::IE_Pressed, this, &AMainCharacter::AttackAction);
-	PlayerInputComponent->BindAction("PlayerJumpAction", EInputEvent::IE_Pressed, this, &AMainCharacter::JumpAction);
-	PlayerInputComponent->BindAction("Lock_On", EInputEvent::IE_Pressed, this, &AMainCharacter::LockOnTarget);
-}
-
-void AMainCharacter::AttackAction()
-{
-	AniState = ZEDAniState::Attack;
-}
-
-void AMainCharacter::JumpAction()
-{
-	Jump();
-
-	AniState = ZEDAniState::Jump;
-}
+	//PlayerInputComponent->BindAction("PlayerAttack", EInputEvent::IE_Pressed, this, &AMainCharacter::AttackAction);
+	//PlayerInputComponent->BindAction("PlayerJumpAction", EInputEvent::IE_Pressed, this, &AMainCharacter::JumpAction);
+	//PlayerInputComponent->BindAction("Lock_On", EInputEvent::IE_Pressed, this, &AMainCharacter::LockOnTarget);
+//}
+//
+//void AMainCharacter::AttackAction()
+//{
+//	AniState = ZEDAniState::Attack;
+//}
+//
+//void AMainCharacter::JumpAction()
+//{
+//	Jump();
+//
+//	AniState = ZEDAniState::Jump;
+//}
 
 //void AMainCharacter::Look(const FInputActionValue& Value)
 //{

@@ -27,7 +27,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	//virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	/** Camera boom positioning the camera behind the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
@@ -40,27 +40,27 @@ public:
 	
 
 
-	void AttackAction();
-	void JumpAction();
-	//void JumpAxis(float Rate);
+	//void AttackAction();
+	//void JumpAction();
+	////void JumpAxis(float Rate);
 
-	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
-		virtual void MoveForward(float Val);
+	//UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+	//	virtual void MoveForward(float Val);
 
-	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
-		virtual void MoveRight(float Val);
+	//UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+	//	virtual void MoveRight(float Val);
 
-	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
-		virtual void MoveUp_World(float Val);
+	//UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+	//	virtual void MoveUp_World(float Val);
 
-	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
-		virtual void TurnAtRate(float Rate);
+	//UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+	//	virtual void TurnAtRate(float Rate);
 
-	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
-		virtual void LookUpAtRate(float Rate);
+	//UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+	//	virtual void LookUpAtRate(float Rate);
 
-	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
-		void FocusTurn(float Rate);
+	//UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+	//	void FocusTurn(float Rate);
 
 	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
 		void LockOnTarget();
