@@ -74,6 +74,8 @@ void AMainCharacter::LockOnTarget()
 		{
 			//UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation());
 			SetActorRotation(UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation()));
+
+			mTargetNpcCharacter = Inst->AllNpcCharac[i];
 			Inst->AllNpcCharac[i]->mLockOnSphere->SetVisibility(true);
 
 			mSpringArmComp->AddLocalRotation(this->GetActorRotation());
@@ -87,9 +89,9 @@ void AMainCharacter::LockOnTarget()
 		for (int i = 0; i < Inst->AllNpcCharac.Num(); ++i)
 		{
 			//UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation());
-			SetActorRotation(UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation()));
+			//SetActorRotation(UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation()));
 			Inst->AllNpcCharac[i]->mLockOnSphere->SetVisibility(false);
-
+			mTargetNpcCharacter = nullptr;
 
 			mSpringArmComp->AddLocalRotation(this->GetActorRotation());
 			mSpringArmComp->AddLocalRotation(this->GetControlRotation());

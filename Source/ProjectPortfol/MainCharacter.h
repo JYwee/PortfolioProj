@@ -98,6 +98,9 @@ public:
 		mIsLockOn = isLockOn;
 	}
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		class ANpcCharacter* mTargetNpcCharacter;
+
 private:
 		int mHealthPoint;
 
@@ -108,5 +111,7 @@ private:
 		int mDefense;
 
 		bool mIsLockOn;
+
+
 
 };
