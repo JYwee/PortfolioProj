@@ -90,7 +90,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		TArray<UStaticMesh*> WeaponArrays;
 
+	FORCEINLINE bool IsLockOnTarget(){
+		return mIsLockOn;
+	}
 
+	FORCEINLINE void SetIsLockOn(bool isLockOn) {
+		mIsLockOn = isLockOn;
+	}
 
 private:
 		int mHealthPoint;
@@ -100,5 +106,7 @@ private:
 		int mAttack;
 
 		int mDefense;
+
+		bool mIsLockOn;
 
 };

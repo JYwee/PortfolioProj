@@ -3,7 +3,7 @@
 
 #include "ZedGameInstance.h"
 #include "ObjDataTable.h"
-#include "NpcCharacter.h"
+#include "Ai/NpcCharacter.h"
 #include "WeaponDataTable.h"
 
 

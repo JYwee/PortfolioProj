@@ -9,7 +9,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
-#include "NpcCharacter.h"
+#include "Ai/NpcCharacter.h"
 //#include "Math/Vector.h"
 #include "GameFramework/SpringArmComponent.h"
 
@@ -39,6 +39,7 @@ AMainCharacter::AMainCharacter()
 	mFollowCamera->bUsePawnControlRotation = false;
 
 
+	mIsLockOn = false;
 	
 
 
@@ -54,117 +55,49 @@ AMainCharacter::AMainCharacter()
 		WeaponArrays.Add(MeshLoader.Object);
 	}
 }
-//void AMainCharacter::MoveForward(float Val)
-//{
-//	if (AniState == ZEDAniState::Attack || AniState == ZEDAniState::Jump) {
-//		return;
-//	}
-//
-//
-//	if (Val != 0.f)
-//	{
-//		if (Controller)
-//		{
-//			FRotator const ControlSpaceRot = Controller->GetControlRotation();
-//			const FRotator YawRotation(0, ControlSpaceRot.Yaw, 0);
-//
-//			// transform to world space and add it
-//			AddMovementInput(FRotationMatrix(YawRotation).GetScaledAxis(EAxis::X), Val); //ControlSpaceRot
-//
-//			AniState = Val > 0.f ? ZEDAniState::ForwardMove : ZEDAniState::BackwardMove;
-//			return;
-//		}
-//	}
-//	else {
-//		if (AniState == ZEDAniState::ForwardMove || AniState == ZEDAniState::BackwardMove)
-//		{
-//			AniState = ZEDAniState::Idle;
-//		}
-//	}
-//
-//
-//}
-//
-//void AMainCharacter::MoveRight(float Val)
-//{
-//	if (AniState == ZEDAniState::Attack || AniState == ZEDAniState::Jump) {
-//		return;
-//	}
-//
-//	
-//	
-//	if (Val != 0.f)
-//	{
-//		//float axisValue = Val * BaseTurnRate * GetWorld()->GetDeltaSeconds() * CustomTimeDilation;
-//		//this->AddActorWorldRotation(FRotator(0.0f, axisValue, 0.0f));
-//
-//		if (Controller)
-//		{
-//			FRotator const ControlSpaceRot = Controller->GetControlRotation();
-//			const FRotator YawRotation(0, ControlSpaceRot.Yaw, 0);
-//			
-//			// transform to world space and add it
-//			AddMovementInput(FRotationMatrix(YawRotation).GetScaledAxis(EAxis::Y), Val); //ControlSpaceRot
-//
-//			AniState = Val > 0.f ? ZEDAniState::RightMove : ZEDAniState::LeftMove;
-//			return;
-//		}
-//	}
-//	else {
-//		if (AniState == ZEDAniState::RightMove || AniState == ZEDAniState::LeftMove)
-//		{
-//			AniState = ZEDAniState::Idle;
-//		}
-//	}
-//}
-//
-//void AMainCharacter::MoveUp_World(float Val)
-//{
-//	if (Val != 0.f)
-//	{
-//		AddMovementInput(FVector::UpVector, Val);
-//	}
-//}
-//
-//void AMainCharacter::TurnAtRate(float Rate)
-//{
-//	AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds() * CustomTimeDilation);
-//}
-//
-//void AMainCharacter::LookUpAtRate(float Rate)
-//{
-//	//AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds() * CustomTimeDilation);
-//	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds() * CustomTimeDilation);
-//}
-//
-//void AMainCharacter::FocusTurn(float Rate)
-//{
-//	
-//	float axisValue = Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds() * CustomTimeDilation;
-//	mFollowCamera->AddLocalRotation(FRotator(0.0f, axisValue, 0.0f));
-//
-//	//AddActorLocalRotation();
-//	//AddControllerPitchInput();
-//}
 
 void AMainCharacter::LockOnTarget()
 {
 	UZedGameInstance* Inst = GetGameInstance<UZedGameInstance>();
-
-	for (int i = 0; i < Inst->AllNpcCharac.Num(); ++i)
+	
+	if (mIsLockOn == false) 
 	{
-		//UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation());
 
-		
-		SetActorRotation(UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation()));
-		Inst->AllNpcCharac[i]->mLockOnSphere->SetVisibility(true);
+		if (Inst->AllNpcCharac.Num() < 1){
+			return;
+		}
+
+		mIsLockOn = true;
 		GetCharacterMovement()->bOrientRotationToMovement = false;
 
+		for (int i = 0; i < Inst->AllNpcCharac.Num(); ++i)
+		{
+			//UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation());
+			SetActorRotation(UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation()));
+			Inst->AllNpcCharac[i]->mLockOnSphere->SetVisibility(true);
 
-
-		mSpringArmComp->AddLocalRotation(this->GetActorRotation());
-		mSpringArmComp->AddLocalRotation(this->GetControlRotation());
+			mSpringArmComp->AddLocalRotation(this->GetActorRotation());
+			mSpringArmComp->AddLocalRotation(this->GetControlRotation());
+		}
 	}
+	else
+	{
+		mIsLockOn = false;
+
+		for (int i = 0; i < Inst->AllNpcCharac.Num(); ++i)
+		{
+			//UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation());
+			SetActorRotation(UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation()));
+			Inst->AllNpcCharac[i]->mLockOnSphere->SetVisibility(false);
+
+
+			mSpringArmComp->AddLocalRotation(this->GetActorRotation());
+			mSpringArmComp->AddLocalRotation(this->GetControlRotation());
+		}
+		GetCharacterMovement()->bOrientRotationToMovement = true;
+	}
+
+	
 }
 
 // Sets default values
@@ -193,6 +126,8 @@ void AMainCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 }
+
+
 
  //Called to bind functionality to input
 //void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
