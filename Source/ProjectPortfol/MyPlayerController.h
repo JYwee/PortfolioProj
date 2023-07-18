@@ -14,8 +14,21 @@ class PROJECTPORTFOL_API AMyPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 	
+public:
+	AMyPlayerController();
+	
+	virtual void PostInitializeComponents() override;
+	virtual void OnPossess(APawn* InPawn) override;
+
+
 
 protected:
+	
+
+
+
+
+	
 	virtual void SetupInputComponent() override;
 
 	virtual void BeginPlay() override;

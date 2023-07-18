@@ -6,6 +6,20 @@
 #include "Kismet/KismetMathLibrary.h"
 
 
+AMyPlayerController::AMyPlayerController()
+{
+}
+
+void AMyPlayerController::PostInitializeComponents()
+{	
+	Super::PostInitializeComponents();
+}
+
+void AMyPlayerController::OnPossess(APawn* InPawn)
+{
+	Super::OnPossess(InPawn);
+}
+
 void AMyPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
@@ -16,15 +30,15 @@ void AMyPlayerController::SetupInputComponent()
 	if (!bBindingsAdded)
 	{
 		bBindingsAdded = true;
-		
-		FInputAxisKeyMapping("MainPlayer_MoveForward", EKeys::W, 1.f);
-		FInputAxisKeyMapping("MainPlayer_MoveForward", EKeys::S, -1.f);
+
+		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveForward", EKeys::W, 1.f));
+		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveForward", EKeys::S, -1.f));
 
 		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveForward", EKeys::Gamepad_LeftY, 1.f));
 
 		//왼쪽 오른쪽 움직임
-		FInputAxisKeyMapping("MainPlayer_MoveRight", EKeys::A, -1.f);
-		FInputAxisKeyMapping("MainPlayer_MoveRight", EKeys::D, 1.f);
+		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveRight", EKeys::A, -1.f));
+		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_MoveRight", EKeys::D, 1.f));
 
 		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_TurnRate", EKeys::A, -1.f));
 		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_TurnRate", EKeys::D, 1.f));
@@ -42,20 +56,20 @@ void AMyPlayerController::SetupInputComponent()
 		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("DefaultPawn_MoveUp", EKeys::C, -1.f));
 		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("DefaultPawn_MoveUp", EKeys::E, 1.f));
 		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("DefaultPawn_MoveUp", EKeys::Q, -1.f));
+	
+			//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_TurnRate", EKeys::Gamepad_RightX, 1.f));
+			//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_TurnRate", EKeys::Left, -1.f));
+			//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_TurnRate", EKeys::Right, 1.f));
+			
+			
+			UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_Turn", EKeys::MouseX, 1.f));
 
-		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_TurnRate", EKeys::Gamepad_RightX, 1.f));
-		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_TurnRate", EKeys::Left, -1.f));
-		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_TurnRate", EKeys::Right, 1.f));
+			//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_LookUpRate", EKeys::Gamepad_RightY, 1.f));
+			UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_LookUp", EKeys::MouseY, -1.f));
 
-
-		FInputAxisKeyMapping("MainPlayer_Turn", EKeys::MouseX, 1.f);
-
-		//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_LookUpRate", EKeys::Gamepad_RightY, 1.f));
-		FInputAxisKeyMapping("MainPlayer_LookUp", EKeys::MouseY, -1.f);
-
-		FInputActionKeyMapping(TEXT("PlayerAttack"), EKeys::LeftMouseButton);
-		FInputActionKeyMapping(TEXT("PlayerJumpAction"), EKeys::SpaceBar);
-		FInputActionKeyMapping(TEXT("Lock_On"), EKeys::Q);
+			UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerAttack"), EKeys::LeftMouseButton));
+			UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerJumpAction"), EKeys::SpaceBar));
+			UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("Lock_On"), EKeys::Q));
 
 	}
 	InputComponent->BindAxis("MainPlayer_MoveForward", this, &AMyPlayerController::MoveForward);
@@ -72,9 +86,9 @@ void AMyPlayerController::SetupInputComponent()
 	//PlayerInputComponent->BindAxis("MainPlayer_LookUp", this, &AMainCharacter::AddControllerPitchInput);
 	//PlayerInputComponent->BindAxis("MainPlayer_LookUpRate", this, &AMainCharacter::LookUpAtRate);
 
-	InputComponent->BindAction("PlayerAttack", EInputEvent::IE_Pressed, this, &AMyPlayerController::AttackAction);
-	InputComponent->BindAction("PlayerJumpAction", EInputEvent::IE_Pressed, this, &AMyPlayerController::JumpAction);
-	InputComponent->BindAction("Lock_On", EInputEvent::IE_Pressed, this, &AMyPlayerController::LockOnTarget);
+	InputComponent->BindAction("PlayerAttack", IE_Pressed, this, &AMyPlayerController::AttackAction);
+	InputComponent->BindAction("PlayerJumpAction", IE_Pressed, this, &AMyPlayerController::JumpAction);
+	InputComponent->BindAction("Lock_On", IE_Pressed, this, &AMyPlayerController::LockOnTarget);
 }
 
 void AMyPlayerController::BeginPlay()
