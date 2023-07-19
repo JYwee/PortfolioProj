@@ -78,7 +78,7 @@ public:
 
 
 	UPROPERTY(Category = "AMainCharacter", EditAnywhere, BlueprintReadWrite)
-		ZEDAniState AniState = ZEDAniState::Idle;
+		ZEDAniState AniState;
 
 	UPROPERTY(Category = "AMainCharacter", EditAnywhere, BlueprintReadWrite)
 		TMap<ZEDAniState, class UAnimMontage*> AllAnimations;

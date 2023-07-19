@@ -76,7 +76,7 @@ void AMyPlayerController::SetupInputComponent()
 	InputComponent->BindAxis("MainPlayer_MoveForward", this, &AMyPlayerController::MoveForward);
 	InputComponent->BindAxis("MainPlayer_MoveRight", this, &AMyPlayerController::MoveRight);
 	//PlayerInputComponent->BindAxis("MainPlayer_MoveUp", this, &AMainCharacter::MoveUp_World);
-	InputComponent->BindAxis("MainPlayer_TurnRate", this, &AMyPlayerController::TurnAtRate);
+	//InputComponent->BindAxis("MainPlayer_TurnRate", this, &AMyPlayerController::TurnAtRate);
 
 	//수정필요
 	//FInputAxisBinding& BindAxis(const FName AxisName, UserClass * Object, typename FInputAxisHandlerSignature::TMethodPtr< UserClass > Func);
@@ -118,8 +118,8 @@ void AMyPlayerController::MoveForward(float Val)
 	
 	if (Val != 0.f)
 	{
-		if (this)
-		{
+		//if (this)
+		//{
 			FRotator const ControlSpaceRot = this->GetControlRotation();
 			const FRotator YawRotation(0, ControlSpaceRot.Yaw, 0);
 
@@ -128,22 +128,24 @@ void AMyPlayerController::MoveForward(float Val)
 			// transform to world space and add it
 			myCharacter->AddMovementInput(FRotationMatrix(YawRotation).GetScaledAxis(EAxis::X), Val); //ControlSpaceRot
 			
-			if (myCharacter->IsLockOnTarget())
+			if (myCharacter->IsLockOnTarget() == true)
 			{
 				myCharacter->AniState = Val > 0.f ? ZEDAniState::ForwardMove : ZEDAniState::BackwardMove;
 				myCharacter->SetActorRotation(UKismetMathLibrary::FindLookAtRotation(myCharacter->GetActorLocation(), myCharacter->GetTargetNpcChar()->GetActorLocation()));
 			}
 			else
 			{
-				myCharacter->AniState = ZEDAniState::Run;
+				myCharacter->AniState = ZEDAniState::FrontRun;
+				UE_LOG(LogTemp, Log, TEXT("%S(%u) %d, %d"), __FUNCTION__, __LINE__, myCharacter->AniState , ZEDAniState::FrontRun);
 			}
 			return;
-		}
+		//}
 	}
 	else {
-		if (myCharacter->AniState == ZEDAniState::ForwardMove || myCharacter->AniState == ZEDAniState::BackwardMove || myCharacter->AniState == ZEDAniState::Run)
+		if (myCharacter->AniState == ZEDAniState::ForwardMove || myCharacter->AniState == ZEDAniState::BackwardMove || myCharacter->AniState == ZEDAniState::FrontRun)//|| myCharacter->AniState == ZEDAniState::Run
 		{
 			myCharacter->AniState = ZEDAniState::Idle;
+			UE_LOG(LogTemp, Log, TEXT("%S(%u) %d"), __FUNCTION__, __LINE__, myCharacter->AniState);
 		}
 	}
 
@@ -163,31 +165,32 @@ void AMyPlayerController::MoveRight(float Val)
 		//float axisValue = Val * BaseTurnRate * GetWorld()->GetDeltaSeconds() * CustomTimeDilation;
 		//this->AddActorWorldRotation(FRotator(0.0f, axisValue, 0.0f));
 
-		if (this)
-		{
+		///if (this)
+	//	{
 			FRotator const ControlSpaceRot = this->GetControlRotation();
 			const FRotator YawRotation(0, ControlSpaceRot.Yaw, 0);
 
 			// transform to world space and add it
 			
 			myCharacter->AddMovementInput(FRotationMatrix(YawRotation).GetScaledAxis(EAxis::Y), Val); //ControlSpaceRot
-			if (myCharacter->IsLockOnTarget())
+			if (myCharacter->IsLockOnTarget() == true)
 			{
 				myCharacter->AniState = Val > 0.f ? ZEDAniState::RightMove : ZEDAniState::LeftMove;
 				myCharacter->SetActorRotation(UKismetMathLibrary::FindLookAtRotation(myCharacter->GetActorLocation(), myCharacter->GetTargetNpcChar()->GetActorLocation()));
 			}
 			else
 			{
-				myCharacter->AniState = ZEDAniState::Run;
+				myCharacter->AniState = ZEDAniState::RightRun;
 			}
 			
 			return;
-		}
+//		}
 	}
 	else {
-		if (myCharacter->AniState == ZEDAniState::RightMove || myCharacter->AniState == ZEDAniState::LeftMove || myCharacter->AniState == ZEDAniState::Run)
+		if (myCharacter->AniState == ZEDAniState::RightMove || myCharacter->AniState == ZEDAniState::LeftMove || myCharacter->AniState == ZEDAniState::RightRun)
 		{
 			myCharacter->AniState = ZEDAniState::Idle;
+			UE_LOG(LogTemp, Log, TEXT("%S(%u) %d"), __FUNCTION__, __LINE__, myCharacter->AniState);
 		}
 	}
 }
@@ -231,19 +234,18 @@ void AMyPlayerController::LockOnTarget()
 		for (int i = 0; i < Inst->AllNpcCharac.Num(); ++i)
 		{
 			//UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation());
-			//bUseControllerRotationYaw = true;
+			
 
 
 			//SetActorRotation(UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation()));
+			
 			SetControlRotation(UKismetMathLibrary::FindLookAtRotation(myCharacter->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation()));
 			myCharacter->mTargetNpcCharacter = Inst->AllNpcCharac[i];
 			Inst->AllNpcCharac[i]->mLockOnSphere->SetVisibility(true);
 
-			//mSpringArmComp.setro
-
-
-
-			//mSpringArmComp->SetWorldRotation(this->GetActorRotation());
+			//myCharacter->bUseControllerRotationRoll = false; // not work
+			//myCharacter->bUseControllerRotationPitch = false;
+			//myCharacter->bUseControllerRotationYaw = false;
 
 			//bUseControllerRotationYaw = false;
 			//mSpringArmComp->AddLocalRotation(this->GetActorRotation());

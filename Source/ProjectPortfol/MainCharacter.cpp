@@ -17,7 +17,7 @@ AMainCharacter::AMainCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	AniState = ZEDAniState::Idle;
 	BaseTurnRate = 65.f;
 	BaseLookUpRate = 65.f;
 	//
@@ -30,7 +30,7 @@ AMainCharacter::AMainCharacter()
 
 	mSpringArmComp = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComp"));
 	mSpringArmComp->SetupAttachment(RootComponent);
-	mSpringArmComp->TargetArmLength = 400.0f; // The camera follows at this distance behind the character	
+	mSpringArmComp->TargetArmLength = 500.0f; // The camera follows at this distance behind the character	
 	mSpringArmComp->bUsePawnControlRotation = true; // Rotate the arm based on the controller
 
 	// Create a follow camera
@@ -60,6 +60,8 @@ AMainCharacter::AMainCharacter()
 void AMainCharacter::LockOnTarget()
 {
 	UZedGameInstance* Inst = GetGameInstance<UZedGameInstance>();
+
+	bool isEnemyHere = false;
 	
 	if (mIsLockOn == false) 
 	{
@@ -68,19 +70,28 @@ void AMainCharacter::LockOnTarget()
 			return;
 		}
 
-		mIsLockOn = true;
-		GetCharacterMovement()->bOrientRotationToMovement = false;
+		
+		
 
 		for (int i = 0; i < Inst->AllNpcCharac.Num(); ++i)
 		{
 			//UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation());
-			bUseControllerRotationYaw = true;
+			
 
 			
-			SetActorRotation(UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation()));
-
-			mTargetNpcCharacter = Inst->AllNpcCharac[i];
-			Inst->AllNpcCharac[i]->mLockOnSphere->SetVisibility(true);
+			if (GetDistanceTo(Inst->AllNpcCharac[i]) < 1000.f)
+			{
+				mIsLockOn = true;
+				GetCharacterMovement()->bOrientRotationToMovement = false;
+				isEnemyHere = true;
+				bUseControllerRotationYaw = true;
+				SetActorRotation(UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation()));
+				mTargetNpcCharacter = Inst->AllNpcCharac[i];
+				Inst->AllNpcCharac[i]->mLockOnSphere->SetVisibility(true);
+				bUseControllerRotationYaw = false;
+			}
+			
+			
 
 			//mSpringArmComp.setro
 
@@ -88,9 +99,12 @@ void AMainCharacter::LockOnTarget()
 
 			//mSpringArmComp->SetWorldRotation(this->GetActorRotation());
 
-			bUseControllerRotationYaw = false;
+			
 			//mSpringArmComp->AddLocalRotation(this->GetActorRotation());
 			//mSpringArmComp->AddLocalRotation(this->GetControlRotation());
+		}
+		if (isEnemyHere == false) {
+			return;
 		}
 	}
 	else
@@ -138,6 +152,8 @@ void AMainCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	UE_LOG(LogTemp, Error, TEXT("%S(%u) %d "), __FUNCTION__, __LINE__, AniState);
+	AniState;
 }
 
 
