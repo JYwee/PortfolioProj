@@ -98,6 +98,12 @@ public:
 		mIsLockOn = isLockOn;
 	}
 
+	FORCEINLINE class ANpcCharacter* GetTargetNpcChar() {
+		return mTargetNpcCharacter;
+	}
+
+
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class ANpcCharacter* mTargetNpcCharacter;
 

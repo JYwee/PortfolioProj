@@ -137,6 +137,7 @@ void AMyPlayerController::MoveForward(float Val)
 			{
 				myCharacter->AniState = ZEDAniState::Run;
 			}
+
 			return;
 		}
 	}

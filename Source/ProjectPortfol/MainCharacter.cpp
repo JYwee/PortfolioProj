@@ -41,6 +41,7 @@ AMainCharacter::AMainCharacter()
 
 	mIsLockOn = false;
 	
+	
 
 
 	//
