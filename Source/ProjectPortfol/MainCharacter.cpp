@@ -74,13 +74,23 @@ void AMainCharacter::LockOnTarget()
 		for (int i = 0; i < Inst->AllNpcCharac.Num(); ++i)
 		{
 			//UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation());
+			bUseControllerRotationYaw = true;
+
+			
 			SetActorRotation(UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation()));
 
 			mTargetNpcCharacter = Inst->AllNpcCharac[i];
 			Inst->AllNpcCharac[i]->mLockOnSphere->SetVisibility(true);
 
-			mSpringArmComp->AddLocalRotation(this->GetActorRotation());
-			mSpringArmComp->AddLocalRotation(this->GetControlRotation());
+			//mSpringArmComp.setro
+
+			
+
+			//mSpringArmComp->SetWorldRotation(this->GetActorRotation());
+
+			bUseControllerRotationYaw = false;
+			//mSpringArmComp->AddLocalRotation(this->GetActorRotation());
+			//mSpringArmComp->AddLocalRotation(this->GetControlRotation());
 		}
 	}
 	else
@@ -94,8 +104,8 @@ void AMainCharacter::LockOnTarget()
 			Inst->AllNpcCharac[i]->mLockOnSphere->SetVisibility(false);
 			mTargetNpcCharacter = nullptr;
 
-			mSpringArmComp->AddLocalRotation(this->GetActorRotation());
-			mSpringArmComp->AddLocalRotation(this->GetControlRotation());
+			//mSpringArmComp->AddLocalRotation(this->GetActorRotation());
+			//mSpringArmComp->AddLocalRotation(this->GetControlRotation());
 		}
 		GetCharacterMovement()->bOrientRotationToMovement = true;
 	}

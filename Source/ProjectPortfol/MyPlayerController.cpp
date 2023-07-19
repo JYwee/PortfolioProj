@@ -223,9 +223,35 @@ void AMyPlayerController::FocusTurn(float Rate)
 
 void AMyPlayerController::LockOnTarget()
 {
+
+	UZedGameInstance* Inst = GetGameInstance<UZedGameInstance>();
 	
 	if (myCharacter) {
+
+		for (int i = 0; i < Inst->AllNpcCharac.Num(); ++i)
+		{
+			//UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation());
+			//bUseControllerRotationYaw = true;
+
+
+			//SetActorRotation(UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation()));
+			SetControlRotation(UKismetMathLibrary::FindLookAtRotation(myCharacter->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation()));
+			myCharacter->mTargetNpcCharacter = Inst->AllNpcCharac[i];
+			Inst->AllNpcCharac[i]->mLockOnSphere->SetVisibility(true);
+
+			//mSpringArmComp.setro
+
+
+
+			//mSpringArmComp->SetWorldRotation(this->GetActorRotation());
+
+			//bUseControllerRotationYaw = false;
+			//mSpringArmComp->AddLocalRotation(this->GetActorRotation());
+			//mSpringArmComp->AddLocalRotation(this->GetControlRotation());
+		}
+
 		myCharacter->LockOnTarget();
+		
 	}
 	
 }
