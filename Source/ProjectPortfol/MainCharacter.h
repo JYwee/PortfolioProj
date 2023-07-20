@@ -62,8 +62,8 @@ public:
 	//UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
 	//	void FocusTurn(float Rate);
 
-	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
-		void LockOnTarget();
+	//UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+	//	void LockOnTarget();
 
 
 	//UFUNCTION(BlueprintCallable, Category = "AMainCharacter")

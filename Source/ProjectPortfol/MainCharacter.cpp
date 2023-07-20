@@ -10,6 +10,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Ai/NpcCharacter.h"
+#include "MyPlayerController.h"
 //#include "Math/Vector.h"
 #include "GameFramework/SpringArmComponent.h"
 
@@ -42,7 +43,7 @@ AMainCharacter::AMainCharacter()
 	mIsLockOn = false;
 	
 	
-
+	
 
 	//
 	WeaponMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WeaponMesh"));
@@ -55,77 +56,79 @@ AMainCharacter::AMainCharacter()
 	{
 		WeaponArrays.Add(MeshLoader.Object);
 	}
-}
-
-void AMainCharacter::LockOnTarget()
-{
-	UZedGameInstance* Inst = GetGameInstance<UZedGameInstance>();
-
-	bool isEnemyHere = false;
-	
-	if (mIsLockOn == false) 
-	{
-
-		if (Inst->AllNpcCharac.Num() < 1){
-			return;
-		}
-
-		
-		
-
-		for (int i = 0; i < Inst->AllNpcCharac.Num(); ++i)
-		{
-			//UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation());
-			
-
-			
-			if (GetDistanceTo(Inst->AllNpcCharac[i]) < 1000.f)
-			{
-				mIsLockOn = true;
-				GetCharacterMovement()->bOrientRotationToMovement = false;
-				isEnemyHere = true;
-				bUseControllerRotationYaw = true;
-				SetActorRotation(UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation()));
-				mTargetNpcCharacter = Inst->AllNpcCharac[i];
-				Inst->AllNpcCharac[i]->mLockOnSphere->SetVisibility(true);
-				bUseControllerRotationYaw = false;
-			}
-			
-			
-
-			//mSpringArmComp.setro
-
-			
-
-			//mSpringArmComp->SetWorldRotation(this->GetActorRotation());
-
-			
-			//mSpringArmComp->AddLocalRotation(this->GetActorRotation());
-			//mSpringArmComp->AddLocalRotation(this->GetControlRotation());
-		}
-		if (isEnemyHere == false) {
-			return;
-		}
-	}
-	else
-	{
-		mIsLockOn = false;
-
-		for (int i = 0; i < Inst->AllNpcCharac.Num(); ++i)
-		{
-			//UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation());
-			//SetActorRotation(UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation()));
-			Inst->AllNpcCharac[i]->mLockOnSphere->SetVisibility(false);
-			mTargetNpcCharacter = nullptr;
-
-			//mSpringArmComp->AddLocalRotation(this->GetActorRotation());
-			//mSpringArmComp->AddLocalRotation(this->GetControlRotation());
-		}
-		GetCharacterMovement()->bOrientRotationToMovement = true;
-	}
 
 	
 }
+
+//void AMainCharacter::LockOnTarget()
+//{
+//	UZedGameInstance* Inst = GetGameInstance<UZedGameInstance>();
+//
+//	bool isEnemyHere = false;
+//	
+//	if (mIsLockOn == false) 
+//	{
+//
+//		if (Inst->AllNpcCharac.Num() < 1){
+//			return;
+//		}
+//
+//		
+//		
+//
+//		for (int i = 0; i < Inst->AllNpcCharac.Num(); ++i)
+//		{
+//			//UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation());
+//			
+//
+//			
+//			if (GetDistanceTo(Inst->AllNpcCharac[i]) < 1000.f)
+//			{
+//				mIsLockOn = true;
+//				GetCharacterMovement()->bOrientRotationToMovement = false;
+//				isEnemyHere = true;
+//				bUseControllerRotationYaw = true;
+//				SetActorRotation(UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation()));
+//				mTargetNpcCharacter = Inst->AllNpcCharac[i];
+//				Inst->AllNpcCharac[i]->mLockOnSphere->SetVisibility(true);
+//				bUseControllerRotationYaw = false;
+//			}
+//			
+//			
+//
+//			//mSpringArmComp.setro
+//
+//			
+//
+//			//mSpringArmComp->SetWorldRotation(this->GetActorRotation());
+//
+//			
+//			//mSpringArmComp->AddLocalRotation(this->GetActorRotation());
+//			//mSpringArmComp->AddLocalRotation(this->GetControlRotation());
+//		}
+//		if (isEnemyHere == false) {
+//			return;
+//		}
+//	}
+//	else
+//	{
+//		mIsLockOn = false;
+//
+//		for (int i = 0; i < Inst->AllNpcCharac.Num(); ++i)
+//		{
+//			//UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation());
+//			//SetActorRotation(UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation()));
+//			Inst->AllNpcCharac[i]->mLockOnSphere->SetVisibility(false);
+//			mTargetNpcCharacter = nullptr;
+//
+//			//mSpringArmComp->AddLocalRotation(this->GetActorRotation());
+//			//mSpringArmComp->AddLocalRotation(this->GetControlRotation());
+//		}
+//		GetCharacterMovement()->bOrientRotationToMovement = true;
+//	}
+//
+//	
+//}
 
 // Sets default values
 
@@ -152,8 +155,29 @@ void AMainCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	UE_LOG(LogTemp, Error, TEXT("%S(%u) %d "), __FUNCTION__, __LINE__, AniState);
-	AniState;
+	//UE_LOG(LogTemp, Error, TEXT("%S(%u) %d "), __FUNCTION__, __LINE__, AniState);
+	//AniState;
+	FVector::Zero();
+
+	UE_LOG(LogTemp, Error, TEXT("%S(%u) %f %f %f "), __FUNCTION__, __LINE__, GetCharacterMovement()->GetCurrentAcceleration().X
+		, GetCharacterMovement()->GetCurrentAcceleration().Y
+		, GetCharacterMovement()->GetCurrentAcceleration().Z);
+	if (GetCharacterMovement()->IsWalking() == false)
+	{
+		GetCharacterMovement()->MaxWalkSpeed = 400.f;
+		AMyPlayerController* myController = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
+
+		if (myController == nullptr || myController->IsValidLowLevel() == false)
+		{
+			UE_LOG(LogTemp, Error, TEXT("%S(%u) myController == nullptr || myController->IsValidLowLevel() == false"), __FUNCTION__, __LINE__);
+			return;
+		}
+		UE_LOG(LogTemp, Error, TEXT("%S(%u) %f "), __FUNCTION__, __LINE__, GetCharacterMovement()->MaxWalkSpeed);
+		
+		if (myController->GetIsShift() == true) {
+			myController->SetIsShift(false);
+		}
+	}
 }
 
 

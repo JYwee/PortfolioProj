@@ -56,7 +56,12 @@ protected:
 		void FocusTurn(float Rate);
 
 	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+		void ShiftAction();
+
+	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
 		void LockOnTarget();
+
+
 
 
 	//UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
@@ -69,6 +74,19 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AMainCharacter")
 		float BaseLookUpRate;
 
+public:
+
+	FORCEINLINE bool GetIsShift() {
+		return mIsShift;
+	}
+
+
+	FORCEINLINE void SetIsShift(bool isShift) {
+		mIsShift = isShift;
+	}
+
 private:
 	class AMainCharacter* myCharacter;
+
+	bool mIsShift = false;
 };
