@@ -8,6 +8,7 @@
 #include "Components/InputComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Ai/NpcCharacter.h"
 #include "MyPlayerController.h"
@@ -39,6 +40,9 @@ AMainCharacter::AMainCharacter()
 	mFollowCamera->SetupAttachment(mSpringArmComp, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	mFollowCamera->bUsePawnControlRotation = false;
 
+	
+	mParticleSystemComp = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("BlinkParticleComp"));
+	mParticleSystemComp->SetupAttachment(GetMesh());
 
 	mIsLockOn = false;
 	
@@ -157,12 +161,12 @@ void AMainCharacter::Tick(float DeltaTime)
 
 	//UE_LOG(LogTemp, Error, TEXT("%S(%u) %d "), __FUNCTION__, __LINE__, AniState);
 	//AniState;
-	FVector::Zero();
+	/*FVector::Zero();
 
 	UE_LOG(LogTemp, Error, TEXT("%S(%u) %f %f %f "), __FUNCTION__, __LINE__, GetCharacterMovement()->GetCurrentAcceleration().X
 		, GetCharacterMovement()->GetCurrentAcceleration().Y
-		, GetCharacterMovement()->GetCurrentAcceleration().Z);
-	if (GetCharacterMovement()->IsWalking() == false)
+		, GetCharacterMovement()->GetCurrentAcceleration().Z);*/
+	if (GetCharacterMovement()->GetCurrentAcceleration() == FVector::Zero())
 	{
 		GetCharacterMovement()->MaxWalkSpeed = 400.f;
 		AMyPlayerController* myController = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());

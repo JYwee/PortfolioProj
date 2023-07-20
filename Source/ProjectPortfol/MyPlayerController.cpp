@@ -233,11 +233,17 @@ void AMyPlayerController::FocusTurn(float Rate)
 
 void AMyPlayerController::ShiftAction()
 {
-	if (mIsShift == false)
+	if (myCharacter->IsLockOnTarget() == true)
 	{
+
+	}
+	else {
+		if (mIsShift == false)
+		{
 		mIsShift = true;
 
 		myCharacter->GetCharacterMovement()->MaxWalkSpeed = 1000.f;
+		}
 	}
 }
 
