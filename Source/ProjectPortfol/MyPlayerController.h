@@ -86,6 +86,14 @@ public:
 		mIsShift = isShift;
 	}
 
+	/*FORCEINLINE class ANpcCharacter* GetLockOnTargetNpc() {
+		return LockOnTargetNpcCharacter;
+	}
+
+	FORCEINLINE void SetLockOnTargetNpc(class ANpcCharacter* targetNpc) {
+		LockOnTargetNpcCharacter = targetNpc;
+	}*/
+
 	UPROPERTY(Category = "AMainCharacter", VisibleAnywhere , BlueprintReadWrite)
 		UUserWidget* mWdgLockOn;
 
@@ -94,5 +102,6 @@ private:
 
 	bool mIsShift = false;
 
-	
+	/*UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AMainCharacter")
+	class ANpcCharacter* LockOnTargetNpcCharacter;*/
 };

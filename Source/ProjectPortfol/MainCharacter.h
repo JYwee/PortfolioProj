@@ -104,7 +104,8 @@ public:
 		return mTargetNpcCharacter;
 	}
 
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		class AMyPlayerController* myController;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class ANpcCharacter* mTargetNpcCharacter;

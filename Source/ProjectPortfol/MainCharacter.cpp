@@ -7,6 +7,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Components/WidgetComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -150,7 +151,13 @@ void AMainCharacter::BeginPlay()
 
 	WeaponMesh->SetStaticMesh(WeaponArrays[1]);
 
-	
+	myController = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
+
+	if (myController == nullptr || myController->IsValidLowLevel() == false)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%S(%u) myController == nullptr || myController->IsValidLowLevel() == false"), __FUNCTION__, __LINE__);
+		return;
+	}
 
 }
 
@@ -169,19 +176,27 @@ void AMainCharacter::Tick(float DeltaTime)
 	if (GetCharacterMovement()->GetCurrentAcceleration() == FVector::Zero())
 	{
 		GetCharacterMovement()->MaxWalkSpeed = 400.f;
-		AMyPlayerController* myController = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
-
-		if (myController == nullptr || myController->IsValidLowLevel() == false)
-		{
-			UE_LOG(LogTemp, Error, TEXT("%S(%u) myController == nullptr || myController->IsValidLowLevel() == false"), __FUNCTION__, __LINE__);
-			return;
-		}
+		
 		UE_LOG(LogTemp, Error, TEXT("%S(%u) %f "), __FUNCTION__, __LINE__, GetCharacterMovement()->MaxWalkSpeed);
 		
 		if (myController->GetIsShift() == true) {
 			myController->SetIsShift(false);
 		}
 	}
+
+	if (GetDistanceTo(mTargetNpcCharacter) > 2000.f)
+	{
+		SetIsLockOn(false);
+
+		mTargetNpcCharacter->mLockOnSphere->SetVisibility(false);
+		mTargetNpcCharacter->mLockOnWidgetComp->SetVisibility(false);
+			//SetLockOnTargetNpc(nullptr);
+			mTargetNpcCharacter = nullptr;
+			myController->mWdgLockOn->SetVisibility(ESlateVisibility::Hidden);    //적 hp창 ui 보이게
+		
+		GetCharacterMovement()->bOrientRotationToMovement = true;
+	}
+	
 }
 
 

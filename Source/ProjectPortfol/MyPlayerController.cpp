@@ -285,6 +285,7 @@ void AMyPlayerController::LockOnTarget()
 				{
 					myCharacter->SetIsLockOn(true);
 					myCharacter->GetCharacterMovement()->bOrientRotationToMovement = false;
+					//SetLockOnTargetNpc(Inst->AllNpcCharac[i]);
 					isEnemyHere = true;
 					myCharacter->bUseControllerRotationYaw = true;
 					myCharacter->SetActorRotation(UKismetMathLibrary::FindLookAtRotation(myCharacter->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation()));
@@ -310,6 +311,7 @@ void AMyPlayerController::LockOnTarget()
 			{
 				Inst->AllNpcCharac[i]->mLockOnSphere->SetVisibility(false);
 				Inst->AllNpcCharac[i]->mLockOnWidgetComp->SetVisibility(false);
+				//SetLockOnTargetNpc(nullptr);
 				myCharacter->mTargetNpcCharacter = nullptr;
 				mWdgLockOn->SetVisibility(ESlateVisibility::Hidden);    //적 hp창 ui 보이게
 			}
