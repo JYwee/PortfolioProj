@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Blueprint/UserWidget.h"
 #include "GameFramework/PlayerController.h"
 #include "MyPlayerController.generated.h"
 
@@ -85,8 +86,13 @@ public:
 		mIsShift = isShift;
 	}
 
+	UPROPERTY(Category = "AMainCharacter", VisibleAnywhere , BlueprintReadWrite)
+		UUserWidget* mWdgLockOn;
+
 private:
 	class AMainCharacter* myCharacter;
 
 	bool mIsShift = false;
+
+	
 };

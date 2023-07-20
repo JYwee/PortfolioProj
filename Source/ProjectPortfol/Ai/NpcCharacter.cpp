@@ -3,6 +3,7 @@
 
 #include "NpcCharacter.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/WidgetComponent.h"
 #include "ZedGameInstance.h"
 
 // Sets default values
@@ -15,6 +16,9 @@ ANpcCharacter::ANpcCharacter()
 	mLockOnSphere->SetupAttachment(RootComponent);
 	mLockOnSphere->SetVisibility(false);
 
+	mLockOnWidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("LockOnArrowWDG"));
+	mLockOnWidgetComp->SetupAttachment(RootComponent);
+	mLockOnWidgetComp->SetVisibility(false);
 }
 
 // Called when the game starts or when spawned

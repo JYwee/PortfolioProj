@@ -4,6 +4,7 @@
 #include "MainCharacter.h"
 #include "ZedGameInstance.h"
 #include "Ai/NpcCharacter.h"
+#include "Components/WidgetComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 
@@ -235,7 +236,15 @@ void AMyPlayerController::ShiftAction()
 {
 	if (myCharacter->IsLockOnTarget() == true)
 	{
+		FVector curFVector = myCharacter->GetCharacterMovement()->GetCurrentAcceleration();
+		FVector tpFVector;
+		tpFVector.X = myCharacter->GetActorLocation().X + (curFVector.X * 0.1);
+		tpFVector.Y = myCharacter->GetActorLocation().Y + (curFVector.Y * 0.1);
+		tpFVector.Z = myCharacter->GetActorLocation().Z;   /*+ (curFVector.Z * 0.5f);*/
 
+		UE_LOG(LogTemp, Log, TEXT("%S(%u) %f, %f, %f"), __FUNCTION__, __LINE__, tpFVector.X, tpFVector.Y, tpFVector.Z);
+
+		myCharacter->SetActorLocation(tpFVector);
 	}
 	else {
 		if (mIsShift == false)
@@ -282,7 +291,8 @@ void AMyPlayerController::LockOnTarget()
 					SetControlRotation(UKismetMathLibrary::FindLookAtRotation(myCharacter->GetActorLocation(), Inst->AllNpcCharac[i]->GetActorLocation()));
 					myCharacter->mTargetNpcCharacter = Inst->AllNpcCharac[i];
 					Inst->AllNpcCharac[i]->mLockOnSphere->SetVisibility(true);
-
+					Inst->AllNpcCharac[i]->mLockOnWidgetComp->SetVisibility(true);
+					mWdgLockOn->SetVisibility(ESlateVisibility::Visible);    //적 hp창 ui 보이게
 					myCharacter->bUseControllerRotationYaw = false;
 				}
 
@@ -299,7 +309,9 @@ void AMyPlayerController::LockOnTarget()
 			for (int i = 0; i < Inst->AllNpcCharac.Num(); ++i)
 			{
 				Inst->AllNpcCharac[i]->mLockOnSphere->SetVisibility(false);
+				Inst->AllNpcCharac[i]->mLockOnWidgetComp->SetVisibility(false);
 				myCharacter->mTargetNpcCharacter = nullptr;
+				mWdgLockOn->SetVisibility(ESlateVisibility::Hidden);    //적 hp창 ui 보이게
 			}
 			myCharacter->GetCharacterMovement()->bOrientRotationToMovement = true;
 			

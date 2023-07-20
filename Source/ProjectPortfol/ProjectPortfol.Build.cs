@@ -11,7 +11,7 @@ public class ProjectPortfol : ModuleRules
         PublicIncludePaths.Add(ModuleDirectory);
         PrivateIncludePaths.Add(ModuleDirectory);
 
-        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
+        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" , "UMG"});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
