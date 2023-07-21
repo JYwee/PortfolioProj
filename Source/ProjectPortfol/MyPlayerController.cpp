@@ -4,6 +4,7 @@
 #include "MainCharacter.h"
 #include "ZedGameInstance.h"
 #include "Ai/NpcCharacter.h"
+#include "Kismet/GameplayStatics.h"
 #include "Components/WidgetComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -283,6 +284,13 @@ void AMyPlayerController::LockOnTarget()
 
 				if (myCharacter->GetDistanceTo(Inst->AllNpcCharac[i]) < 1500.f)
 				{
+					
+					//Inst->TimerManager->TimerExists();
+
+					float recentTime = UGameplayStatics::GetRealTimeSeconds(GetLevel()) - Inst->AllNpcCharac[i]->GetLastRenderTime();
+					if(Visibility_GetRenderedActors(Inst->AllNpcCharac[i], recentTime) != nullptr)
+
+					{
 					myCharacter->SetIsLockOn(true);
 					myCharacter->GetCharacterMovement()->bOrientRotationToMovement = false;
 					//SetLockOnTargetNpc(Inst->AllNpcCharac[i]);
@@ -295,6 +303,7 @@ void AMyPlayerController::LockOnTarget()
 					Inst->AllNpcCharac[i]->mLockOnWidgetComp->SetVisibility(true);
 					mWdgLockOn->SetVisibility(ESlateVisibility::Visible);    //적 hp창 ui 보이게
 					myCharacter->bUseControllerRotationYaw = false;
+					}
 				}
 
 			}
@@ -350,6 +359,18 @@ void AMyPlayerController::LockOnTarget()
 	//	
 	//}
 	
+}
+
+ANpcCharacter* AMyPlayerController::Visibility_GetRenderedActors(ANpcCharacter* npcCharacter, float MinRecentTime)
+{
+	
+	UE_LOG(LogTemp, Error, TEXT("%S(%u) %f, %f"), __FUNCTION__, __LINE__, npcCharacter->GetLastRenderTime(), MinRecentTime);
+	if (0.3f < MinRecentTime)
+	{
+
+		return nullptr;
+	}
+	return npcCharacter;
 }
 
 void AMyPlayerController::AttackAction()

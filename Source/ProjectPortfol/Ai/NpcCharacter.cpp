@@ -19,6 +19,8 @@ ANpcCharacter::ANpcCharacter()
 	mLockOnWidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("LockOnArrowWDG"));
 	mLockOnWidgetComp->SetupAttachment(RootComponent);
 	mLockOnWidgetComp->SetVisibility(false);
+
+	//setcontroller
 }
 
 // Called when the game starts or when spawned

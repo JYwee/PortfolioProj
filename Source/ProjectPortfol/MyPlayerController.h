@@ -93,6 +93,8 @@ public:
 	FORCEINLINE void SetLockOnTargetNpc(class ANpcCharacter* targetNpc) {
 		LockOnTargetNpcCharacter = targetNpc;
 	}*/
+	//TArray<class ANpcCharacter*>
+	class ANpcCharacter* Visibility_GetRenderedActors(class ANpcCharacter*, float MinRecentTime);
 
 	UPROPERTY(Category = "AMainCharacter", VisibleAnywhere , BlueprintReadWrite)
 		UUserWidget* mWdgLockOn;

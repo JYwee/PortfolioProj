@@ -8,7 +8,9 @@
 
 AMyAIController::AMyAIController()
 {
+	mBehaviorTreeComponent = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("BehaviorTreeComponent"));
 
+	mBlackboardComponent = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComponent"));;
 }
 
 void AMyAIController::OnPossess(APawn* InPawn)

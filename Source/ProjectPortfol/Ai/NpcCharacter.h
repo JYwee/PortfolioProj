@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "../ZedEnums.h"
 #include "NpcCharacter.generated.h"
 
 UCLASS()
@@ -20,6 +21,15 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 		class UWidgetComponent* mLockOnWidgetComp;
+
+
+	UPROPERTY(Category = "NpcCharacter", EditAnywhere, BlueprintReadWrite)
+		NPCAniState AniState = NPCAniState::Idle;
+
+	UPROPERTY(Category = "NpcCharacter", EditAnywhere, BlueprintReadWrite)
+		TMap<NPCAniState, class UAnimMontage*> AllAnimations;
+
+
 
 protected:
 	// Called when the game starts or when spawned

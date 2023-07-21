@@ -177,7 +177,7 @@ void AMainCharacter::Tick(float DeltaTime)
 	{
 		GetCharacterMovement()->MaxWalkSpeed = 400.f;
 		
-		UE_LOG(LogTemp, Error, TEXT("%S(%u) %f "), __FUNCTION__, __LINE__, GetCharacterMovement()->MaxWalkSpeed);
+		//UE_LOG(LogTemp, Error, TEXT("%S(%u) %f "), __FUNCTION__, __LINE__, GetCharacterMovement()->MaxWalkSpeed);
 		
 		if (myController->GetIsShift() == true) {
 			myController->SetIsShift(false);

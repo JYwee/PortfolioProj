@@ -18,6 +18,66 @@ enum class ZEDAniState : uint8
 };
 
 UENUM(BlueprintType)
+enum class NPCAniState : uint8
+{
+	None UMETA(DisplayName = "사용안함"),
+	Idle UMETA(DisplayName = "서있기"),
+	LeftMove UMETA(DisplayName = "왼쪽이동"),
+	RightMove UMETA(DisplayName = "오른쪽이동"),
+	ForwardMove UMETA(DisplayName = "앞으로이동"),
+	BackwardMove UMETA(DisplayName = "뒤로이동"),
+	Jump UMETA(DisplayName = "점프"),
+	Attack UMETA(DisplayName = "공격"),
+	FrontRun  UMETA(DisplayName = "앞으로달리기"),
+	RightRun  UMETA(DisplayName = "옆으로달리기"),
+};
+
+
+UENUM(BlueprintType)
+enum class NPCEnemyAIControlState : uint8
+{
+	None UMETA(DisplayName = "사용안함"),
+	Idle UMETA(DisplayName = "서있기"),
+	Move UMETA(DisplayName = "이동"),
+	Attack UMETA(DisplayName = "공격"),
+	Return UMETA(DisplayName = "복귀"),
+	Patrol UMETA(DisplayName = "정찰"),
+	Death UMETA(DisplayName = "죽음"),
+};
+
+
+UENUM(BlueprintType)
+enum class BossDragonAniState : uint8
+{
+	None UMETA(DisplayName = "사용안함"),
+	Idle UMETA(DisplayName = "서있기"),
+	LeftMove UMETA(DisplayName = "왼쪽이동"),
+	RightMove UMETA(DisplayName = "오른쪽이동"),
+	ForwardMove UMETA(DisplayName = "앞으로이동"),
+	BackwardMove UMETA(DisplayName = "뒤로이동"),
+	Jump UMETA(DisplayName = "점프"),
+	Attack UMETA(DisplayName = "공격"),
+	FrontRun  UMETA(DisplayName = "앞으로달리기"),
+	RightRun  UMETA(DisplayName = "옆으로달리기"),
+};
+
+UENUM(BlueprintType)
+enum class BossDragonAIControlState : uint8
+{
+	None UMETA(DisplayName = "사용안함"),
+	Idle UMETA(DisplayName = "서있기"),
+	Move UMETA(DisplayName = "이동"),
+	Attack UMETA(DisplayName = "공격"),
+	Return UMETA(DisplayName = "복귀"),
+	Patrol UMETA(DisplayName = "정찰"),
+	Death UMETA(DisplayName = "죽음"),
+	Skill_1 UMETA(DisplayName = "특수스킬1번"),
+	Skill_2 UMETA(DisplayName = "특수스킬1번"),
+};
+
+
+
+UENUM(BlueprintType)
 enum class ZEDElementalState : uint8
 {
 	None UMETA(DisplayName = "무속성"),
@@ -25,3 +85,4 @@ enum class ZEDElementalState : uint8
 	WATER UMETA(DisplayName = "물속성"),
 	ICE UMETA(DisplayName = "얼음속성"),
 };
+
