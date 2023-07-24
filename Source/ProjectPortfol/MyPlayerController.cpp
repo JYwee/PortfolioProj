@@ -289,8 +289,8 @@ void AMyPlayerController::LockOnTarget()
 
 					float recentTime = UGameplayStatics::GetRealTimeSeconds(GetLevel()) - Inst->AllNpcCharac[i]->GetLastRenderTime();
 					if(Visibility_GetRenderedActors(Inst->AllNpcCharac[i], recentTime) != nullptr)
-
 					{
+						//UE_LOG(LogTemp, Warning, TEXT("%S(%u) %f, %f"), __FUNCTION__, __LINE__, npcCharacter->GetLastRenderTime(), MinRecentTime);
 					myCharacter->SetIsLockOn(true);
 					myCharacter->GetCharacterMovement()->bOrientRotationToMovement = false;
 					//SetLockOnTargetNpc(Inst->AllNpcCharac[i]);
