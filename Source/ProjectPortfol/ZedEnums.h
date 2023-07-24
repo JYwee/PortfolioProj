@@ -47,7 +47,7 @@ enum class NPCEnemyAIControlState : uint8
 
 
 UENUM(BlueprintType)
-enum class BossDragonAniState : uint8
+enum class BossAniState : uint8
 {
 	None UMETA(DisplayName = "사용안함"),
 	Idle UMETA(DisplayName = "서있기"),

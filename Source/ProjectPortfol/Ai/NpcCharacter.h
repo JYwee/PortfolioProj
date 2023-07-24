@@ -50,6 +50,8 @@ private:
 
 	float mShieldPoint;
 
+	int mStemina;
+
 	int mAttack;
 
 	int mDefense;
