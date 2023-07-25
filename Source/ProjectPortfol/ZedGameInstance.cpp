@@ -9,24 +9,24 @@
 
 UZedGameInstance::UZedGameInstance() {
 
-	FString DataPath = TEXT("/Script/Engine.DataTable'/Game/Data/DT_Weapon.DT_Weapon'");
-	ConstructorHelpers::FObjectFinder<UDataTable> DataTable(*DataPath);
-	
-	if (DataTable.Succeeded())
 	{
-		WeaponMeshData = DataTable.Object;
+		FString DataPath = TEXT("/Script/Engine.DataTable'/Game/Data/DT_Weapon.DT_Weapon'");
+		ConstructorHelpers::FObjectFinder<UDataTable> DataTable(*DataPath);
 
-		TArray<FName> ArrayName = WeaponMeshData->GetRowNames();
-
-		for (size_t i = 0; i < ArrayName.Num(); i++)
+		if (DataTable.Succeeded())
 		{
-			FWeaponDataTable* FindTable = WeaponMeshData->FindRow<FWeaponDataTable>(ArrayName[i], ArrayName[i].ToString());
+			WeaponMeshData = DataTable.Object;
 
-			int a = 0;
+			TArray<FName> ArrayName = WeaponMeshData->GetRowNames();
+
+			for (size_t i = 0; i < ArrayName.Num(); i++)
+			{
+				FWeaponDataTable* FindTable = WeaponMeshData->FindRow<FWeaponDataTable>(ArrayName[i], ArrayName[i].ToString());
+			}
 		}
-
-
 	}
+
+
 	//// /Script/Engine.DataTable'/Game/Data/DT_Weapon.DT_Weapon'
 	////DataPath = TEXT("");
 	//ConstructorHelpers::FObjectFinder<UDataTable> DataTable2(*DataPath);

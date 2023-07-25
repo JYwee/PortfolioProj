@@ -19,10 +19,10 @@ class PROJECTPORTFOL_API UZedAnimInstance : public UAnimInstance
 public:
 	
 	UPROPERTY(Category = "Anime", EditAnywhere, BlueprintReadWrite)
-	ZEDAniState AniState = ZEDAniState::Idle;
+	int AniState = static_cast<int>(ZEDAniState::Idle);
 
 
-	TMap<ZEDAniState, class UAnimMontage*> AllAnimations;
+	TMap<int, class UAnimMontage*> AllAnimations;
 
 
 	UFUNCTION(Category = "Anime", BlueprintCallable)

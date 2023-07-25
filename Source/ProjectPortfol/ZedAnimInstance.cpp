@@ -63,7 +63,7 @@ void UZedAnimInstance::NativeUpdateAnimation(float deltaTime)
 		return;
 	}
 
-	AniState = character->AniState;
+	AniState = static_cast<int>(character->AniState);
 
 	class UAnimMontage* montage = AllAnimations[AniState];
 

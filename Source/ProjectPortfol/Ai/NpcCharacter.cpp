@@ -4,7 +4,9 @@
 #include "NpcCharacter.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/WidgetComponent.h"
+#include "MyAIController.h"
 #include "ZedGameInstance.h"
+#include "../ZedAnimInstance.h"
 
 // Sets default values
 ANpcCharacter::ANpcCharacter()
@@ -23,11 +25,30 @@ ANpcCharacter::ANpcCharacter()
 	//setcontroller
 }
 
+UBlackboardComponent* ANpcCharacter::GetBlackboardComponent()
+{
+	if (mBlackboardComponent == nullptr) 
+	{
+		AMyAIController* myAiCon = GetController<AMyAIController>();
+
+		if (myAiCon == nullptr)
+		{
+			return nullptr;
+		}
+
+		mBlackboardComponent = myAiCon->GetBlackboardComponent();
+	}
+	return mBlackboardComponent;
+}
+
 // Called when the game starts or when spawned
 void ANpcCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+
+	// 
+
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ANpcCharacter::BeginOverLap);
 
 	UZedGameInstance* Inst = GetGameInstance<UZedGameInstance>();
@@ -39,6 +60,11 @@ void ANpcCharacter::BeginPlay()
 	}
 
 	Inst->AllNpcCharac.Add(this);
+	///
+
+	mZedAnimInstance = Cast<UZedAnimInstance>(GetMesh()->GetAnimInstance());
+
+	mZedAnimInstance->AllAnimations = AllAnimations;
 }
 
 // Called every frame

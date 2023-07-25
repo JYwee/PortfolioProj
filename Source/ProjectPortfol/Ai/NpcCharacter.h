@@ -23,29 +23,37 @@ public:
 		class UWidgetComponent* mLockOnWidgetComp;
 
 
-	UPROPERTY(Category = "NpcCharacter", EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(Category = "CharacterBase", EditAnywhere, BlueprintReadWrite)
 		NPCAniState AniState = NPCAniState::Idle;
 
-	
-	//UFUNCTION(BlueprintCallable, Category = "NpcCharacter")
-	template<typename EnumType>
-	class UAnimMontage* GetAnimMontage(EnumType index) {
-		return GetAnimMontage(static_cast<int>(index));
+	UFUNCTION(BlueprintCallable, Category = Npc)
+	FORCEINLINE class UBehaviorTree* GetBehaviorTree() {
+		return mBehaviorTree;
 	}
-	class UAnimMontage* GetAnimMontage(int index) {
-		if (AllAnimations.Contains(index))
-		{
-			return AllAnimations[index];
-		}
-		return nullptr;
-	}
-		
 
-
+	UFUNCTION(BlueprintCallable, Category = Npc)
+	class UBlackboardComponent* GetBlackboardComponent();
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	template<typename EnumType>
+	void PushAnimMontage(EnumType index, UAnimMontage* aniMontage) {
+		if (AllAnimations.Contains(static_cast<int>(index)))
+		{
+			return;
+		}
+		AllAnimations.Add(static_cast<int>(index), aniMontage);
+	}
+
+
+	UPROPERTY(Category = "CharacterBase", EditAnywhere, BlueprintReadWrite)
+		class UBehaviorTree* mBehaviorTree;
+
+	UPROPERTY(Category = "CharacterBase", EditAnywhere, BlueprintReadWrite)
+		class UBlackboardComponent* mBlackboardComponent;
+
 
 public:	
 	// Called every frame
@@ -56,6 +64,29 @@ public:
 
 	virtual void Destroyed() override;
 
+	//UFUNCTION(BlueprintCallable, Category = "NpcCharacter")
+	template<typename EnumType>
+	class UAnimMontage* GetAnimMontage(EnumType index) {
+		return GetAnimMontage(static_cast<int>(index));
+	}
+
+	class UAnimMontage* GetAnimMontage(int index) {
+		if (AllAnimations.Contains(index))
+		{
+			return AllAnimations[index];
+		}
+		return nullptr;
+	}
+
+	template<typename EnumType>
+	void SetAniState(EnumType aniState) {
+		mAniState = static_cast<int>(aniState);
+	}
+
+	class UZedAnimInstance* GetZedAnimInstance() {
+		return mZedAnimInstance;
+	}
+	
 
 private:
 	int mHealthPoint;
@@ -68,6 +99,7 @@ private:
 
 	int mDefense;
 
+
 	UFUNCTION(BlueprintCallable, Category = NpcCollision)
 		void BeginOverLap(
 			UPrimitiveComponent* OverlappedComponent,
@@ -79,6 +111,13 @@ private:
 		);
 
 
+	UPROPERTY(Category = "CharacterBase", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		int mAniState = 0;
+
+	UPROPERTY(Category = "CharacterBase", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	TMap<int , class UAnimMontage*> AllAnimations;
+
+
+	class UZedAnimInstance* mZedAnimInstance = nullptr;
 	//UPROPERTY()
 };
