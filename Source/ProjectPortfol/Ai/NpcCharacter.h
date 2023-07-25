@@ -26,8 +26,20 @@ public:
 	UPROPERTY(Category = "NpcCharacter", EditAnywhere, BlueprintReadWrite)
 		NPCAniState AniState = NPCAniState::Idle;
 
-	UPROPERTY(Category = "NpcCharacter", EditAnywhere, BlueprintReadWrite)
-		TMap<NPCAniState, class UAnimMontage*> AllAnimations;
+	
+	//UFUNCTION(BlueprintCallable, Category = "NpcCharacter")
+	template<typename EnumType>
+	class UAnimMontage* GetAnimMontage(EnumType index) {
+		return GetAnimMontage(static_cast<int>(index));
+	}
+	class UAnimMontage* GetAnimMontage(int index) {
+		if (AllAnimations.Contains(index))
+		{
+			return AllAnimations[index];
+		}
+		return nullptr;
+	}
+		
 
 
 
@@ -66,5 +78,7 @@ private:
 			const FHitResult& SweepResult
 		);
 
+
+	TMap<int , class UAnimMontage*> AllAnimations;
 	//UPROPERTY()
 };
