@@ -27,6 +27,15 @@ UZedGameInstance::UZedGameInstance() {
 
 
 	}
+	//// /Script/Engine.DataTable'/Game/Data/DT_Weapon.DT_Weapon'
+	////DataPath = TEXT("");
+	//ConstructorHelpers::FObjectFinder<UDataTable> DataTable2(*DataPath);
+
+	//if (DataTable2.Succeeded())
+	//{
+
+	//}
+	//mSubClassData;
 
 
 }
@@ -50,4 +59,11 @@ UStaticMesh* UZedGameInstance::GetMesh(FName name)
 	}
 
 	return FindTable->weaponMesh;
+}
+
+TSubclassOf<UObject> UZedGameInstance::GetSubClassData(FName name)
+{
+
+
+	return nullptr;
 }

@@ -24,7 +24,14 @@ public:
 	UPROPERTY(Category = "NpcCharacters", EditAnywhere, BlueprintReadWrite)
 		TArray<class ANpcCharacter*> AllNpcCharac;
 
+	UFUNCTION(Category = "Anime", BlueprintCallable)
+		TSubclassOf<UObject> GetSubClassData(FName name);
+
 private:
+
+	
+	UDataTable* mSubClassData;
+
 	UDataTable* WeaponMeshData;
 	TArray<UStaticMesh*> ArrWeaponMesh;
 };
