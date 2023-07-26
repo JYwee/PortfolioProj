@@ -44,7 +44,8 @@ void UZedAnimInstance::NativeBeginPlay()
 		return;
 	}
 
-	AllAnimations = character->AllAnimations;
+	
+	AllAnimations = character->GetAllAnimations();
 }
 
 void UZedAnimInstance::NativeUpdateAnimation(float deltaTime)

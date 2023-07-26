@@ -64,7 +64,7 @@ void ANpcCharacter::BeginPlay()
 
 	mZedAnimInstance = Cast<UZedAnimInstance>(GetMesh()->GetAnimInstance());
 
-	mZedAnimInstance->AllAnimations = AllAnimations;
+	mZedAnimInstance->AllAnimations = mAllAnimations;
 }
 
 // Called every frame

@@ -20,7 +20,7 @@ AMainCharacter::AMainCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	AniState = ZEDAniState::Idle;
+	mAniState = ZEDAniState::Idle;
 	BaseTurnRate = 65.f;
 	BaseLookUpRate = 65.f;
 	//

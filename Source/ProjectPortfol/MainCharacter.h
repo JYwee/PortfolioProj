@@ -41,7 +41,33 @@ public:
 		class UParticleSystemComponent* mParticleSystemComp;
 
 
+	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+	FORCEINLINE	ZEDAniState GetAniState() const{
+		return mAniState;
+	}
+	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+	FORCEINLINE	void SetAniState(ZEDAniState aniState) {
+		mAniState = aniState;
+	}
+	
+	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+	FORCEINLINE	TMap<ZEDAniState, class UAnimMontage*> GetAllAnimations() {
+		return mAllAnimations;
+	}
+	
+	template<typename EnumType>
+	void SetAllAnimation(const TMap<EnumType, class UAnimMontage*>& mapAnimation)
+	{
+		for (TPair<EnumType, UAnimMontage*> Pair : mapAnimation)
+		{
+			mAllAnimations.Add(static_cast<int>(Pair.Key), Pair.Value);
+		}
+	}
 
+	/*UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+	FORCEINLINE	void SetAllAnimations(ZEDAniState aniState) {
+		mA
+	}*/
 	//void AttackAction();
 	//void JumpAction();
 	////void JumpAxis(float Rate);
@@ -79,11 +105,7 @@ public:
 		float BaseLookUpRate;
 
 
-	UPROPERTY(Category = "AMainCharacter", EditAnywhere, BlueprintReadWrite)
-		ZEDAniState AniState;
-
-	UPROPERTY(Category = "AMainCharacter", EditAnywhere, BlueprintReadWrite)
-		TMap<ZEDAniState, class UAnimMontage*> AllAnimations;
+	
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UStaticMeshComponent* WeaponMesh;
@@ -121,6 +143,12 @@ private:
 
 		bool mIsLockOn;
 
+		UPROPERTY(Category = "AMainCharacter", BlueprintReadOnly)
+			ZEDAniState mAniState;
+		//ZEDAniState AniState;
 
+		UPROPERTY(Category = "AMainCharacter", BlueprintReadOnly)
+			TMap<ZEDAniState, class UAnimMontage*> mAllAnimations;
+		//TMap<ZEDAniState, class UAnimMontage*> AllAnimations;
 
 };

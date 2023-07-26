@@ -120,7 +120,7 @@ void AMyPlayerController::BeginPlay()
 void AMyPlayerController::MoveForward(float Val)
 {
 
-	if (myCharacter->AniState == ZEDAniState::Attack || myCharacter->AniState == ZEDAniState::Jump) {
+	if (myCharacter->GetAniState() == ZEDAniState::Attack || myCharacter->GetAniState() == ZEDAniState::Jump) {
 		return;
 	}
 	
@@ -139,21 +139,21 @@ void AMyPlayerController::MoveForward(float Val)
 			
 			if (myCharacter->IsLockOnTarget() == true)
 			{
-				myCharacter->AniState = Val > 0.f ? ZEDAniState::ForwardMove : ZEDAniState::BackwardMove;
+				myCharacter->SetAniState(Val > 0.f ? ZEDAniState::ForwardMove : ZEDAniState::BackwardMove);
 				myCharacter->SetActorRotation(UKismetMathLibrary::FindLookAtRotation(myCharacter->GetActorLocation(), myCharacter->GetTargetNpcChar()->GetActorLocation()));
 			}
 			else
 			{
-				myCharacter->AniState = ZEDAniState::FrontRun;
+				myCharacter->SetAniState(ZEDAniState::FrontRun);
 				//UE_LOG(LogTemp, Log, TEXT("%S(%u) %d, %d"), __FUNCTION__, __LINE__, myCharacter->AniState , ZEDAniState::FrontRun);
 			}
 			return;
 		//}
 	}
 	else {
-		if (myCharacter->AniState == ZEDAniState::ForwardMove || myCharacter->AniState == ZEDAniState::BackwardMove || myCharacter->AniState == ZEDAniState::FrontRun)//|| myCharacter->AniState == ZEDAniState::Run
+		if (myCharacter->GetAniState() == ZEDAniState::ForwardMove || myCharacter->GetAniState() == ZEDAniState::BackwardMove || myCharacter->GetAniState() == ZEDAniState::FrontRun)//|| myCharacter->AniState == ZEDAniState::Run
 		{
-			myCharacter->AniState = ZEDAniState::Idle;
+			myCharacter->SetAniState(ZEDAniState::Idle);
 			//UE_LOG(LogTemp, Log, TEXT("%S(%u) %d"), __FUNCTION__, __LINE__, myCharacter->AniState);
 		}
 	}
@@ -163,7 +163,7 @@ void AMyPlayerController::MoveForward(float Val)
 
 void AMyPlayerController::MoveRight(float Val)
 {
-	if (myCharacter->AniState == ZEDAniState::Attack || myCharacter->AniState == ZEDAniState::Jump) {
+	if (myCharacter->GetAniState() == ZEDAniState::Attack || myCharacter->GetAniState() == ZEDAniState::Jump) {
 		return;
 	}
 
@@ -184,21 +184,21 @@ void AMyPlayerController::MoveRight(float Val)
 			myCharacter->AddMovementInput(FRotationMatrix(YawRotation).GetScaledAxis(EAxis::Y), Val); //ControlSpaceRot
 			if (myCharacter->IsLockOnTarget() == true)
 			{
-				myCharacter->AniState = Val > 0.f ? ZEDAniState::RightMove : ZEDAniState::LeftMove;
+				myCharacter->SetAniState(Val > 0.f ? ZEDAniState::RightMove : ZEDAniState::LeftMove);
 				myCharacter->SetActorRotation(UKismetMathLibrary::FindLookAtRotation(myCharacter->GetActorLocation(), myCharacter->GetTargetNpcChar()->GetActorLocation()));
 			}
 			else
 			{
-				myCharacter->AniState = ZEDAniState::RightRun;
+				myCharacter->SetAniState(ZEDAniState::RightRun);
 			}
 			
 			return;
 //		}
 	}
 	else {
-		if (myCharacter->AniState == ZEDAniState::RightMove || myCharacter->AniState == ZEDAniState::LeftMove || myCharacter->AniState == ZEDAniState::RightRun)
+		if (myCharacter->GetAniState() == ZEDAniState::RightMove || myCharacter->GetAniState() == ZEDAniState::LeftMove || myCharacter->GetAniState() == ZEDAniState::RightRun)
 		{
-			myCharacter->AniState = ZEDAniState::Idle;
+			myCharacter->SetAniState(ZEDAniState::Idle);
 			//UE_LOG(LogTemp, Log, TEXT("%S(%u) %d"), __FUNCTION__, __LINE__, myCharacter->AniState);
 		}
 	}
@@ -375,12 +375,12 @@ ANpcCharacter* AMyPlayerController::Visibility_GetRenderedActors(ANpcCharacter* 
 
 void AMyPlayerController::AttackAction()
 {
-	myCharacter->AniState = ZEDAniState::Attack;
+	myCharacter->SetAniState(ZEDAniState::Attack);
 }
 
 void AMyPlayerController::JumpAction()
 {
 	myCharacter->Jump();
 
-	myCharacter->AniState = ZEDAniState::Jump;
+	myCharacter->SetAniState(ZEDAniState::Jump);
 }
