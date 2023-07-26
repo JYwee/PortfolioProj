@@ -6,7 +6,7 @@
 
 void UZedAnimInstance::MontageEnd(UAnimMontage* aniMontage, bool inter)
 {
-	TSubclassOf<UAnimInstance> animInstance = UZedAnimInstance::StaticClass();
+	/*TSubclassOf<UAnimInstance> animInstance = UZedAnimInstance::StaticClass();
 	
 	AMainCharacter* character = Cast<AMainCharacter>(GetOwningActor());
 
@@ -27,7 +27,7 @@ void UZedAnimInstance::MontageEnd(UAnimMontage* aniMontage, bool inter)
 		AniState = ZEDAniState::Idle;
 		character->AniState = ZEDAniState::Idle;
 		Montage_Play(AllAnimations[ZEDAniState::Idle], 1.0f);
-	}
+	}*/
 
 }
 
@@ -64,7 +64,7 @@ void UZedAnimInstance::NativeUpdateAnimation(float deltaTime)
 		return;
 	}
 
-	AniState = static_cast<int>(character->AniState);
+	AniState = static_cast<int>(character->GetAniState());
 
 	class UAnimMontage* montage = AllAnimations[AniState];
 

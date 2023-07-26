@@ -51,16 +51,21 @@ public:
 	}
 	
 	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
-	FORCEINLINE	TMap<ZEDAniState, class UAnimMontage*> GetAllAnimations() {
-		return mAllAnimations;
+	FORCEINLINE	TMap<int, class UAnimMontage*> GetAllAnimations() const{
+		TMap<int, class UAnimMontage*> tmpAllAnim;
+		for (TPair<ZEDAniState, UAnimMontage*> Pair : mAllAnimations)
+		{
+			tmpAllAnim.Add(static_cast<int>(Pair.Key), Pair.Value);
+		}
+		return tmpAllAnim;
 	}
 	
-	template<typename EnumType>
-	void SetAllAnimation(const TMap<EnumType, class UAnimMontage*>& mapAnimation)
+	
+	void SetAllAnimation(const TMap<int, class UAnimMontage*>& mapAnimation)
 	{
-		for (TPair<EnumType, UAnimMontage*> Pair : mapAnimation)
+		for (TPair<int, UAnimMontage*> Pair : mapAnimation)
 		{
-			mAllAnimations.Add(static_cast<int>(Pair.Key), Pair.Value);
+			mAllAnimations.Add(static_cast<ZEDAniState>(Pair.Key), Pair.Value);
 		}
 	}
 
@@ -143,11 +148,11 @@ private:
 
 		bool mIsLockOn;
 
-		UPROPERTY(Category = "AMainCharacter", BlueprintReadOnly)
+		UPROPERTY(Category = "AMainCharacter", BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 			ZEDAniState mAniState;
 		//ZEDAniState AniState;
-
-		UPROPERTY(Category = "AMainCharacter", BlueprintReadOnly)
+		
+		UPROPERTY(Category = "AMainCharacter", BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 			TMap<ZEDAniState, class UAnimMontage*> mAllAnimations;
 		//TMap<ZEDAniState, class UAnimMontage*> AllAnimations;
 

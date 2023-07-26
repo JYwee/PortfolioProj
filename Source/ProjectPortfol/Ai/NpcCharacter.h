@@ -136,6 +136,9 @@ private:
 
 	int mDefense;
 
+	UFUNCTION()
+		void MontageEnd(UAnimMontage* animMontage, bool inter);
+
 
 	UFUNCTION(BlueprintCallable, Category = NpcCollision)
 		void BeginOverLap(

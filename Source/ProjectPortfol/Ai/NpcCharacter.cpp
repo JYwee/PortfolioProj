@@ -97,6 +97,26 @@ void ANpcCharacter::Destroyed()
 }
 
 
+void ANpcCharacter::MontageEnd(UAnimMontage* animMontage, bool inter)
+{
+	TSubclassOf<UAnimInstance> Inst = ANpcCharacter::StaticClass();
+	
+	// Anim 종료된 몽타주
+
+	if (mAllAnimations[static_cast<int>(NPCAniState::Attack)] == animMontage)
+	{
+		SetAniState<NPCAniState>(NPCAniState::Idle);
+		//Montage_Play(AllAnimations[ZEDAniState::Idle], 1.0f);
+	}
+
+	if (mAllAnimations[static_cast<int>(NPCAniState::Jump)] == animMontage)
+	{
+		SetAniState<NPCAniState>(NPCAniState::Idle);
+		//Montage_Play(AllAnimations[ZEDAniState::Idle], 1.0f)
+	}
+
+}
+
 void ANpcCharacter::BeginOverLap(
 	UPrimitiveComponent* OverlappedComponent,
 	AActor* OtherActor,
