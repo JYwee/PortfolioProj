@@ -152,7 +152,8 @@ private:
 			ZEDAniState mAniState;
 		//ZEDAniState AniState;
 		
-		UPROPERTY(Category = "AMainCharacter", BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
+		
+		UPROPERTY(Category = "AMainCharacter", BlueprintReadWrite, EditAnywhere, meta = (AllowPrivateAccess = "true"))
 			TMap<ZEDAniState, class UAnimMontage*> mAllAnimations;
 		//TMap<ZEDAniState, class UAnimMontage*> AllAnimations;
 
