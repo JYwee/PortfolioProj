@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "ZedAnimInstance.h"
@@ -6,6 +6,7 @@
 
 void UZedAnimInstance::MontageEnd(UAnimMontage* aniMontage, bool inter)
 {
+	//수정해야할것 0729
 	/*TSubclassOf<UAnimInstance> animInstance = UZedAnimInstance::StaticClass();
 	
 	AMainCharacter* character = Cast<AMainCharacter>(GetOwningActor());
