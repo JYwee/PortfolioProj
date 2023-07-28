@@ -74,6 +74,8 @@ public:
 
 	virtual void Destroyed() override;
 
+	virtual void PostInitializeComponents() override;
+
 	//UFUNCTION(BlueprintCallable, Category = "NpcCharacter")
 	template<typename EnumType>
 	FORCEINLINE class UAnimMontage* GetAnimMontage(EnumType index) const{

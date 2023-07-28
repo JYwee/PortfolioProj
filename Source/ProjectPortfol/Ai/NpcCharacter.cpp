@@ -75,10 +75,10 @@ void ANpcCharacter::BeginPlay()
 
 	Inst->AllNpcCharac.Add(this);
 	///
-
+	/*UAnimInstance* tmp = GetMesh()->GetAnimInstance();
 	mNpcAnimInstance = Cast<UNpcAnimInstance>(GetMesh()->GetAnimInstance());
 
-	mNpcAnimInstance->SetAllAnimations(mAllAnimations);
+	mNpcAnimInstance->SetAllAnimations(mAllAnimations);*/
 }
 
 // Called every frame
@@ -108,6 +108,15 @@ void ANpcCharacter::Destroyed()
 	}
 
 	Inst->AllNpcCharac.;*/
+}
+
+void ANpcCharacter::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	/*mNpcAnimInstance = Cast<UNpcAnimInstance>(GetMesh()->GetAnimInstance());
+
+	mNpcAnimInstance->SetAllAnimations(mAllAnimations);*/
 }
 
 

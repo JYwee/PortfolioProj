@@ -34,8 +34,11 @@ public:
 
 	//template<typename EnumType>
 	UFUNCTION(Category = "Anime", BlueprintCallable)
-		void SetAllAnimations(TMap<int , class UAnimMontage*> allAnim) {
-		mAllAnimations = allAnim;
+		void SetAllAnimations(TMap<int , class UAnimMontage*>& allAnim) {
+		for (TPair<int, UAnimMontage*> Pair : allAnim)
+			{
+				mAllAnimations.Add(static_cast<int>(Pair.Key), Pair.Value);
+			}	
 	}
 
 protected:
