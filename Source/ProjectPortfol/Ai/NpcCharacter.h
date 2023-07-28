@@ -90,8 +90,9 @@ public:
 		}
 	}
 
-
-	
+	FORCEINLINE TMap<int, class UAnimMontage*> GetAllAnimation() const{
+		return mAllAnimations;
+	}
 
 	FORCEINLINE class UAnimMontage* GetAnimMontage(int index) {
 		if (mAllAnimations.Contains(index))
@@ -120,8 +121,8 @@ public:
 		return mAniState;
 	}
 
-	FORCEINLINE class UZedAnimInstance* GetZedAnimInstance() {
-		return mZedAnimInstance;
+	FORCEINLINE class UNpcAnimInstance* GetNpcAnimInstance() {
+		return mNpcAnimInstance;
 	}
 	
 
@@ -157,7 +158,8 @@ private:
 	UPROPERTY(Category = "CharacterBase", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	TMap<int , class UAnimMontage*> mAllAnimations;
 
+	const struct FMonsterDataTable* mMonsterDT = nullptr;
 
-	class UZedAnimInstance* mZedAnimInstance = nullptr;
+	class UNpcAnimInstance* mNpcAnimInstance = nullptr;
 	//UPROPERTY()
 };

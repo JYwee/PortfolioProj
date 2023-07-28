@@ -43,3 +43,7 @@ https://github.com/donanroherty/UE4_DarkSoulsCamera/blob/master/Source/DarkSouls
 orient Rotation to Movement 체크
 
 use Controller rotation yaw 체크
+
+
+
+getMesh()->wasRecentlyRendered(0,0f) -> 최근에 매쉬가 랜더 되었는가 bool 값으로 리턴함.

@@ -5,8 +5,9 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/WidgetComponent.h"
 #include "MyAIController.h"
-#include "ZedGameInstance.h"
-#include "../ZedAnimInstance.h"
+#include "../ZedGameInstance.h"
+#include "../Data/MonsterDataTable.h"
+#include "NpcAnimInstance.h"
 
 // Sets default values
 ANpcCharacter::ANpcCharacter()
@@ -44,6 +45,19 @@ UBlackboardComponent* ANpcCharacter::GetBlackboardComponent()
 // Called when the game starts or when spawned
 void ANpcCharacter::BeginPlay()
 {
+	UZedGameInstance* inst = Cast<UZedGameInstance>(GetWorld()->GetGameInstance());
+
+	if (inst == nullptr || inst->IsValidLowLevel() == false)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%S(%u) Inst == nullptr  inst->IsValidLowLevel() == false"), __FUNCTION__, __LINE__);
+		return;
+	}
+
+	mMonsterDT = inst->GetMonsterDataTable(TEXT("meeleEnemy"));
+
+	SetAllAnimation<NPCAniState>(mMonsterDT->MapAnimation);
+
+
 	Super::BeginPlay();
 
 
@@ -62,9 +76,9 @@ void ANpcCharacter::BeginPlay()
 	Inst->AllNpcCharac.Add(this);
 	///
 
-	mZedAnimInstance = Cast<UZedAnimInstance>(GetMesh()->GetAnimInstance());
+	mNpcAnimInstance = Cast<UNpcAnimInstance>(GetMesh()->GetAnimInstance());
 
-	mZedAnimInstance->AllAnimations = mAllAnimations;
+	mNpcAnimInstance->SetAllAnimations(mAllAnimations);
 }
 
 // Called every frame

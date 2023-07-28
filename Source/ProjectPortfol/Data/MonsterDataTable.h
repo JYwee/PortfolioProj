@@ -22,7 +22,7 @@ struct PROJECTPORTFOL_API FMonsterDataTable : public FTableRowBase
 public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MonsterData")
-		UStaticMesh* Mesh;
+		USkeletalMesh* Mesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MonsterData")
 		int HP;

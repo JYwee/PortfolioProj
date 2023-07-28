@@ -27,11 +27,16 @@ public:
 	UFUNCTION(Category = "Anime", BlueprintCallable)
 		TSubclassOf<UObject> GetSubClassData(FName name);
 
+	struct FMonsterDataTable* GetMonsterDataTable(FName _Name);
+
 private:
 
 	
 	UDataTable* mSubClassData;
 
 	UDataTable* WeaponMeshData;
+
+	UDataTable* mMonsterData;
+
 	TArray<UStaticMesh*> ArrWeaponMesh;
 };

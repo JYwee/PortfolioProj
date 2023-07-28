@@ -5,6 +5,7 @@
 #include "Data/ObjDataTable.h"
 #include "Ai/NpcCharacter.h"
 #include "WeaponDataTable.h"
+#include "Data/MonsterDataTable.h"
 
 
 UZedGameInstance::UZedGameInstance() {
@@ -24,6 +25,19 @@ UZedGameInstance::UZedGameInstance() {
 				FWeaponDataTable* FindTable = WeaponMeshData->FindRow<FWeaponDataTable>(ArrayName[i], ArrayName[i].ToString());
 			}
 		}
+	}
+
+	///Script/Engine.DataTable'/Game/Data/DT_Monster.DT_Monster'
+	
+	{
+		FString DataPath = TEXT("Script/Engine.DataTable'/Game/Data/DT_Monster.DT_Monster'");
+		ConstructorHelpers::FObjectFinder<UDataTable> DataTable(*DataPath);
+
+		if (DataTable.Succeeded())
+		{
+			mMonsterData = DataTable.Object;
+		}
+
 	}
 
 
@@ -67,3 +81,21 @@ TSubclassOf<UObject> UZedGameInstance::GetSubClassData(FName name)
 
 	return nullptr;
 }
+
+FMonsterDataTable* UZedGameInstance::GetMonsterDataTable(FName _Name)
+{
+	if (nullptr == mMonsterData)
+	{
+		return nullptr;
+	}
+
+	FMonsterDataTable* FindTable = mMonsterData->FindRow<FMonsterDataTable>(_Name, _Name.ToString());
+
+	if (nullptr == FindTable)
+	{
+		return nullptr;
+	}
+
+	return FindTable;
+}
+
