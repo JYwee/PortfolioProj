@@ -16,4 +16,6 @@ class PROJECTPORTFOL_API UTestCapsuleComponent : public UCapsuleComponent
 	
 public:
 
+
+
 };

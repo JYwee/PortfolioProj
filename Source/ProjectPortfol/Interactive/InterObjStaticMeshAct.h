@@ -29,6 +29,6 @@ protected:
 private:
 
 	UPROPERTY(Category = InteractiveObjMeshActor, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-		class UCapsuleComponent* CapsuleComponent;
+	class UCapsuleComponent* CapsuleComponent;
 	//TObjectPtr<UCapsuleComponent> CapsuleComponent;
 };
