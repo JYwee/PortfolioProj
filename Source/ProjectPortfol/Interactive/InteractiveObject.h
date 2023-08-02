@@ -4,14 +4,14 @@
 
 #include "CoreMinimal.h"
 //#include "Engine/StaticMeshActor.h"
-
+#include "../InteractiveInterface.h"
 #include "GameFramework/Actor.h"
 #include "InteractiveObject.generated.h"
 
 class CapsuleComponent;
 
 UCLASS()
-class PROJECTPORTFOL_API AInteractiveObject : public AActor
+class PROJECTPORTFOL_API AInteractiveObject : public AActor, public UInteractiveInterface
 {
 	GENERATED_BODY()
 	
@@ -21,8 +21,6 @@ public:
 
 	//AInteractiveObject(const FObjectInitializer& ObjectInitializer);
 
-	FORCEINLINE class UCapsuleComponent* GetCapsuleComponent() const { return CapsuleComponent; }
-
 	//UPROPERTY(Category = InteractiveCapsule, EditAnywhere, AdvancedDisplay)
 	//static FName CapsuleComponentName;
 
@@ -31,6 +29,18 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+
+	//using interactive collision
+	virtual FORCEINLINE class UCapsuleComponent* GetCapsuleComponent() const { return CapsuleComponent; }
+
+	//GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ANpcCharacter::BeginOverLap);
+	virtual void BeginOverLap(
+		UPrimitiveComponent* OverlappedComponent,
+		AActor* OtherActor,
+		UPrimitiveComponent* OtherComp,
+		int32 OtherBodyIndex,
+		bool bFromSweep,
+		const FHitResult& SweepResult);
 
 
 private:
