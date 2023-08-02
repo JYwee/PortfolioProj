@@ -25,19 +25,20 @@ class PROJECTPORTFOL_API IInteractiveInterface
 	GENERATED_BODY()
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
-protected:
+public:
 	
 	//using interactive collision
-	virtual FORCEINLINE class UCapsuleComponent* GetCapsuleComponent() const = 0;
+	virtual class UCapsuleComponent* GetInteractCapsuleComponent() const = 0;
 
 	//GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ANpcCharacter::BeginOverLap);
+	//UFUNCTION(BlueprintCallable, Category = InteractiveCollision)
 	virtual void BeginOverLap(
 		UPrimitiveComponent* OverlappedComponent,
 		AActor* OtherActor,
 		UPrimitiveComponent* OtherComp,
 		int32 OtherBodyIndex,
 		bool bFromSweep,
-		const FHitResult& SweepResult)=0;
+		const FHitResult& SweepResult) = 0;
 
 	
 };

@@ -8,10 +8,10 @@
 #include "GameFramework/Actor.h"
 #include "InteractiveObject.generated.h"
 
-class CapsuleComponent;
+class UCapsuleComponent;
 
 UCLASS()
-class PROJECTPORTFOL_API AInteractiveObject : public AActor, public UInteractiveInterface
+class PROJECTPORTFOL_API AInteractiveObject : public AActor, public IInteractiveInterface
 {
 	GENERATED_BODY()
 	
@@ -26,26 +26,27 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 	
-
-protected:
-	virtual void BeginPlay() override;
-
-	//using interactive collision
-	virtual FORCEINLINE class UCapsuleComponent* GetCapsuleComponent() const { return CapsuleComponent; }
-
-	//GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ANpcCharacter::BeginOverLap);
+	FORCEINLINE virtual class UCapsuleComponent* GetInteractCapsuleComponent() const override { return CapsuleComponent; }
+	
+	UFUNCTION(BlueprintCallable, Category = InteractiveCollision)
 	virtual void BeginOverLap(
 		UPrimitiveComponent* OverlappedComponent,
 		AActor* OtherActor,
 		UPrimitiveComponent* OtherComp,
 		int32 OtherBodyIndex,
 		bool bFromSweep,
-		const FHitResult& SweepResult);
+		const FHitResult& SweepResult) override;
 
+protected:
+	virtual void BeginPlay() override;
+
+	//using interactive collision
+	
 
 private:
 	UPROPERTY(Category = Character, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		TObjectPtr<UCapsuleComponent> CapsuleComponent;
+		//UCapsuleComponent* CapsuleComponent;
 
 };
 
