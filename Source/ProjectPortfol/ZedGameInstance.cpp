@@ -5,6 +5,7 @@
 #include "Data/ObjDataTable.h"
 #include "Ai/NpcCharacter.h"
 #include "WeaponDataTable.h"
+#include "Data/ObjDataTable.h"
 #include "Data/MonsterDataTable.h"
 
 
@@ -23,6 +24,24 @@ UZedGameInstance::UZedGameInstance() {
 			for (size_t i = 0; i < ArrayName.Num(); i++)
 			{
 				FWeaponDataTable* FindTable = WeaponMeshData->FindRow<FWeaponDataTable>(ArrayName[i], ArrayName[i].ToString());
+			}
+		}
+	}
+	{
+		
+
+		FString DataPath = TEXT("/Script/Engine.DataTable'/Game/Data/DT_ObjectInteract.DT_ObjectInteract'");
+		ConstructorHelpers::FObjectFinder<UDataTable> DataTable(*DataPath);
+
+		if (DataTable.Succeeded())
+		{
+			mObjInteractData = DataTable.Object;
+
+			TArray<FName> ArrayName = mObjInteractData->GetRowNames();
+
+			for (size_t i = 0; i < ArrayName.Num(); i++)
+			{
+				FObjDataTable* FindTable = mObjInteractData->FindRow<FObjDataTable>(ArrayName[i], ArrayName[i].ToString());
 			}
 		}
 	}
@@ -96,6 +115,21 @@ FMonsterDataTable* UZedGameInstance::GetMonsterDataTable(FName _Name)
 		return nullptr;
 	}
 
+	return FindTable;
+}
+
+FObjDataTable* UZedGameInstance::GetObjInteractData(FName _Name)
+{
+	if (mObjInteractData == nullptr)
+	{
+		return nullptr;
+	}
+	FObjDataTable* FindTable = mObjInteractData->FindRow<FObjDataTable>(_Name, _Name.ToString());
+
+	if (FindTable == nullptr)
+	{
+		return nullptr;
+	}
 	return FindTable;
 }
 

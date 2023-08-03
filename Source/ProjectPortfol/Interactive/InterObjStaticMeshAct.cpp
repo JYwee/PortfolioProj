@@ -2,6 +2,8 @@
 
 
 #include "Interactive/InterObjStaticMeshAct.h"
+#include "../ZedGameInstance.h"
+#include "../Data/ObjDataTable.h"
 
 //void AInterObjStaticMeshAct::Tick(float DeltaTime)
 //{
@@ -16,6 +18,16 @@
 
 AInterObjStaticMeshAct::AInterObjStaticMeshAct()
 {
+	/*UZedGameInstance* gameInst = GetWorld()->GetGameInstance<UZedGameInstance>();
+	if (gameInst == nullptr || gameInst->IsValidLowLevel() == false)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%S(%u) Find failed"), __FUNCTION__, __LINE__);
+		return;
+	}*/
+
+	//FObjDataTable = gameInst->GetObjInteractData(TEXT("TeleportGate"));
+
+
 	mCapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("InteractiveCapsule"));
 	
 	FVector Origin, Extent;
@@ -38,6 +50,7 @@ void AInterObjStaticMeshAct::BeginOverLap(UPrimitiveComponent* OverlappedCompone
 	}
 	if (OtherComp->ComponentHasTag(TEXT("PlayerCapsuleComp")))
 	{
+		
 		UE_LOG(LogTemp, Warning, TEXT("%S(%u) Find"), __FUNCTION__, __LINE__);
 	}
 	//float x, y;

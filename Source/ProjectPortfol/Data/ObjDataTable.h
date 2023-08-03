@@ -20,7 +20,13 @@ struct PROJECTPORTFOL_API FObjDataTable : public FTableRowBase
 
 public:
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MeshData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ObjData")
+		FText NameObj;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ObjData")
 		UStaticMesh* Mesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ObjData")
+		FText InteractiveText;
 
 };

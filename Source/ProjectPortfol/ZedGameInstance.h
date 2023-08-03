@@ -29,6 +29,9 @@ public:
 
 	struct FMonsterDataTable* GetMonsterDataTable(FName _Name);
 
+	struct FObjDataTable* GetObjInteractData(FName _Name);
+
+
 private:
 
 	
@@ -37,6 +40,8 @@ private:
 	UDataTable* WeaponMeshData;
 
 	UDataTable* mMonsterData;
+
+	UDataTable* mObjInteractData;
 
 	TArray<UStaticMesh*> ArrWeaponMesh;
 };
