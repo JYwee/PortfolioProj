@@ -42,5 +42,8 @@ private:
 	TObjectPtr<UCapsuleComponent> mCapsuleComponent;
 	//class UCapsuleComponent* CapsuleComponent;
 
+	UPROPERTY(Category = InteractiveObjMeshActor, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	struct FObjDataTable* mObjData;
+
 	
 };

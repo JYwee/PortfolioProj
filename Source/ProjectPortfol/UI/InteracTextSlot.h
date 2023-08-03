@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/TextBlock.h"
+#include "../Data/ObjDataTable.h"
 #include "InteracTextSlot.generated.h"
 
 /**
@@ -24,7 +25,7 @@ public:
 		UTextBlock* mTextBlock = nullptr;
 
 
-	void SetItemData(const FText* stringData);
+	void SetItemData(const FObjDataTable* objData);
 
 protected:
 	void NativeConstruct() override;
@@ -33,5 +34,5 @@ protected:
 	
 
 private:
-	const FText* mStringData = nullptr;
+	const FObjDataTable* mObjData = nullptr;
 };
