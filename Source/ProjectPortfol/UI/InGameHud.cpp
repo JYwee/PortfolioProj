@@ -15,12 +15,12 @@ void AInGameHud::BeginPlay()
 {
 	Super::BeginPlay();
 
-	FSoftClassPath ClassPath(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/InGameUI/Wdg_InGameMain.Wdg_InGameMain'"));
+	FSoftClassPath ClassPath(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/InGameUI/Wdg_InGameMain.Wdg_InGameMain_C'"));
 	TSubclassOf<UUserWidget> MainWidgetClass = ClassPath.TryLoadClass<UUserWidget>();
 
-	/*UUserWidget* Widget = CreateWidget<UUserWidget>(GetWorld(), MainWidgetClass);
+	UUserWidget* Widget = CreateWidget<UUserWidget>(GetWorld(), MainWidgetClass);
 	mInGameMainWdgt = Cast<UInGameMainWidget>(Widget);
-	mInGameMainWdgt->AddToViewport();*/
+	mInGameMainWdgt->AddToViewport();
 
 	{
 		//UUserWidget* Window = Cast<UUserWidget>(mInGameMainWdgt->GetWidgetFromName(TEXT("TalkTextWindow")));

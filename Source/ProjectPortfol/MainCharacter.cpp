@@ -41,6 +41,9 @@ AMainCharacter::AMainCharacter()
 	mFollowCamera->SetupAttachment(mSpringArmComp, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	mFollowCamera->bUsePawnControlRotation = false;
 
+	//mFollowCamera->ComponentTags.Add
+	GetCapsuleComponent()->ComponentTags.Add(TEXT("PlayerCapsuleComp"));
+
 	
 	mParticleSystemComp = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("BlinkParticleComp"));
 	mParticleSystemComp->SetupAttachment(GetMesh());

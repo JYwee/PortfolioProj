@@ -31,9 +31,24 @@ AInterObjStaticMeshAct::AInterObjStaticMeshAct()
 
 void AInterObjStaticMeshAct::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	float x, y;
-	mCapsuleComponent->GetScaledCapsuleSize(x, y);
-	UE_LOG(LogTemp, Warning, TEXT("%S(%u) %f, %f"), __FUNCTION__, __LINE__, x, y);
+
+	if (OtherActor->ActorHasTag(TEXT("Weapon")))
+	{
+		this->Destroy();
+	}
+	if (OtherComp->ComponentHasTag(TEXT("PlayerCapsuleComp")))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%S(%u) Find"), __FUNCTION__, __LINE__);
+	}
+	//float x, y;
+	//mCapsuleComponent->GetScaledCapsuleSize(x, y);
+	// test static capsule can chagne size 
+	//x += 100.f;
+	//y += 100.f;
+	//mCapsuleComponent->SetCapsuleSize(x, y, true);
+	//UE_LOG(LogTemp, Warning, TEXT("%S(%u) %f, %f"), __FUNCTION__, __LINE__, x, y);
+	
+
 }
 
 void AInterObjStaticMeshAct::BeginPlay()

@@ -301,7 +301,7 @@ void AMyPlayerController::LockOnTarget()
 					myCharacter->mTargetNpcCharacter = Inst->AllNpcCharac[i];
 					Inst->AllNpcCharac[i]->mLockOnSphere->SetVisibility(true);
 					Inst->AllNpcCharac[i]->mLockOnWidgetComp->SetVisibility(true);
-					mWdgLockOn->SetVisibility(ESlateVisibility::Visible);    //적 hp창 ui 보이게
+					//mWdgLockOn->SetVisibility(ESlateVisibility::Visible);    //적 hp창 ui 보이게
 					myCharacter->bUseControllerRotationYaw = false;
 					}
 				}
@@ -322,7 +322,7 @@ void AMyPlayerController::LockOnTarget()
 				Inst->AllNpcCharac[i]->mLockOnWidgetComp->SetVisibility(false);
 				//SetLockOnTargetNpc(nullptr);
 				myCharacter->mTargetNpcCharacter = nullptr;
-				mWdgLockOn->SetVisibility(ESlateVisibility::Hidden);    //적 hp창 ui 보이게
+				//mWdgLockOn->SetVisibility(ESlateVisibility::Hidden);    //적 hp창 ui 보이게
 			}
 			myCharacter->GetCharacterMovement()->bOrientRotationToMovement = true;
 			
