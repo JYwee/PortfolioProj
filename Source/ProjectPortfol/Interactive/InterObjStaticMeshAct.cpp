@@ -33,8 +33,10 @@ AInterObjStaticMeshAct::AInterObjStaticMeshAct()
 	
 	//mCapsuleComponent->InitCapsuleSize(Extent.X * 0.5f, Extent.Y * 0.5f);
 	mCapsuleComponent->InitCapsuleSize(100.f, 100.f);
+	
 	mCapsuleComponent->ComponentTags.Add(TEXT("Interactive"));
 	mCapsuleComponent->SetupAttachment(RootComponent);
+	
 	
 	mCapsuleComponent->SetMobility(EComponentMobility::Static);
 }
@@ -48,33 +50,7 @@ void AInterObjStaticMeshAct::BeginOverLap(UPrimitiveComponent* OverlappedCompone
 	}
 	if (OtherComp->ComponentHasTag(TEXT("PlayerCapsuleComp")))
 	{
-		AMainCharacter* myCharacter = Cast<AMainCharacter>(OtherActor);
-		if (myCharacter == nullptr || myCharacter->IsValidLowLevel() == false)
-		{
-			return;
-		}
-		APlayerController* HUDController = Cast<APlayerController>(myCharacter->GetController());
-		AInGameHud* myHud = HUDController->GetHUD<AInGameHud>();
 		
-		//UUserWidget* Window;
-
-		UInteracTextListWidget* listWdg = Cast<UInteracTextListWidget>(myHud->GetMainWidget()->GetWidgetFromName(TEXT("UI_IntractiveText")));
-
-
-		UZedGameInstance* gameInst = GetWorld()->GetGameInstance<UZedGameInstance>();
-		if (gameInst == nullptr || gameInst->IsValidLowLevel() == false)
-		{
-			UE_LOG(LogTemp, Error, TEXT("%S(%u) Find failed"), __FUNCTION__, __LINE__);
-			return;
-		}
-
-		FObjDataTable* mObjData = gameInst->GetObjInteractData(TEXT("TeleportGate"));
-
-
-		//listWdg->AddInteracTextSlot(mObjData, )
-		//listWdg.
-
-		//AddInteracTextSlot(UObject* objData, UUserWidget* widgetData)
 
 		UE_LOG(LogTemp, Warning, TEXT("%S(%u) Find"), __FUNCTION__, __LINE__);
 	}
@@ -98,8 +74,8 @@ void AInterObjStaticMeshAct::BeginPlay()
 
 	FVector Origin, Extent;
 	GetActorBounds(false, Origin, Extent);
-	mCapsuleComponent->SetCapsuleSize(Extent.X * 0.5f, Extent.Y * 0.5f, true);
-	
+	//mCapsuleComponent->SetCapsuleSize(Extent.X * 0.5f, Extent.Y * 0.5f, true);
+	mCapsuleComponent->SetCapsuleSize(Extent.X, Extent.Y, true);
 	
 	//mCapsuleComponent->InitCapsuleSize(Extent.X * 0.5f, Extent.Y * 0.5f);
 	GetInteractCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AInterObjStaticMeshAct::BeginOverLap);

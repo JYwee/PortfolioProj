@@ -12,6 +12,13 @@
 #include "Particles/ParticleSystemComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Ai/NpcCharacter.h"
+#include "UI/InteracTextListWidget.h"
+#include "UI/InGameHud.h"
+
+#include "Interactive/InterObjStaticMeshAct.h"
+#include "Data/ObjDataTable.h"
+#include "UI/InteracTextSlot.h"
+
 #include "MyPlayerController.h"
 //#include "Math/Vector.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -27,6 +34,11 @@ AMainCharacter::AMainCharacter()
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
+	
+	mSphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("InteractSphereComp"));
+	mSphereComponent->SetupAttachment(RootComponent);
+	mSphereComponent->SetSphereRadius(200.f, true);
+	mSphereComponent->ComponentTags.Add(TEXT("Interact_PlayerComp"));
 
 	//캐릭터 이동 모션 관련
 	GetCharacterMovement()->bOrientRotationToMovement = false;
@@ -66,6 +78,100 @@ AMainCharacter::AMainCharacter()
 	}
 
 	
+}
+
+void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	
+	if (OtherComp->ComponentHasTag(TEXT("Interactive")))
+	{
+		APlayerController* HUDController = Cast<APlayerController>(GetController());
+		AInGameHud* myHud = HUDController->GetHUD<AInGameHud>();
+		
+		//UUserWidget* Window;
+
+		UInteracTextListWidget* listWdg = Cast<UInteracTextListWidget>(myHud->GetMainWidget()->GetWidgetFromName(TEXT("UI_IntractiveText")));
+		UInteracTextSlot* tmp = Cast<UInteracTextSlot>(listWdg->GetWidgetFromName(TEXT("UI_InteracTextSlot")));
+
+		UZedGameInstance* gameInst = GetWorld()->GetGameInstance<UZedGameInstance>();
+		if (gameInst == nullptr || gameInst->IsValidLowLevel() == false)
+		{
+			UE_LOG(LogTemp, Error, TEXT("%S(%u) Find failed"), __FUNCTION__, __LINE__);
+			return;
+		}
+
+		AInterObjStaticMeshAct* objMeshAct = Cast<AInterObjStaticMeshAct>(OtherActor);
+		if(objMeshAct == nullptr || objMeshAct->IsValidLowLevel() == false)
+		{
+			UE_LOG(LogTemp, Error, TEXT("%S(%u) Find failed"), __FUNCTION__, __LINE__);
+				return;
+		}
+
+		UInteracObjData* Data = NewObject<UInteracObjData>();
+		Data->mObjData = gameInst->GetObjInteractData("TeleportGate");
+		listWdg->GetInteractListView()->AddItem(Data);
+
+
+		//UInteracTextSlot
+		//objMeshAct.
+		//FObjDataTable* objData = gameInst->GetObjInteractData(TEXT("TeleportGate"));
+		////UObject tmpObj = 
+		//UInteracTextSlot::CreateWidgetInstance(listWdg, <UInteracTextSlot>, TEXT("UI_InteracTextSlot"));
+		//listWdg->AddInteracTextSlot(Cast<UObject>(objMeshAct), UInteracTextSlot::CreateWidgetInstance(listWdg, ));
+		//FObjDataTable* mObjData = gameInst->GetObjInteractData(TEXT("TeleportGate"));
+
+
+		//listWdg->AddInteracTextSlot(mObjData, )
+		//listWdg.
+
+		//AddInteracTextSlot(UObject* objData, UUserWidget* widgetData)
+	}
+
+
+
+}
+
+void AMainCharacter::EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if (OtherComp->ComponentHasTag(TEXT("Interactive")))
+	{
+		APlayerController* HUDController = Cast<APlayerController>(GetController());
+		AInGameHud* myHud = HUDController->GetHUD<AInGameHud>();
+
+		//UUserWidget* Window;
+
+		UInteracTextListWidget* listWdg = Cast<UInteracTextListWidget>(myHud->GetMainWidget()->GetWidgetFromName(TEXT("UI_IntractiveText")));
+		UInteracTextSlot* tmp = Cast<UInteracTextSlot>(listWdg->GetWidgetFromName(TEXT("UI_InteracTextSlot")));
+
+		UZedGameInstance* gameInst = GetWorld()->GetGameInstance<UZedGameInstance>();
+		if (gameInst == nullptr || gameInst->IsValidLowLevel() == false)
+		{
+			UE_LOG(LogTemp, Error, TEXT("%S(%u) Find failed"), __FUNCTION__, __LINE__);
+			return;
+		}
+
+		AInterObjStaticMeshAct* objMeshAct = Cast<AInterObjStaticMeshAct>(OtherActor);
+		if (objMeshAct == nullptr || objMeshAct->IsValidLowLevel() == false)
+		{
+			UE_LOG(LogTemp, Error, TEXT("%S(%u) Find failed"), __FUNCTION__, __LINE__);
+			return;
+		}
+
+		/*UInteracObjData* Data = NewObject<UInteracObjData>();
+		Data->mObjData = gameInst->GetObjInteractData("TeleportGate");*/
+		
+		UListView* tmp2 = listWdg->GetInteractListView()/*->RemoveItem()*/;
+		TArray<UObject*> listItems = tmp2->GetListItems();
+		for (int i = 0; i < tmp2->GetListItems().Num(); ++i)
+		{
+			UInteracObjData* tmpData = Cast<UInteracObjData>(listItems[i]);
+			if (tmpData != nullptr || tmpData->IsValidLowLevel() == true)
+			{
+				tmp2->RemoveItem(tmpData);
+			}
+		}
+	}
+
 }
 
 //void AMainCharacter::LockOnTarget()
@@ -162,6 +268,9 @@ void AMainCharacter::BeginPlay()
 		return;
 	}
 
+	//for interativeObj
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMainCharacter::BeginOverLap);
+	GetCapsuleComponent()->OnComponentEndOverlap.AddDynamic(this, &AMainCharacter::EndOverlap);
 }
 
 // Called every frame

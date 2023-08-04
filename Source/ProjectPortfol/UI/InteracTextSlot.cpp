@@ -18,7 +18,7 @@ void UInteracTextSlot::NativeTick(const FGeometry& MyGeometry, float InDeltaTime
 
 void UInteracTextSlot::SetItemData(const FObjDataTable* objData)
 {
-	mObjData = objData;
+	/*mObjData = objData;
 
 	if (mObjData->InteractiveText.IsEmpty() == true)
 	{
@@ -27,5 +27,16 @@ void UInteracTextSlot::SetItemData(const FObjDataTable* objData)
 	else
 	{
 		mTextBlock->SetText(mObjData->InteractiveText);
+	}*/
+}
+
+void UInteracTextSlot::NativeOnListItemObjectSet(UObject* ListItemObject)
+{
+	IUserObjectListEntry::NativeOnListItemObjectSet(ListItemObject);
+
+	mObjData = Cast<UInteracObjData>(ListItemObject);
+	if (mObjData == nullptr) {
+		return;
 	}
+	mTextBlock->SetText(mObjData->mObjData->InteractiveText);
 }

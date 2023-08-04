@@ -5,13 +5,14 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/ListView.h"
+//#include "Blueprint/IUserObjectListEntry.h"
 #include "InteracTextListWidget.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class PROJECTPORTFOL_API UInteracTextListWidget : public UUserWidget
+class PROJECTPORTFOL_API UInteracTextListWidget : public UUserWidget /*, public IUserObjectListEntry*/
 {
 	GENERATED_BODY()
 	
@@ -24,10 +25,15 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void NewSlotWidget(UUserWidget* widgetData);
 
+	//virtual void NativeOnListItemObjectSet(UObject* ListItemObject) override;
+
+	FORCEINLINE UListView* GetInteractListView() const { return mListView; }
+	
+
 protected:
 	void NativeConstruct() override;
 	void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
-
+	
 
 private:
 	UPROPERTY(Category = "IngameUI", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))

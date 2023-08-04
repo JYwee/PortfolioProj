@@ -6,13 +6,15 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/TextBlock.h"
 #include "../Data/ObjDataTable.h"
+#include "InteracObjData.h"
+#include "Blueprint/IUserObjectListEntry.h"
 #include "InteracTextSlot.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class PROJECTPORTFOL_API UInteracTextSlot : public UUserWidget
+class PROJECTPORTFOL_API UInteracTextSlot : public UUserWidget, public IUserObjectListEntry
 {
 	GENERATED_BODY()
 	
@@ -27,6 +29,8 @@ public:
 
 	void SetItemData(const FObjDataTable* objData);
 
+	virtual void NativeOnListItemObjectSet(UObject* ListItemObject) override;
+
 protected:
 	void NativeConstruct() override;
 	void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
@@ -34,5 +38,6 @@ protected:
 	
 
 private:
-	const FObjDataTable* mObjData = nullptr;
+	const UInteracObjData* mObjData = nullptr;
+	//const FObjDataTable* mObjData = nullptr;
 };

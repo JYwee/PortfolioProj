@@ -9,10 +9,17 @@ void UInteracTextListWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	mListView = Cast<UListView>(GetWidgetFromName(TEXT("UI_IntractiveText")));
+	mListView = Cast<UListView>(GetWidgetFromName(TEXT("InteracTextListView")));
 
+	UZedGameInstance* gameInstance = GetWorld()->GetGameInstance<UZedGameInstance>();
 	
+	/*for (int i = 0; i < 5; ++i)
+	{
+	UInteracObjData* Data = NewObject<UInteracObjData>();
+	Data->mObjData = gameInstance->GetObjInteractData("TeleportGate");
+	mListView->AddItem(Data);
 
+	}*/
 	
 
 
@@ -21,6 +28,9 @@ void UInteracTextListWidget::NativeTick(const FGeometry& MyGeometry, float InDel
 {
 	Super::NativeTick( MyGeometry, InDeltaTime);
 }
+
+
+
 
 void UInteracTextListWidget::AddInteracTextSlot(UObject* objData, UUserWidget* widgetData)
 {
@@ -43,7 +53,7 @@ void UInteracTextListWidget::AddInteracTextSlot(UObject* objData, UUserWidget* w
 
 void UInteracTextListWidget::NewSlotWidget(UUserWidget* widgetData)
 {
-
+	
 }
 
 
