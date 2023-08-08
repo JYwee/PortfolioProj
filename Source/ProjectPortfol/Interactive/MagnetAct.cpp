@@ -22,7 +22,7 @@ void AMagnetAct::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 
 	mCurrnetTime += DeltaSeconds;
-
+	mLimitTime += DeltaSeconds;
 	if (mIsGotoPast == true)
 	{
 		if (mCurrnetTime > 60)

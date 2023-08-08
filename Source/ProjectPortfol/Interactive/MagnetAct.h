@@ -32,7 +32,9 @@ public:
 
 private:
 
-	float mCurrnetTime;
+	
+	float mLimitTime = 0.f;
+	float mCurrnetTime = 0.f;
 
 	bool mIsGotoPast = false;
 	
