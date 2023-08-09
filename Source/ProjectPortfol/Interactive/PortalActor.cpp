@@ -13,6 +13,8 @@ APortalActor::APortalActor()
 
 	mCapsuleComponent->SetCapsuleHalfHeight(150.f);
 	mCapsuleComponent->SetCapsuleRadius(150.f);
+	mCapsuleComponent->ComponentTags.Add(TEXT("TeleportGate"));
+
 }
 
 

@@ -107,16 +107,16 @@ void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AAct
 				return;
 		}
 		
-		for (int i = 0; i < objMeshAct->Tags.Num(); ++i)
+		for (int i = 0; i < OtherComp->ComponentTags.Num(); ++i)
 		{
-			if (TEXT("TeleportGate") == objMeshAct->Tags[i])
+			if (TEXT("TeleportGate") == OtherComp->ComponentTags[i])
 			{
 				UInteracObjData* Data = NewObject<UInteracObjData>();
 				Data->mObjData = gameInst->GetObjInteractData("TeleportGate");
 				listWdg->GetInteractListView()->AddItem(Data);
 			}
 
-			if (TEXT("MagnetOBJ") == objMeshAct->Tags[i])
+			if (TEXT("MagnetOBJ") == OtherComp->ComponentTags[i])
 			{
 				/*UInteracObjData* Data = NewObject<UInteracObjData>();
 				Data->mObjData = gameInst->GetObjInteractData("TeleportGate");
