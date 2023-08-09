@@ -7,6 +7,14 @@
 AMagnetAct::AMagnetAct()
 {
 	PrimaryActorTick.bCanEverTick = true;
+
+	mCapsuleComponent->ComponentTags.Add("MagnetOBJ");
+
+	FVector Origin, Extent;
+	GetActorBounds(false, Origin, Extent);
+	//mCapsuleComponent->SetCapsuleSize(Extent.X * 0.5f, Extent.Y * 0.5f, true);
+	mCapsuleComponent->SetCapsuleSize(Extent.X + 50.f, Extent.Y + 50.f, true);
+
 }
 
 void AMagnetAct::MovePast()

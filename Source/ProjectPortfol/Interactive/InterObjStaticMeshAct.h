@@ -35,11 +35,12 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	
+	UPROPERTY(Category = InteractiveObjMeshActor, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UCapsuleComponent> mCapsuleComponent;
 
 private:
 
-	UPROPERTY(Category = InteractiveObjMeshActor, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UCapsuleComponent> mCapsuleComponent;
 	//class UCapsuleComponent* CapsuleComponent;
 
 	//UPROPERTY(Category = InteractiveObjMeshActor, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))

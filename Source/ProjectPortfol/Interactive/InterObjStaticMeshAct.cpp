@@ -28,9 +28,9 @@ AInterObjStaticMeshAct::AInterObjStaticMeshAct()
 
 	mCapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("InteractiveCapsule"));
 	
-	FVector Origin, Extent;
+	/*FVector Origin, Extent;
 	GetActorBounds(false, Origin, Extent);
-	
+	*/
 	//mCapsuleComponent->InitCapsuleSize(Extent.X * 0.5f, Extent.Y * 0.5f);
 	mCapsuleComponent->InitCapsuleSize(100.f, 100.f);
 	
@@ -75,7 +75,7 @@ void AInterObjStaticMeshAct::BeginPlay()
 	FVector Origin, Extent;
 	GetActorBounds(false, Origin, Extent);
 	//mCapsuleComponent->SetCapsuleSize(Extent.X * 0.5f, Extent.Y * 0.5f, true);
-	mCapsuleComponent->SetCapsuleSize(Extent.X, Extent.Y, true);
+	mCapsuleComponent->SetCapsuleSize(Extent.X + 50.f , Extent.Y + 50.f, true);
 	
 	//mCapsuleComponent->InitCapsuleSize(Extent.X * 0.5f, Extent.Y * 0.5f);
 	GetInteractCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AInterObjStaticMeshAct::BeginOverLap);

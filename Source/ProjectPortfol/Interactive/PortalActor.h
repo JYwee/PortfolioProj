@@ -17,6 +17,9 @@ class PROJECTPORTFOL_API APortalActor : public AInterObjStaticMeshAct
 
 public:
 
+	APortalActor();
+	
+
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Portal)
 	FVector mTargetPortal;

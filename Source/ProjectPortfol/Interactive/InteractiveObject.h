@@ -42,11 +42,11 @@ protected:
 
 	//using interactive collision
 	
-
-private:
 	UPROPERTY(Category = Character, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		TObjectPtr<UCapsuleComponent> CapsuleComponent;
 		//UCapsuleComponent* CapsuleComponent;
+
+private:
 
 };
 

@@ -37,7 +37,7 @@ AMainCharacter::AMainCharacter()
 	
 	mSphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("InteractSphereComp"));
 	mSphereComponent->SetupAttachment(RootComponent);
-	mSphereComponent->SetSphereRadius(200.f, true);
+	mSphereComponent->SetSphereRadius(300.f, true);
 	mSphereComponent->ComponentTags.Add(TEXT("Interact_PlayerComp"));
 
 	//캐릭터 이동 모션 관련
@@ -106,10 +106,26 @@ void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AAct
 			UE_LOG(LogTemp, Error, TEXT("%S(%u) Find failed"), __FUNCTION__, __LINE__);
 				return;
 		}
+		
+		for (int i = 0; i < objMeshAct->Tags.Num(); ++i)
+		{
+			if (TEXT("TeleportGate") == objMeshAct->Tags[i])
+			{
+				UInteracObjData* Data = NewObject<UInteracObjData>();
+				Data->mObjData = gameInst->GetObjInteractData("TeleportGate");
+				listWdg->GetInteractListView()->AddItem(Data);
+			}
 
-		UInteracObjData* Data = NewObject<UInteracObjData>();
-		Data->mObjData = gameInst->GetObjInteractData("TeleportGate");
-		listWdg->GetInteractListView()->AddItem(Data);
+			if (TEXT("MagnetOBJ") == objMeshAct->Tags[i])
+			{
+				/*UInteracObjData* Data = NewObject<UInteracObjData>();
+				Data->mObjData = gameInst->GetObjInteractData("TeleportGate");
+				listWdg->GetInteractListView()->AddItem(Data);*/
+			}
+
+		}
+
+		
 
 
 		//UInteracTextSlot
@@ -271,6 +287,9 @@ void AMainCharacter::BeginPlay()
 	//for interativeObj
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMainCharacter::BeginOverLap);
 	GetCapsuleComponent()->OnComponentEndOverlap.AddDynamic(this, &AMainCharacter::EndOverlap);
+
+	//mSphereComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMainCharacter::BeginOverLap);
+	//mSphereComponent()->OnComponentEndOverlap.AddDynamic(this, &AMainCharacter::EndOverlap);
 }
 
 // Called every frame

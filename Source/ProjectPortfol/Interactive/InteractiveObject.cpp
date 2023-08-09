@@ -29,6 +29,12 @@ void AInteractiveObject::Tick(float DeltaTime)
 void AInteractiveObject::BeginPlay()
 {
 	Super::BeginPlay();
+
+	FVector Origin, Extent;
+	GetActorBounds(false, Origin, Extent);
+	//mCapsuleComponent->SetCapsuleSize(Extent.X * 0.5f, Extent.Y * 0.5f, true);
+	CapsuleComponent->SetCapsuleSize(Extent.X + 50.f, Extent.Y + 50.f, true);
+
 }
 
 //UCapsuleComponent* AInteractiveObject::GetCapsuleComponent() const

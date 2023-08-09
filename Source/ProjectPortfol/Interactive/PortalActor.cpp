@@ -3,7 +3,19 @@
 
 #include "Interactive/PortalActor.h"
 #include "Kismet/GameplayStatics.h"
+#include <MainCharacter.h>
 #include <InGameMode.h>
+
+
+APortalActor::APortalActor()
+{
+	GetInteractCapsuleComponent();
+
+	mCapsuleComponent->SetCapsuleHalfHeight(150.f);
+	mCapsuleComponent->SetCapsuleRadius(150.f);
+}
+
+
 
 void APortalActor::PlayerTeleport()
 {
@@ -16,5 +28,5 @@ void APortalActor::PlayerTeleport()
 		return;
 	}
 
-	myGameMode->GetMainCharacter();
+	//myGameMode->GetMainCharacter()->SetActorLocation(mTargetPortal);
 }
