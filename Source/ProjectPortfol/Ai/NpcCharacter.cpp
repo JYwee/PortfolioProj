@@ -23,6 +23,7 @@ ANpcCharacter::ANpcCharacter()
 	mLockOnWidgetComp->SetupAttachment(RootComponent);
 	mLockOnWidgetComp->SetVisibility(false);
 
+
 	//setcontroller
 }
 
@@ -45,17 +46,17 @@ UBlackboardComponent* ANpcCharacter::GetBlackboardComponent()
 // Called when the game starts or when spawned
 void ANpcCharacter::BeginPlay()
 {
-	UZedGameInstance* inst = Cast<UZedGameInstance>(GetWorld()->GetGameInstance());
+	//UZedGameInstance* inst = Cast<UZedGameInstance>(GetWorld()->GetGameInstance());
 
-	if (inst == nullptr || inst->IsValidLowLevel() == false)
-	{
-		UE_LOG(LogTemp, Error, TEXT("%S(%u) Inst == nullptr  inst->IsValidLowLevel() == false"), __FUNCTION__, __LINE__);
-		return;
-	}
+	//if (inst == nullptr || inst->IsValidLowLevel() == false)
+	//{
+	//	UE_LOG(LogTemp, Error, TEXT("%S(%u) Inst == nullptr  inst->IsValidLowLevel() == false"), __FUNCTION__, __LINE__);
+	//	return;
+	//}
 
-	mMonsterDT = inst->GetMonsterDataTable(TEXT("meeleEnemy"));
+	//mMonsterDT = inst->GetMonsterDataTable(TEXT("meeleEnemy"));
 
-	SetAllAnimation<NPCAniState>(mMonsterDT->MapAnimation);
+	//SetAllAnimation<NPCAniState>(mMonsterDT->MapAnimation);
 
 
 	Super::BeginPlay();
@@ -74,7 +75,7 @@ void ANpcCharacter::BeginPlay()
 	}
 
 	Inst->AllNpcCharac.Add(this);
-	///
+	
 	/*UAnimInstance* tmp = GetMesh()->GetAnimInstance();
 	mNpcAnimInstance = Cast<UNpcAnimInstance>(GetMesh()->GetAnimInstance());
 
@@ -118,6 +119,16 @@ void ANpcCharacter::PostInitializeComponents()
 
 	mNpcAnimInstance->SetAllAnimations(mAllAnimations);*/
 }
+
+UAnimMontage* ANpcCharacter::GetAnimMontage(int index) const
+{
+	if (mAllAnimations.Contains(index))
+	{
+		return mAllAnimations[index];
+	}
+	return nullptr;
+}
+
 
 
 void ANpcCharacter::MontageEnd(UAnimMontage* animMontage, bool inter)

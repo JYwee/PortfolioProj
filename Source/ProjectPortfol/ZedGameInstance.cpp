@@ -7,6 +7,7 @@
 #include "WeaponDataTable.h"
 #include "Data/ObjDataTable.h"
 #include "Data/MonsterDataTable.h"
+#include "Data/BossDataTable.h"
 
 
 UZedGameInstance::UZedGameInstance() {
@@ -49,7 +50,7 @@ UZedGameInstance::UZedGameInstance() {
 	///Script/Engine.DataTable'/Game/Data/DT_Monster.DT_Monster'
 	
 	{
-		FString DataPath = TEXT("Script/Engine.DataTable'/Game/Data/DT_Monster.DT_Monster'");
+		FString DataPath = TEXT("/Script/Engine.DataTable'/Game/Data/DT_Monster.DT_Monster'");
 		ConstructorHelpers::FObjectFinder<UDataTable> DataTable(*DataPath);
 
 		if (DataTable.Succeeded())
@@ -58,6 +59,28 @@ UZedGameInstance::UZedGameInstance() {
 		}
 
 	}
+
+	{
+		FString DataPath = TEXT("/Script/Engine.DataTable'/Game/Data/DT_BossDesertDragon.DT_BossDesertDragon'");
+		ConstructorHelpers::FObjectFinder<UDataTable> DataTable(*DataPath);
+
+		if (DataTable.Succeeded())
+		{
+			mBossData = DataTable.Object;
+
+			TArray<FName> ArrayName = mBossData->GetRowNames();
+
+			for (size_t i = 0; i < ArrayName.Num(); i++)
+			{
+				FBossDataTable* FindTable = mBossData->FindRow<FBossDataTable>(ArrayName[i], ArrayName[i].ToString());
+			}
+		}
+
+	}
+
+	
+	//mBossData
+	/// Script / Engine.DataTable'/Game/Data/DT_BossDesertDragon.DT_BossDesertDragon'
 
 
 	//// /Script/Engine.DataTable'/Game/Data/DT_Weapon.DT_Weapon'
@@ -130,6 +153,23 @@ FObjDataTable* UZedGameInstance::GetObjInteractData(FName _Name)
 	{
 		return nullptr;
 	}
+	return FindTable;
+}
+
+FBossDataTable* UZedGameInstance::GetBossDataTable(FName _Name)
+{
+	if (nullptr == mBossData)
+	{
+		return nullptr;
+	}
+
+	FBossDataTable* FindTable = mBossData->FindRow<FBossDataTable>(_Name, _Name.ToString());
+
+	if (nullptr == FindTable)
+	{
+		return nullptr;
+	}
+
 	return FindTable;
 }
 

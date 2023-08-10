@@ -31,6 +31,7 @@ public:
 
 	struct FObjDataTable* GetObjInteractData(FName _Name);
 
+	struct FBossDataTable* GetBossDataTable(FName _Name);
 
 private:
 
@@ -40,6 +41,8 @@ private:
 	UDataTable* WeaponMeshData;
 
 	UDataTable* mMonsterData;
+
+	UDataTable* mBossData;
 
 	UDataTable* mObjInteractData;
 

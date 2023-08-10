@@ -62,7 +62,8 @@ AMainCharacter::AMainCharacter()
 
 	mIsLockOn = false;
 	
-	
+	//addTag
+	Tags.Add(TEXT("Player"));
 	
 
 	//

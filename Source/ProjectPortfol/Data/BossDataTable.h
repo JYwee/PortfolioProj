@@ -26,7 +26,7 @@ public:
 
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BossMonsterData")
-		UStaticMesh* Mesh;
+		USkeletalMesh* Mesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BossMonsterData")
 		int HealthPoint;
@@ -53,7 +53,7 @@ public:
 		FVector PostionOri;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BossMonsterData")
-		TMap<BossAniState, class UAnimMontage*> MapAnimation;
+		TMap<BossDragonAIControlState, class UAnimMontage*> MapAnimation;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BossMonsterData")
 		class UBehaviorTree* AI;

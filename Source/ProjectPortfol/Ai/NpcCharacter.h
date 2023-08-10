@@ -82,6 +82,8 @@ public:
 		return GetAnimMontage(static_cast<int>(index));
 	}
 
+	class UAnimMontage* GetAnimMontage(int index) const;
+		
 
 	template<typename EnumType>
 	void SetAllAnimation(const TMap<EnumType, class UAnimMontage*>& mapAnimation)
@@ -96,13 +98,6 @@ public:
 		return mAllAnimations;
 	}
 
-	FORCEINLINE class UAnimMontage* GetAnimMontage(int index) {
-		if (mAllAnimations.Contains(index))
-		{
-			return mAllAnimations[index];
-		}
-		return nullptr;
-	}
 
 
 	template<typename EnumType>
@@ -127,6 +122,13 @@ public:
 		return mNpcAnimInstance;
 	}
 	
+protected:
+
+	UPROPERTY(Category = "CharacterBase", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		int mAniState = 0;
+
+	UPROPERTY(Category = "CharacterBase", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		TMap<int, class UAnimMontage*> mAllAnimations;
 
 private:
 	int mHealthPoint;
@@ -154,13 +156,9 @@ private:
 		);
 
 
-	UPROPERTY(Category = "CharacterBase", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	int mAniState = 0;
+	
 
-	UPROPERTY(Category = "CharacterBase", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	TMap<int , class UAnimMontage*> mAllAnimations;
-
-	const struct FMonsterDataTable* mMonsterDT = nullptr;
+//	const struct FMonsterDataTable* mMonsterDT = nullptr;
 
 	class UNpcAnimInstance* mNpcAnimInstance = nullptr;
 	//UPROPERTY()

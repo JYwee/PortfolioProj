@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Ai/NpcCharacter.h"
+#include <ZedEnums.h>
 #include "MonsterNpc.generated.h"
 
 /**
@@ -13,5 +14,11 @@ UCLASS()
 class PROJECTPORTFOL_API AMonsterNpc : public ANpcCharacter
 {
 	GENERATED_BODY()
-	
+
+		AMonsterNpc();
+
+public:
+	void BeginPlay() override;
+
+	const struct FMonsterDataTable* mMonsterDT = nullptr;
 };

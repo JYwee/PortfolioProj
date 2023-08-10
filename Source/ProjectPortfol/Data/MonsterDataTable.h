@@ -41,7 +41,7 @@ public:
 		FVector PostionOri;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MonsterData")
-		TMap<NPCAniState, class UAnimMontage*> MapAnimation;
+		TMap<NPCEnemyAIControlState, class UAnimMontage*> MapAnimation;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MonsterData")
 		class UBehaviorTree* AI;

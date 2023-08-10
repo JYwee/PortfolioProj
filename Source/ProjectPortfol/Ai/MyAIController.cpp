@@ -4,7 +4,8 @@
 #include "MyAIController.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
-
+#include "BehaviorTree/BehaviorTree.h"
+#include "NpcCharacter.h"
 
 AMyAIController::AMyAIController()
 {
@@ -13,9 +14,27 @@ AMyAIController::AMyAIController()
 	mBlackboardComponent = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComponent"));;
 }
 
-void AMyAIController::OnPossess(APawn* InPawn)
+void AMyAIController::OnPossess(APawn* inPawn)
 {
-	Super::OnPossess(InPawn);
+	Super::OnPossess(inPawn);
 
+	if (nullptr != mBehaviorTreeComponent && true == mBehaviorTreeComponent->IsValidLowLevel())
+	{
+		ANpcCharacter* aiNpcChar = Cast<ANpcCharacter>(inPawn);
+
+		UBehaviorTree* behaviorTree = aiNpcChar->GetBehaviorTree();
+
+		if (nullptr == behaviorTree || false == behaviorTree->IsValidLowLevel())
+		{
+			UE_LOG(LogTemp, Error, TEXT("%S(%u)> if (nullptr == BehaviorTree || false == BehaviorTree->IsValidLowLevel())"), __FUNCTION__, __LINE__);
+			return;
+		}
+
+		mBlackboardComponent->InitializeBlackboard(*behaviorTree->BlackboardAsset);
+
+		mBlackboardComponent->SetValueAsObject(TEXT("SelfActor"), inPawn);
+
+		mBehaviorTreeComponent->StartTree(*behaviorTree);
+	}
 
 }

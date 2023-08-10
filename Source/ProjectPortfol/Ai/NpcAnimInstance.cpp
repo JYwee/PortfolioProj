@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "NpcAnimInstance.h"
@@ -44,6 +44,7 @@ void UNpcAnimInstance::NativeUpdateAnimation(float deltaTime)
 
 	mAniState = character->GetAniState();
 
+	// emeny 점프 애니매이션 없어서 임시로 아이들로 때워놓은거 있음.
 	class UAnimMontage* montage = mAllAnimations[mAniState];
 
 	if (montage == nullptr)
