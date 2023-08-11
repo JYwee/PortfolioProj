@@ -13,10 +13,12 @@ ABossCharacter::ABossCharacter()
 	
 	SetAniState(BossAniState::Idle);
 
-	
+	Tags.Add("Boss");
 
 	//GetMesh()->SetSkeletalMeshAsset();
-	GetMesh()->SetSimulatePhysics(true);
+
+	//when died set true
+	GetMesh()->SetSimulatePhysics(false);
 	
 	
 

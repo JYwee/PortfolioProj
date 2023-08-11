@@ -15,7 +15,7 @@ APortalActor::APortalActor()
 	mCapsuleComponent->SetCapsuleRadius(150.f);
 	mCapsuleComponent->ComponentTags.Add(TEXT("TeleportGate"));
 
-	//mTargetPortal = 
+	mTargetPortal = FVector(-1710.0, -2630.0, 160.0);
 
 
 	Tags.Add("TeleportGate");
@@ -34,5 +34,7 @@ void APortalActor::PlayerTeleport()
 		return;
 	}
 
-	//myGameMode->GetMainCharacter()->SetActorLocation(mTargetPortal);
+	myGameMode->GetMainCharacter()->SetActorLocation(mTargetPortal, false);
+
+	//const FVector& NewLocation, bool bSweep, FHitResult* OutSweepHitResult, ETeleportType Teleport
 }

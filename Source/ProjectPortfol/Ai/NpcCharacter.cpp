@@ -100,7 +100,7 @@ void ANpcCharacter::Destroyed()
 {
 	Super::Destroy();
 
-	/*UZedGameInstance* Inst = GetGameInstance<UZedGameInstance>();
+	UZedGameInstance* Inst = GetGameInstance<UZedGameInstance>();
 
 	if (Inst == nullptr || Inst->IsValidLowLevel() == false)
 	{
@@ -108,7 +108,13 @@ void ANpcCharacter::Destroyed()
 		return;
 	}
 
-	Inst->AllNpcCharac.;*/
+	for (int i = 0; i < Inst->AllNpcCharac.Num(); ++i)
+	{
+		if (Inst->AllNpcCharac[i] == this)
+		{
+			//mBlackboardComponent
+		}
+	}
 }
 
 void ANpcCharacter::PostInitializeComponents()

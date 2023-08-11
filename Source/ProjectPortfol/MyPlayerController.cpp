@@ -379,8 +379,11 @@ void AMyPlayerController::InteractAction()
 		}
 		else if (myCharacter->GetNearInteractObj()[i]->Tags.Contains(TEXT("TeleportGate")))
 		{
-			
-			UE_LOG(LogTemp, Error, TEXT("%S(%u) %S"), __FUNCTION__, __LINE__, myCharacter->GetNearInteractObj()[i]->StaticConfigName());
+			APortalActor* portalAct = Cast<APortalActor>(myCharacter->GetNearInteractObj()[i]);
+			portalAct->PlayerTeleport();
+			//magnetAct->MovePast();
+
+			//UE_LOG(LogTemp, Error, TEXT("%S(%u) %S"), __FUNCTION__, __LINE__, myCharacter->GetNearInteractObj()[i]->StaticConfigName());
 		}
 		//UE_LOG(LogTemp, Error, TEXT("%S(%u) %S"), __FUNCTION__, __LINE__, mNearInteractObj[i]->StaticConfigName());
 

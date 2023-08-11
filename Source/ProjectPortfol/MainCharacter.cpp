@@ -20,6 +20,8 @@
 #include "UI/InteracTextSlot.h"
 
 #include "MyPlayerController.h"
+#include "Kismet/GameplayStatics.h"
+#include "InGameMode.h"
 //#include "Math/Vector.h"
 #include "GameFramework/SpringArmComponent.h"
 
@@ -78,6 +80,14 @@ AMainCharacter::AMainCharacter()
 		WeaponArrays.Add(MeshLoader.Object);
 	}
 
+
+	AInGameMode* myGameMode = Cast<AInGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+	if (myGameMode == nullptr || myGameMode->IsValidLowLevel() == false)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%S(%u) Inst == nullptr  myGameMode->IsValidLowLevel() == false"), __FUNCTION__, __LINE__);
+		return;
+	}
+	myGameMode->SetMainCharacter(this);
 	
 }
 
@@ -285,6 +295,8 @@ void AMainCharacter::BeginPlay()
 	Super::BeginPlay();
 	
 	UZedGameInstance* Inst = GetGameInstance<UZedGameInstance>();
+
+	
 
 	WeaponArrays.Add(GetGameInstance<UZedGameInstance>()->GetMesh(TEXT("Staff01SM")));
 	//WeaponArrays.Add(GetGameInstance<UZedGameInstance>()->GetMesh(TEXT("Staff2")));

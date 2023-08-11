@@ -46,7 +46,7 @@ void AInterObjStaticMeshAct::BeginOverLap(UPrimitiveComponent* OverlappedCompone
 
 	if (OtherActor->ActorHasTag(TEXT("Weapon")))
 	{
-		this->Destroy();
+		//this->Destroy();
 	}
 	if (OtherComp->ComponentHasTag(TEXT("PlayerCapsuleComp")))
 	{

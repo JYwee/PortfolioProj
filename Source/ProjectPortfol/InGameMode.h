@@ -22,10 +22,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = InGameMode)
 		AMainCharacter* GetMainCharacter() const { return mMainCharacter; }
 
-protected:
-
 	UFUNCTION(BlueprintCallable, Category = InGameMode)
 	FORCEINLINE void SetMainCharacter(AMainCharacter* mainCharac) { mMainCharacter = mainCharac; }
+protected:
+
 
 private:
 

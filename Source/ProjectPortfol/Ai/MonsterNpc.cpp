@@ -9,7 +9,7 @@
 
 AMonsterNpc::AMonsterNpc()
 {
-	
+	Tags.Add("Monster");
 }
 
 void AMonsterNpc::BeginPlay()

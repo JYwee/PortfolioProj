@@ -14,6 +14,17 @@ UBTTask_NpcMove::UBTTask_NpcMove()
 
 EBTNodeResult::Type UBTTask_NpcMove::ExecuteTask(UBehaviorTreeComponent& ownerComp, uint8* nodeMemory)
 {
+	/*int tmpAIState;
+	if (GetNpcCharacter(ownerComp)->Tags.Contains("Monster"))
+	{
+		tmpAIState = static_cast<int>(NPCEnemyAIControlState::Move);
+	}
+	else if (GetNpcCharacter(ownerComp)->Tags.Contains("Boss"))
+	{
+		tmpAIState = static_cast<int>(BossDragonAIControlState::Move);
+	}*/
+
+	
 	GetNpcCharacter(ownerComp)->SetAniState(NPCEnemyAIControlState::Move);
 
 	UCharacterMovementComponent* moveComp = Cast<UCharacterMovementComponent>(GetNpcCharacter(ownerComp)->GetMovementComponent());
