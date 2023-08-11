@@ -9,16 +9,25 @@ AMagnetAct::AMagnetAct()
 	PrimaryActorTick.bCanEverTick = true;
 
 
-	mCapsuleComponent->SetCapsuleSize(100.f, 100.f, true);
+	mCapsuleComponent->SetCapsuleSize(150.f, 150.f, true);
 	mCapsuleComponent->ComponentTags.Add("MagnetOBJ");
 	Tags.Add("MagnetOBJ");
 
-	FVector Origin, Extent;
-	GetActorBounds(false, Origin, Extent);
-	//mCapsuleComponent->SetCapsuleSize(Extent.X * 0.5f, Extent.Y * 0.5f, true);
-	mCapsuleComponent->SetCapsuleSize(Extent.X + 50.f, Extent.Y + 50.f, true);
+	//FVector Origin, Extent;
+	//GetActorBounds(false, Origin, Extent);
+	////mCapsuleComponent->SetCapsuleSize(Extent.X * 0.5f, Extent.Y * 0.5f, true);
+	//mCapsuleComponent->SetCapsuleSize(Extent.X + 50.f, Extent.Y + 50.f, true);
 
 }
+
+void AMagnetAct::BeginPlay()
+{
+	/*FVector Origin, Extent;
+	GetActorBounds(false, Origin, Extent);
+	mCapsuleComponent->SetCapsuleSize(Extent.X + 50.f, Extent.Y + 50.f, true);*/
+	Super::BeginPlay();
+}
+	
 
 void AMagnetAct::MovePast()
 {

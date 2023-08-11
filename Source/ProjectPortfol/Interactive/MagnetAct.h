@@ -18,6 +18,7 @@ class PROJECTPORTFOL_API AMagnetAct : public AInterObjStaticMeshAct
 
 public:
 
+	virtual void BeginPlay() override;
 
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Portal)
 	TQueue<FTransform> mPastPos;
