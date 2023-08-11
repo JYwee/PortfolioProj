@@ -34,6 +34,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Npc)
 	class UBlackboardComponent* GetBlackboardComponent();
 
+
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -122,6 +124,8 @@ public:
 		return mNpcAnimInstance;
 	}
 	
+
+
 protected:
 
 	UPROPERTY(Category = "CharacterBase", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))

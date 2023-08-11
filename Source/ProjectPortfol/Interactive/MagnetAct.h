@@ -23,6 +23,11 @@ public:
 	TQueue<FTransform> mPastPos;
 
 	
+	UFUNCTION(BlueprintCallable, Category = "Portal")
+	FORCEINLINE void SetIsGotoPast(bool isGo)
+	{
+		mIsGotoPast = isGo;
+	}
 
 	
 	UFUNCTION(BlueprintCallable, Category = "Portal")

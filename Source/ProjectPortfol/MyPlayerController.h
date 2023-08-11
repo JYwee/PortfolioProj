@@ -62,6 +62,9 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
 		void LockOnTarget();
 
+	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+		void InteractAction();
+		
 
 
 

@@ -8,7 +8,8 @@
 #include "Components/WidgetComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
-
+#include "Interactive/MagnetAct.h"
+#include "Interactive/PortalActor.h"
 
 AMyPlayerController::AMyPlayerController()
 {
@@ -76,6 +77,7 @@ void AMyPlayerController::SetupInputComponent()
 			UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerJumpAction"), EKeys::SpaceBar));
 			UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("Lock_On"), EKeys::Q));
 			UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("ShiftAction"), EKeys::LeftShift));
+			UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("InteractAction"), EKeys::E));
 
 	}
 	InputComponent->BindAxis("MainPlayer_MoveForward", this, &AMyPlayerController::MoveForward);
@@ -99,6 +101,8 @@ void AMyPlayerController::SetupInputComponent()
 	InputComponent->BindAction("Lock_On", IE_Pressed, this, &AMyPlayerController::LockOnTarget);
 	
 	InputComponent->BindAction("ShiftAction", IE_Pressed, this, &AMyPlayerController::ShiftAction);
+	InputComponent->BindAction("InteractAction", IE_Pressed, this, &AMyPlayerController::InteractAction);
+
 }
 
 void AMyPlayerController::BeginPlay()
@@ -359,6 +363,33 @@ void AMyPlayerController::LockOnTarget()
 	//	
 	//}
 	
+}
+
+void AMyPlayerController::InteractAction()
+{
+	for (int i = 0; i < myCharacter->GetNearInteractObj().Num(); ++i)
+	{
+
+		if (myCharacter->GetNearInteractObj()[i]->Tags.Contains(TEXT("MagnetOBJ")))
+		{
+			AMagnetAct* magnetAct = Cast<AMagnetAct>(myCharacter->GetNearInteractObj()[i]);
+			magnetAct->SetIsGotoPast(true);
+			//magnetAct->MovePast();
+			UE_LOG(LogTemp, Error, TEXT("%S(%u) %S"), __FUNCTION__, __LINE__, myCharacter->GetNearInteractObj()[i]->StaticConfigName());
+		}
+		else if (myCharacter->GetNearInteractObj()[i]->Tags.Contains(TEXT("TeleportGate")))
+		{
+			
+			UE_LOG(LogTemp, Error, TEXT("%S(%u) %S"), __FUNCTION__, __LINE__, myCharacter->GetNearInteractObj()[i]->StaticConfigName());
+		}
+		//UE_LOG(LogTemp, Error, TEXT("%S(%u) %S"), __FUNCTION__, __LINE__, mNearInteractObj[i]->StaticConfigName());
+
+
+		//UE_LOG mNearInteractObj[i];
+	}
+
+
+	//myCharacter->InteractAction();
 }
 
 ANpcCharacter* AMyPlayerController::Visibility_GetRenderedActors(ANpcCharacter* npcCharacter, float MinRecentTime)

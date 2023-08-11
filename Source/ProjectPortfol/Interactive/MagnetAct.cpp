@@ -8,7 +8,10 @@ AMagnetAct::AMagnetAct()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
+
+	mCapsuleComponent->SetCapsuleSize(100.f, 100.f, true);
 	mCapsuleComponent->ComponentTags.Add("MagnetOBJ");
+	Tags.Add("MagnetOBJ");
 
 	FVector Origin, Extent;
 	GetActorBounds(false, Origin, Extent);
@@ -20,7 +23,10 @@ AMagnetAct::AMagnetAct()
 void AMagnetAct::MovePast()
 {
 	FTransform pastTrans;
-	mPastPos.Dequeue(pastTrans);
+	if (!mPastPos.IsEmpty()) {
+		mPastPos.Dequeue(pastTrans);
+	}
+	
 
 	SetActorTransform(pastTrans);
 }
@@ -33,7 +39,7 @@ void AMagnetAct::Tick(float DeltaSeconds)
 	mLimitTime += DeltaSeconds;
 	if (mIsGotoPast == true)
 	{
-		if (mCurrnetTime > 60)
+		if (mCurrnetTime > 1)
 		{
 			//FTransform&
 
@@ -45,7 +51,7 @@ void AMagnetAct::Tick(float DeltaSeconds)
 		}
 	}
 	else {
-		if (mCurrnetTime > 60)
+		if (mCurrnetTime > 1)
 		{
 		//FTransform&
 		

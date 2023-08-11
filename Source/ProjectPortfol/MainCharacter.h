@@ -96,6 +96,9 @@ public:
 		}
 	}
 
+	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+	void InteractAction();
+
 	/*UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
 	FORCEINLINE	void SetAllAnimations(ZEDAniState aniState) {
 		mA
@@ -164,6 +167,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class ANpcCharacter* mTargetNpcCharacter;
 
+//mNearInteractObj
+	
+	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+	FORCEINLINE TArray<AActor*> GetNearInteractObj() {
+		return mNearInteractObj;
+	}
+
 private:
 		int mHealthPoint;
 
@@ -183,5 +193,9 @@ private:
 		UPROPERTY(Category = "AMainCharacter", BlueprintReadWrite, EditAnywhere, meta = (AllowPrivateAccess = "true"))
 			TMap<ZEDAniState, class UAnimMontage*> mAllAnimations;
 		//TMap<ZEDAniState, class UAnimMontage*> AllAnimations;
+
+		UPROPERTY(Category = "AMainCharacter", BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
+			TArray<AActor*> mNearInteractObj;
+
 
 };

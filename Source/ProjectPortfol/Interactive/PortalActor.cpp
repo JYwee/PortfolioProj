@@ -15,6 +15,10 @@ APortalActor::APortalActor()
 	mCapsuleComponent->SetCapsuleRadius(150.f);
 	mCapsuleComponent->ComponentTags.Add(TEXT("TeleportGate"));
 
+	//mTargetPortal = 
+
+
+	Tags.Add("TeleportGate");
 }
 
 

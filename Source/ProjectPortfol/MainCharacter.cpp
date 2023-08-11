@@ -115,10 +115,15 @@ void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AAct
 				UInteracObjData* Data = NewObject<UInteracObjData>();
 				Data->mObjData = gameInst->GetObjInteractData("TeleportGate");
 				listWdg->GetInteractListView()->AddItem(Data);
+
+				AActor* addedObj = Cast<AActor>(OtherActor);
+				mNearInteractObj.Add(addedObj);
 			}
 
 			if (TEXT("MagnetOBJ") == OtherComp->ComponentTags[i])
 			{
+				AActor* addedObj = Cast<AActor>(OtherActor);
+				mNearInteractObj.Add(addedObj);
 				/*UInteracObjData* Data = NewObject<UInteracObjData>();
 				Data->mObjData = gameInst->GetObjInteractData("TeleportGate");
 				listWdg->GetInteractListView()->AddItem(Data);*/
@@ -187,6 +192,17 @@ void AMainCharacter::EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 				tmp2->RemoveItem(tmpData);
 			}
 		}
+
+		for (int i = 0 ; i < mNearInteractObj.Num(); ++i)
+		{
+			AActor* removeObj = Cast<AActor>(OtherActor);
+			if (mNearInteractObj.Contains(removeObj))
+			{
+				mNearInteractObj.Remove(removeObj);
+			}
+		}
+
+
 	}
 
 }
@@ -328,6 +344,13 @@ void AMainCharacter::Tick(float DeltaTime)
 		
 		GetCharacterMovement()->bOrientRotationToMovement = true;
 	}
+	
+}
+
+void AMainCharacter::InteractAction()
+{
+	
+
 	
 }
 
