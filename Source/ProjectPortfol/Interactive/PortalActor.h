@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Interactive/InterObjStaticMeshAct.h"
+#include "Particles/ParticleSystemComponent.h"
+#include "Components/SphereComponent.h"
 #include "PortalActor.generated.h"
 
 /**
@@ -19,18 +21,30 @@ public:
 
 	APortalActor();
 	
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Portal)
+	UParticleSystemComponent* mPaticleComp;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Portal)
-	FVector mTargetPortal;
+	FVector mTargetLocatrion;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Portal)
+	APortalActor* mTargetPortal;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Portal)
 	FVector mStartPortal;
 
+
+
 	UFUNCTION(BlueprintCallable, Category = "Portal")
 		void PlayerTeleport();
 
+protected:
+	void BeginPlay() override;
+
 private:
+
+	/*UPROPERTY(Category = InteractiveObjMeshActor, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<USphereComponent> mNavigationSphereComp;*/
 
 
 };

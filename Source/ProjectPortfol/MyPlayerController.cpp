@@ -71,6 +71,8 @@ void AMyPlayerController::SetupInputComponent()
 
 			//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_LookUpRate", EKeys::Gamepad_RightY, 1.f));
 			UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_LookUp", EKeys::MouseY, -1.f));
+			UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("MainPlayer_Aim", EKeys::RightMouseButton, 1.f));
+
 			//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("ShiftAction", EKeys::LeftShift));
 
 			UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerAttack"), EKeys::LeftMouseButton));
@@ -82,6 +84,9 @@ void AMyPlayerController::SetupInputComponent()
 	}
 	InputComponent->BindAxis("MainPlayer_MoveForward", this, &AMyPlayerController::MoveForward);
 	InputComponent->BindAxis("MainPlayer_MoveRight", this, &AMyPlayerController::MoveRight);
+
+	InputComponent->BindAxis("MainPlayer_Aim", this, &AMyPlayerController::Aiming);
+
 	//PlayerInputComponent->BindAxis("MainPlayer_MoveUp", this, &AMainCharacter::MoveUp_World);
 	//InputComponent->BindAxis("MainPlayer_TurnRate", this, &AMyPlayerController::TurnAtRate);
 
@@ -108,6 +113,8 @@ void AMyPlayerController::SetupInputComponent()
 void AMyPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
+
+	//GetCharacter null 뜰때 있음.
 
 	myCharacter = Cast<AMainCharacter>(GetCharacter());
 
@@ -393,6 +400,11 @@ void AMyPlayerController::InteractAction()
 
 
 	//myCharacter->InteractAction();
+}
+
+void AMyPlayerController::Aiming(float Rate)
+{
+	//aiming right mouse btn
 }
 
 ANpcCharacter* AMyPlayerController::Visibility_GetRenderedActors(ANpcCharacter* npcCharacter, float MinRecentTime)

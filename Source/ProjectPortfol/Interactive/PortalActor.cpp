@@ -15,8 +15,15 @@ APortalActor::APortalActor()
 	mCapsuleComponent->SetCapsuleRadius(150.f);
 	mCapsuleComponent->ComponentTags.Add(TEXT("TeleportGate"));
 
-	mTargetPortal = FVector(-1710.0, -2630.0, 160.0);
-
+	//mPaticleComp->Activate(true);
+	//
+	mPaticleComp = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("PaticleComp"));
+	
+	mPaticleComp->SetWorldScale3D(FVector3d(0.7f, 0.7f, 0.7f));
+	mPaticleComp->SetupAttachment(RootComponent);
+	
+	//mNavigationSphereComp = CreateDefaultSubobject<USphereComponent>(TEXT("NavigationSphereComp"));
+	
 
 	Tags.Add("TeleportGate");
 }
@@ -34,7 +41,19 @@ void APortalActor::PlayerTeleport()
 		return;
 	}
 
-	myGameMode->GetMainCharacter()->SetActorLocation(mTargetPortal, false);
+	myGameMode->GetMainCharacter()->SetActorLocation(mTargetLocatrion, false);
+
+	
 
 	//const FVector& NewLocation, bool bSweep, FHitResult* OutSweepHitResult, ETeleportType Teleport
+}
+
+void APortalActor::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if (mTargetPortal != nullptr)
+	{
+		mTargetLocatrion = mTargetPortal->GetActorLocation();
+	}
 }
