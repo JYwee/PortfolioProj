@@ -450,7 +450,14 @@ ANpcCharacter* AMyPlayerController::Visibility_GetRenderedActors(ANpcCharacter* 
 
 void AMyPlayerController::AttackAction()
 {
-	myCharacter->SetAniState(ZEDAniState::Attack);
+	if (myCharacter->IsAimingNow() == false) {
+		myCharacter->SetAniState(ZEDAniState::Attack);
+	}
+	else
+	{
+
+		myCharacter->SetAniState(ZEDAniState::Attack);
+	}
 }
 
 void AMyPlayerController::JumpAction()
