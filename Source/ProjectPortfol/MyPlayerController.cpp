@@ -10,6 +10,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Interactive/MagnetAct.h"
 #include "Interactive/PortalActor.h"
+#include <UI/InGameHud.h>
 
 AMyPlayerController::AMyPlayerController()
 {
@@ -404,6 +405,34 @@ void AMyPlayerController::InteractAction()
 
 void AMyPlayerController::Aiming(float Rate)
 {
+	if (Rate != 0.0f) {
+
+		if (myCharacter->IsAimingNow() == false)
+		{
+			myCharacter->SetIsAimingNow(true);
+			if (GetHUD() == nullptr)
+			{
+				UE_LOG(LogTemp, Error, TEXT("%S(%u) GetHud failed"), __FUNCTION__, __LINE__);
+				return;
+			}
+			AInGameHud* ingameHUD = Cast<AInGameHud>(GetHUD());
+			ingameHUD->GetMainWidget()->SetCrossHairOnOffOnOff(ESlateVisibility::Visible);
+
+			myCharacter->AimingAction();
+		}
+	}
+	else
+	{
+		if (myCharacter->IsAimingNow() == true)
+		{
+			myCharacter->SetIsAimingNow(false);
+			AInGameHud* ingameHUD = Cast<AInGameHud>(GetHUD());
+			ingameHUD->GetMainWidget()->SetCrossHairOnOffOnOff(ESlateVisibility::Hidden);
+
+			myCharacter->AimingAction();
+		}
+	}
+	
 	//aiming right mouse btn
 }
 

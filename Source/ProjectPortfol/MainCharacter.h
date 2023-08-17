@@ -87,6 +87,8 @@ public:
 		return tmpAllAnim;
 	}
 	
+	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+	void AimingAction() ;
 	
 	void SetAllAnimation(const TMap<int, class UAnimMontage*>& mapAnimation)
 	{
@@ -174,6 +176,22 @@ public:
 		return mNearInteractObj;
 	}
 
+	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+	FORCEINLINE void SetIsAimingNow(bool bIsAnimed) {
+		mIsAimingNow = bIsAnimed;
+	}
+	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+	FORCEINLINE bool IsAimingNow() {
+		return mIsAimingNow;
+	}
+
+	
+	bool IsChangeAimingState(bool curAimState)
+	{
+		//if()
+		return mIsChangeAimingState;
+	}
+
 private:
 		int mHealthPoint;
 
@@ -184,6 +202,10 @@ private:
 		int mDefense;
 
 		bool mIsLockOn;
+
+		bool mIsAimingNow = false;
+
+		bool mIsChangeAimingState = false;
 
 		UPROPERTY(Category = "AMainCharacter", BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 			ZEDAniState mAniState;

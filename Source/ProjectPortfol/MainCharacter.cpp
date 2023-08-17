@@ -53,6 +53,9 @@ AMainCharacter::AMainCharacter()
 	// Create a follow camera
 	mFollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	mFollowCamera->SetupAttachment(mSpringArmComp, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
+	mFollowCamera->SetRelativeLocation(FVector(0.f, 0.f, 200.f));
+	mFollowCamera->SetRelativeRotation(FRotator(-10.f, 0, 0));
+
 	mFollowCamera->bUsePawnControlRotation = false;
 
 	//mFollowCamera->ComponentTags.Add
@@ -357,6 +360,33 @@ void AMainCharacter::Tick(float DeltaTime)
 		GetCharacterMovement()->bOrientRotationToMovement = true;
 	}
 	
+}
+
+void AMainCharacter::AimingAction()
+{
+	if (mIsAimingNow == true)
+	{
+		mSpringArmComp->TargetArmLength = 100;
+		//set 말고 add 로 바꿀것 나중에
+		//mSpringArmComp.addlo
+		//mSpringArmComp->SetRelativeLocation(FVector(0.f, 45.f, 0.f));
+		mFollowCamera->SetRelativeLocation(FVector(0.f, 45.f, 100.f));
+		mFollowCamera->SetRelativeRotation(FRotator(0, 0, 0));
+		bUseControllerRotationYaw = true;
+		//mFollowCamera.
+	}
+	else {
+		mSpringArmComp->TargetArmLength = 500;
+		////set 말고 add 로 바꿀것 나중에
+		////mSpringArmComp.addlo
+		////mSpringArmComp->SetRelativeLocation(FVector(0.f, 0.f, 0.f));
+		mFollowCamera->SetRelativeLocation(FVector(0.f, 0.f, 200.f));
+		mFollowCamera->SetRelativeRotation(FRotator(-10.f, 0, 0));
+		//UE_LOG(LogTemp, Error, TEXT("%S(%u) %f %f %f "), __FUNCTION__, __LINE__, mSpringArmComp->GetRelativeLocation().X, mSpringArmComp->GetRelativeLocation().Y, mSpringArmComp->GetRelativeLocation().Z);
+		bUseControllerRotationYaw = false;
+		UE_LOG(LogTemp, Error, TEXT("%S(%u) %f %f %f "), __FUNCTION__, __LINE__, mSpringArmComp->GetRelativeLocation().X, mSpringArmComp->GetRelativeLocation().Y, mSpringArmComp->GetRelativeLocation().Z);
+		UE_LOG(LogTemp, Error, TEXT("%S(%u) %f %f %f "), __FUNCTION__, __LINE__, mFollowCamera->GetRelativeLocation().X, mFollowCamera->GetRelativeLocation().Y, mFollowCamera->GetRelativeLocation().Z);
+	}
 }
 
 void AMainCharacter::InteractAction()

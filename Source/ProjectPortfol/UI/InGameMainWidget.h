@@ -31,10 +31,33 @@ public:
 		StatusWindowOnOff = _Visibility;
 	}
 
+
+	void SetmCrossHairOnOffSwitch()
+	{
+		StatusWindowOnOff = StatusWindowOnOff == ESlateVisibility::Hidden ? ESlateVisibility::Visible : ESlateVisibility::Hidden;
+	}
+
+	ESlateVisibility GetCrossHairOnOffOnOff()
+	{
+		return mCrossHairOnOff;
+	}
+
+	void SetCrossHairOnOffOnOff(ESlateVisibility _Visibility)
+	{
+		mCrossHairOnOff = _Visibility;
+	}
+
+
+
 private:
-	UPROPERTY(Category = "Effect", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(Category = "UIzed", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		ESlateVisibility StatusWindowOnOff = ESlateVisibility::Hidden;
 
-	UPROPERTY(Category = "Effect", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(Category = "UIzed", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		ESlateVisibility TalkTextWindowOnOff = ESlateVisibility::Hidden;
+
+	UPROPERTY(Category = "UIzed", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		ESlateVisibility mCrossHairOnOff = ESlateVisibility::Hidden;
+
+
 };
