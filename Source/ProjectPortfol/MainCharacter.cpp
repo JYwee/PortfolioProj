@@ -84,13 +84,7 @@ AMainCharacter::AMainCharacter()
 	}
 
 
-	AInGameMode* myGameMode = Cast<AInGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
-	if (myGameMode == nullptr || myGameMode->IsValidLowLevel() == false)
-	{
-		UE_LOG(LogTemp, Error, TEXT("%S(%u) Inst == nullptr  myGameMode->IsValidLowLevel() == false"), __FUNCTION__, __LINE__);
-		return;
-	}
-	myGameMode->SetMainCharacter(this);
+	
 	
 }
 
@@ -113,6 +107,8 @@ void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AAct
 			UE_LOG(LogTemp, Error, TEXT("%S(%u) Find failed"), __FUNCTION__, __LINE__);
 			return;
 		}
+
+
 
 		AInterObjStaticMeshAct* objMeshAct = Cast<AInterObjStaticMeshAct>(OtherActor);
 		if(objMeshAct == nullptr || objMeshAct->IsValidLowLevel() == false)
@@ -315,6 +311,16 @@ void AMainCharacter::BeginPlay()
 		UE_LOG(LogTemp, Error, TEXT("%S(%u) myController == nullptr || myController->IsValidLowLevel() == false"), __FUNCTION__, __LINE__);
 		return;
 	}
+
+	//AInGameMode* myGameMode = Cast<AInGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+	AInGameMode* myGameMode = Cast<AInGameMode>(GetWorld()->GetAuthGameMode());
+	if (myGameMode == nullptr || myGameMode->IsValidLowLevel() == false)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%S(%u) Inst == nullptr  myGameMode->IsValidLowLevel() == false"), __FUNCTION__, __LINE__);
+		return;
+	}
+	myGameMode->SetMainCharacter(this);
+
 
 	//for interativeObj
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMainCharacter::BeginOverLap);

@@ -33,14 +33,16 @@ void AMagicProjectile::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	mProjectileDestroyTime -= DeltaTime;
+	
+	UE_LOG(LogTemp, Error, TEXT("%S(%u) %f, %f, %f"), __FUNCTION__, __LINE__, GetActorLocation().X, GetActorLocation().Y, GetActorLocation().Z);
 
-	if (mProjectileDestroyTime < 0.f)
+	if (mProjectileDestroyTime < 0.0f)
 	{
 		Destroy();
 		return;
 	}
 
-	AddActorWorldOffset(GetActorLocation() * DeltaTime * mSpeed);
+	AddActorWorldOffset(GetActorForwardVector() * DeltaTime * mSpeed);
 }
 
 void AMagicProjectile::DestroyProjectile(AActor* _Destroy)

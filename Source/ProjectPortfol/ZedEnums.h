@@ -15,6 +15,8 @@ enum class ZEDAniState : uint8
 	Attack UMETA(DisplayName = "공격"),
 	FrontRun  UMETA(DisplayName = "앞으로달리기"),
 	RightRun  UMETA(DisplayName = "옆으로달리기"),
+	SimpleMagicCasting UMETA(DisplayName = "주문 시전"),
+
 };
 
 UENUM(BlueprintType)

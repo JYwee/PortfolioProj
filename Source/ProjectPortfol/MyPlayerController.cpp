@@ -10,6 +10,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Interactive/MagnetAct.h"
 #include "Interactive/PortalActor.h"
+#include <Interactive/Battle/MagicProjectile.h>
 #include <UI/InGameHud.h>
 
 AMyPlayerController::AMyPlayerController()
@@ -450,13 +451,28 @@ ANpcCharacter* AMyPlayerController::Visibility_GetRenderedActors(ANpcCharacter* 
 
 void AMyPlayerController::AttackAction()
 {
+
+	UZedGameInstance* Inst = GetWorld()->GetGameInstance<UZedGameInstance>();
+
+	TSubclassOf<UObject> ShineBolt = Inst->GetSubClassData(TEXT("ShineBolt"));
 	if (myCharacter->IsAimingNow() == false) {
 		myCharacter->SetAniState(ZEDAniState::Attack);
 	}
 	else
 	{
+		AActor* Actor = GetWorld()->SpawnActor<AActor>(ShineBolt);
+		Actor->Tags.Add(TEXT("MagicProjectile"));
+		AMagicProjectile* magicProjectile = Cast<AMagicProjectile>(Actor);
 
-		myCharacter->SetAniState(ZEDAniState::Attack);
+		/*if (magicProjectile == nullptr)
+			UE_LOG(LogTemp, Error, TEXT("%S(%u) magicProjec nullptr"), __FUNCTION__, __LINE__);
+		*/
+		FVector Pos = myCharacter->GetActorLocation() + FVector(20.f, 20.f, 20.f);
+		magicProjectile ->SetActorLocation(Pos);//tmp  pos
+		magicProjectile ->SetActorRotation(myCharacter->GetActorRotation());
+		magicProjectile ->GetSphereComponent()->SetCollisionProfileName(TEXT("PlayerAttack"), true);
+
+		myCharacter->SetAniState(ZEDAniState::SimpleMagicCasting);
 	}
 }
 

@@ -30,6 +30,12 @@ void UZedAnimInstance::MontageEnd(UAnimMontage* aniMontage, bool inter)
 		Montage_Play(AllAnimations[ZEDAniState::Idle], 1.0f);
 	}
 
+	if (AllAnimations[ZEDAniState::SimpleMagicCasting] == aniMontage)
+	{
+		AniState = ZEDAniState::Idle;
+		character->SetAniState(ZEDAniState::Idle);
+		Montage_Play(AllAnimations[ZEDAniState::Idle], 1.0f);
+	}
 }
 
 void UZedAnimInstance::NativeBeginPlay()

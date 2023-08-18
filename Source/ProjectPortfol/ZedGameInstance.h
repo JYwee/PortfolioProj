@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include <Engine/DataTable.h>
+
 #include "Engine/GameInstance.h"
 #include "ZedGameInstance.generated.h"
 

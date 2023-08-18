@@ -8,6 +8,7 @@
 #include "Data/ObjDataTable.h"
 #include "Data/MonsterDataTable.h"
 #include "Data/BossDataTable.h"
+#include "Data/SubClassData.h"
 
 
 UZedGameInstance::UZedGameInstance() {
@@ -78,6 +79,17 @@ UZedGameInstance::UZedGameInstance() {
 
 	}
 
+	{
+		FString DataPath = TEXT("/Script/Engine.DataTable'/Game/Data/DT_SubClass.DT_SubClass'");
+		ConstructorHelpers::FObjectFinder<UDataTable> DataTable(*DataPath);
+
+		if (DataTable.Succeeded())
+		{
+			mSubClassData = DataTable.Object;
+		}
+	}
+
+
 	
 	//mBossData
 	/// Script / Engine.DataTable'/Game/Data/DT_BossDesertDragon.DT_BossDesertDragon'
@@ -119,9 +131,19 @@ UStaticMesh* UZedGameInstance::GetMesh(FName name)
 
 TSubclassOf<UObject> UZedGameInstance::GetSubClassData(FName name)
 {
+	if (nullptr == mSubClassData)
+	{
+		return nullptr;
+	}
 
+	FSubClassData* FindTable = mSubClassData->FindRow<FSubClassData>(name, name.ToString());
 
-	return nullptr;
+	if (nullptr == FindTable)
+	{
+		return nullptr;
+	}
+
+	return FindTable->Object;
 }
 
 FMonsterDataTable* UZedGameInstance::GetMonsterDataTable(FName _Name)
