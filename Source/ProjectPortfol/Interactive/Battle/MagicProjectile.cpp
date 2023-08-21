@@ -2,6 +2,9 @@
 
 
 #include "Interactive/Battle/MagicProjectile.h"
+#include <MyPlayerController.h>
+#include <MainCharacter.h>
+#include "GameFramework/ProjectileMovementComponent.h"
 
 // Sets default values
 AMagicProjectile::AMagicProjectile()
@@ -10,13 +13,25 @@ AMagicProjectile::AMagicProjectile()
 	PrimaryActorTick.bCanEverTick = true;
 
 	mSphereComp = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
-	mSphereComp->SetupAttachment(RootComponent);
+	RootComponent = mSphereComp;
 	mSphereComp->SetCollisionProfileName(TEXT("NoCollision"), true);
 	mSphereComp->ComponentTags.Add(FName("SphereMagicProj"));
+	
 
 	mNiagaraComp = CreateDefaultSubobject<UNiagaraComponent>(TEXT("NiagaraComponent"));
-	mNiagaraComp->SetupAttachment(mSphereComp, TEXT("attachNigara"));
+	mNiagaraComp->SetupAttachment(RootComponent, TEXT("attachNigara"));
 
+	/*if (mProjectileMovementComponent != nullptr)
+	{
+		mProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovementComponent"));
+		mProjectileMovementComponent->SetUpdatedComponent(mSphereComp);
+		mProjectileMovementComponent->InitialSpeed = 1000.0f;
+		mProjectileMovementComponent->MaxSpeed = 1000.0f;
+		mProjectileMovementComponent->bRotationFollowsVelocity = true;
+		mProjectileMovementComponent->bShouldBounce = false;
+		mProjectileMovementComponent->Bounciness = 0.3f;
+		mProjectileMovementComponent->ProjectileGravityScale = 9.0f;
+	}*/
 }
 
 // Called when the game starts or when spawned
@@ -41,8 +56,22 @@ void AMagicProjectile::Tick(float DeltaTime)
 		Destroy();
 		return;
 	}
-
-	AddActorWorldOffset(GetActorForwardVector() * DeltaTime * mSpeed);
+	
+	if (mDirection == FVector::Zero())
+	{
+		AMyPlayerController* playerController = GetWorld()->GetFirstPlayerController<AMyPlayerController>();
+		SetActorRotation(playerController->GetMyCharacter()->GetFollowCameraRotator());
+		mDirection = playerController->GetMyCharacter()->GetFollowCameraRotator().Vector();
+	}
+	else {
+		AddActorWorldOffset(mDirection * DeltaTime * mSpeed);
+	}
+	
+	
+	
+	//FVector tmp = GetActorForwardVector() + playerController->GetMyCharacter()->GetFollowCameraRotator().Vector();
+	
+	
 }
 
 void AMagicProjectile::DestroyProjectile(AActor* _Destroy)

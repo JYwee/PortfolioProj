@@ -41,7 +41,7 @@ AMainCharacter::AMainCharacter()
 	mSphereComponent->SetupAttachment(RootComponent);
 	mSphereComponent->SetSphereRadius(300.f, true);
 	mSphereComponent->ComponentTags.Add(TEXT("Interact_PlayerComp"));
-
+	
 	//캐릭터 이동 모션 관련
 	GetCharacterMovement()->bOrientRotationToMovement = false;
 
@@ -400,6 +400,11 @@ void AMainCharacter::InteractAction()
 	
 
 	
+}
+
+FRotator AMainCharacter::GetFollowCameraRotator() const
+{
+	return mFollowCamera->GetComponentRotation();
 }
 
 

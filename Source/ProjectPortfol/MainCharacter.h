@@ -142,6 +142,8 @@ public:
 		float BaseLookUpRate;
 
 
+	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+		FRotator GetFollowCameraRotator() const;
 	
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

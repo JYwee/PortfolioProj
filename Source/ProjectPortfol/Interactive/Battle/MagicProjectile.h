@@ -33,10 +33,10 @@ public:
 
 private:
 	UPROPERTY(Category = "MagicProj", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	float mSpeed = 1500.0f;
+	float mSpeed = 1000.0f;
 
 	UPROPERTY(Category = "MagicProj", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	float mProjectileDestroyTime = 5.0f;
+	float mProjectileDestroyTime = 3.0f;
 
 	UPROPERTY(Category = "MagicProj", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<AActor> mDestroyEffectObject = nullptr;
@@ -50,4 +50,7 @@ private:
 	UPROPERTY(Category = "Effect", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		class UNiagaraComponent* mNiagaraComp = nullptr;
 
+	FVector mDirection = FVector::Zero();
+	//UPROPERTY(VisibleAnywhere, Category = Movement)
+	//	class UProjectileMovementComponent* mProjectileMovementComponent;
 };

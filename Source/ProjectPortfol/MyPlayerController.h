@@ -104,6 +104,14 @@ public:
 	UPROPERTY(Category = "AMainCharacter", VisibleAnywhere , BlueprintReadWrite)
 		UUserWidget* mWdgLockOn;
 
+
+	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+		FORCEINLINE	class AMainCharacter* GetMyCharacter() const
+	{
+		return myCharacter;
+	}
+
+
 private:
 	class AMainCharacter* myCharacter;
 
