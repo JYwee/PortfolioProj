@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Interactive/InterObjStaticMeshAct.h"
-#include "InteractiveObject.h"
+//#include "InteractiveObject.h"
 #include "NiagaraComponent.h"
 #include "DropItem.generated.h"
 
@@ -12,7 +12,7 @@
  * 
  */
 UCLASS()
-class PROJECTPORTFOL_API ADropItem : public AInteractiveObject
+class PROJECTPORTFOL_API ADropItem : public AInterObjStaticMeshAct //AInteractiveObject   
 {
 	GENERATED_BODY()
 	

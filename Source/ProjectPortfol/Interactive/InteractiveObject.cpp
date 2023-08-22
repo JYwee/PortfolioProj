@@ -11,6 +11,9 @@ AInteractiveObject::AInteractiveObject()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	//PrimaryActorTick.bCanEverTick = true;
 
+	//mSceneComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("SceneComp"));
+	//RootComponent = mSceneComponent;
+
 	CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("InteractiveCapsule"));
 	CapsuleComponent->InitCapsuleSize(30.0f, 30.0f);
 	CapsuleComponent->ComponentTags.Add(TEXT("Interactive"));

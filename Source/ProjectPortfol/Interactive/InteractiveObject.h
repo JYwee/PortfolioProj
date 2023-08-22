@@ -46,6 +46,11 @@ protected:
 		TObjectPtr<UCapsuleComponent> CapsuleComponent;
 		//UCapsuleComponent* CapsuleComponent;
 
+	UPROPERTY(Category = Character, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+		TObjectPtr<USceneComponent> mSceneComponent;
+
+	
+
 private:
 
 };
