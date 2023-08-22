@@ -5,18 +5,25 @@
 #include "CoreMinimal.h"
 #include "Engine/DataTable.h"
 #include "UObject/NoExportTypes.h"
-#include "SubClassData.generated.h"
+#include "FItemDataTable.generated.h"
 
 /**
  *
  */
+
+UENUM(BlueprintType)
+enum class ItemType : uint8
+{
+
+}
+
 USTRUCT(BlueprintType)
-struct PROJECTPORTFOL_API FSubClassData : public FTableRowBase
+struct PROJECTPORTFOL_API FItemDataTable : public FTableRowBase
 {
 	GENERATED_BODY()
 
-	FSubClassData() {}
-	~FSubClassData() {}
+		FItemDataTable() {}
+	~FItemDataTable() {}
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 		TSubclassOf<UObject> Object;
