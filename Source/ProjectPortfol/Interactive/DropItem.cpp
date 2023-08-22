@@ -2,6 +2,7 @@
 
 
 #include "Interactive/DropItem.h"
+#include "NiagaraDataInterfaceArrayFunctionLibrary.h"
 
 ADropItem::ADropItem()
 {
@@ -19,17 +20,7 @@ ADropItem::~ADropItem()
 void ADropItem::BeginPlay()
 {
 	Super::BeginPlay();
-
-	FVector3f InColorVec;
-	
-	
-
-	//Particle_SetColorFromVector(FVector3f(0.f, 0.f, 0.f), );
-		//const FVector3f& InColorVec, const float InAlpha, FLinearColor& OutColor
-		/*OutColor.R = InColorVec.X;
-		OutColor.G = InColorVec.Y;
-	OutColor.B = InColorVec.Z;
-	OutColor.A = InAlpha;*/
-
-	mNiagaraComp->GetAsset();
+	//mNiagaraComp->GetAsset()
+	mNiagaraComp->SetColorParameter(TEXT("ArrColor_2"), FLinearColor(0.5f, 0.5f, 1.5f, 1.0f));
+	//UNiagaraDataInterfaceArrayFunctionLibrary::SetNiagaraArrayColor(mNiagaraComp, TEXT("ArrColor"), ArrayData);
 }
