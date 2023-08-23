@@ -13,6 +13,14 @@ AMagnetAct::AMagnetAct()
 	mCapsuleComponent->ComponentTags.Add("MagnetOBJ");
 	Tags.Add("MagnetOBJ");
 
+
+
+	//materialerial
+	mOriginMaterial = CreateDefaultSubobject<UMaterialInterface>("Originlmaterial");
+	mActionMaterial = CreateDefaultSubobject<UMaterialInterface>("Actionlmaterial");;
+	// = GetStaticMeshComponent()->GetMaterial(0);
+	//mMaterial = UMaterialInterface::create
+
 	//FVector Origin, Extent;
 	//GetActorBounds(false, Origin, Extent);
 	////mCapsuleComponent->SetCapsuleSize(Extent.X * 0.5f, Extent.Y * 0.5f, true);
@@ -26,6 +34,8 @@ void AMagnetAct::BeginPlay()
 	GetActorBounds(false, Origin, Extent);
 	mCapsuleComponent->SetCapsuleSize(Extent.X + 50.f, Extent.Y + 50.f, true);*/
 	Super::BeginPlay();
+
+	mOriginMaterial = GetStaticMeshComponent()->GetMaterial(0);
 }
 	
 
@@ -33,6 +43,7 @@ void AMagnetAct::MovePast()
 {
 	FTransform pastTrans;
 	if (!mPastPos.IsEmpty()) {
+		GetStaticMeshComponent()->SetMaterial(0, mActionMaterial);
 		mPastPos.Dequeue(pastTrans);
 		SetActorTransform(pastTrans);
 	}
@@ -40,6 +51,7 @@ void AMagnetAct::MovePast()
 	{
 		mCurrnetTime = 0.f;
 		mIsGotoPast = false;
+		GetStaticMeshComponent()->SetMaterial(0, mOriginMaterial);
 	}
 }
 
@@ -53,6 +65,8 @@ void AMagnetAct::Tick(float DeltaSeconds)
 	if (mIsGotoPast == true)
 	{
 		MovePast();
+		
+		//GetStaticMeshComponent()->SetMaterial(0, );
 		///Script/Engine.Material'/Engine/EngineDebugMaterials/MAT_LevelColorationLitLightmapUV.MAT_LevelColorationLitLightmapUV'
 		//GetStaticMeshComponent().set
 	}

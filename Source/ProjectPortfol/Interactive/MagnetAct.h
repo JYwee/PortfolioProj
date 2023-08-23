@@ -36,9 +36,18 @@ public:
 
 	void Tick(float DeltaSeconds) override;
 
+	UPROPERTY(Category = "Effect", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	class  UMaterialInterface* mOriginMaterial = nullptr;
+
+	UPROPERTY(Category = "Effect", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	class  UMaterialInterface* mActionMaterial = nullptr;
+
+
 private:
 
 	
+
+
 	float mLimitTime = 0.f;
 	float mCurrnetTime = 0.f;
 
