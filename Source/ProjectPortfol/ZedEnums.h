@@ -95,3 +95,26 @@ enum class ZEDElementalState : uint8
 	ICE UMETA(DisplayName = "얼음속성"),
 };
 
+
+UENUM(BlueprintType)
+enum class ItemType : uint8
+{
+	Consumption_Postion UMETA(DisplayName = "포션 소비재"),
+	Consumption_Scroll UMETA(DisplayName = "스크롤 소비재"),
+	Equipment_Weapon UMETA(DisplayName = "무기"),
+	Equipment_Clothes UMETA(DisplayName = "방어구"),
+	Quest UMETA(DisplayName = "퀘스트관련"),
+	Etc UMETA(DisplayName = "퀘스트관련"),
+};
+
+
+
+UENUM(BlueprintType)
+enum class RankItem : uint8
+{
+	SS UMETA(DisplayName = "유니크"),
+	S UMETA(DisplayName = "s등급"),
+	A UMETA(DisplayName = "a등급"),
+	Normal UMETA(DisplayName = "일반"),
+	// UMETA(DisplayName = "퀘스트관련"),
+};

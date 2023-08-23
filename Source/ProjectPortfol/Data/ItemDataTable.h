@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataTable.h"
+#include <ZedEnums.h>
 #include "UObject/NoExportTypes.h"
 #include "ItemDataTable.generated.h"
 
@@ -11,11 +12,9 @@
  *
  */
 
-//UENUM(BlueprintType)
-//enum class ItemType : uint8
-//{
-//
-//}
+
+
+
 
 USTRUCT(BlueprintType)
 struct PROJECTPORTFOL_API FItemDataTable : public FTableRowBase
@@ -26,6 +25,28 @@ struct PROJECTPORTFOL_API FItemDataTable : public FTableRowBase
 	~FItemDataTable() {}
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-		TSubclassOf<UObject> Object;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ItemData")
+	FText NameItem;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ItemData")
+	FText Explain;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ItemData")
+	UStaticMesh* ItemMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ItemData")
+	TSubclassOf<UObject> Object;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ItemData")
+	ItemType ItemType;
+
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ItemData")
+	RankItem Rank;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ItemData")
+	uint8 StackSize;
+
+
 };

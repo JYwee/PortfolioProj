@@ -21,6 +21,25 @@ void ADropItem::BeginPlay()
 {
 	Super::BeginPlay();
 	//mNiagaraComp->GetAsset()
-	mNiagaraComp->SetColorParameter(TEXT("ArrColor_2"), FLinearColor(0.5f, 0.5f, 1.5f, 1.0f));
 	//UNiagaraDataInterfaceArrayFunctionLibrary::SetNiagaraArrayColor(mNiagaraComp, TEXT("ArrColor"), ArrayData);
+
+	switch (mRank)
+	{
+	default:
+	{
+		mNiagaraComp->SetColorParameter(TEXT("ArrColor_2"), FLinearColor(0.5f, 0.5f, 1.5f, 1.0f));
+		break;
+	}
+	case 1:
+	{
+		mNiagaraComp->SetColorParameter(TEXT("ArrColor_2"), FLinearColor(1.0f, 1.0f, 1.0f, 1.0f));
+		break;
+	}
+	case 2:
+	{
+		break;
+	}
+
+		
+	}
 }

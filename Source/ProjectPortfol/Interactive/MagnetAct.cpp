@@ -34,10 +34,13 @@ void AMagnetAct::MovePast()
 	FTransform pastTrans;
 	if (!mPastPos.IsEmpty()) {
 		mPastPos.Dequeue(pastTrans);
+		SetActorTransform(pastTrans);
 	}
-	
-
-	SetActorTransform(pastTrans);
+	else
+	{
+		mCurrnetTime = 0.f;
+		mIsGotoPast = false;
+	}
 }
 
 void AMagnetAct::Tick(float DeltaSeconds)
@@ -46,35 +49,52 @@ void AMagnetAct::Tick(float DeltaSeconds)
 
 	mCurrnetTime += DeltaSeconds;
 	mLimitTime += DeltaSeconds;
+	
 	if (mIsGotoPast == true)
 	{
-		if (mCurrnetTime > 1)
-		{
-			//FTransform&
-
-			MovePast();
-			mCurrnetTime = 0;
-		}
-		else {
-
-		}
+		MovePast();
+		///Script/Engine.Material'/Engine/EngineDebugMaterials/MAT_LevelColorationLitLightmapUV.MAT_LevelColorationLitLightmapUV'
+		//GetStaticMeshComponent().set
 	}
-	else {
-		if (mCurrnetTime > 1)
+	else
+	{
+		mPastPos.Enqueue(GetActorTransform());
+		if (mCurrnetTime > 10.f)
 		{
-		//FTransform&
-		
-			mPastPos.Enqueue(GetActorTransform());
-			mCurrnetTime = 0;
+			mPastPos.Pop();
 		}
-		else
-		{
-			
-
-		}
-	//if(DeltaSeconds * 180);
-
-
 	}
 	
+	UE_LOG(LogTemp, Error, TEXT("%S(%u) %f "), __FUNCTION__, __LINE__, mCurrnetTime);
+	//if (mIsGotoPast == true)
+	//{
+	//	if (mCurrnetTime > 0.1)
+	//	{
+	//		//FTransform&
+
+	//		MovePast();
+	//		mCurrnetTime = 0;
+	//	}
+	//	else {
+
+	//	}
+	//}
+	//else {
+	//	if (mCurrnetTime > 0.1)
+	//	{
+	//	//FTransform&
+	//	
+	//		mPastPos.Enqueue(GetActorTransform());
+	//		mCurrnetTime = 0;
+	//	}
+	//	else
+	//	{
+	//		
+
+	//	}
+	////if(DeltaSeconds * 180);
+
+
 }
+	
+
