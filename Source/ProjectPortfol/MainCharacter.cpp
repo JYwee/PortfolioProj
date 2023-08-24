@@ -128,8 +128,7 @@ void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AAct
 				AActor* addedObj = Cast<AActor>(OtherActor);
 				mNearInteractObj.Add(addedObj);
 			}
-
-			if (TEXT("MagnetOBJ") == OtherComp->ComponentTags[i])
+			else if (TEXT("MagnetOBJ") == OtherComp->ComponentTags[i])
 			{
 				AActor* addedObj = Cast<AActor>(OtherActor);
 				mNearInteractObj.Add(addedObj);
@@ -137,7 +136,14 @@ void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AAct
 				Data->mObjData = gameInst->GetObjInteractData("TeleportGate");
 				listWdg->GetInteractListView()->AddItem(Data);*/
 			}
-
+			else if (TEXT("LootObj") == OtherComp->ComponentTags[i])
+			{
+				AActor* addedObj = Cast<AActor>(OtherActor);
+				mNearInteractObj.Add(addedObj);
+				/*UInteracObjData* Data = NewObject<UInteracObjData>();
+				Data->mObjData = gameInst->GetObjInteractData("TeleportGate");
+				listWdg->GetInteractListView()->AddItem(Data);*/
+			}
 		}
 
 		

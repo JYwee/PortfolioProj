@@ -6,6 +6,8 @@
 #include "Interactive/InterObjStaticMeshAct.h"
 //#include "InteractiveObject.h"
 #include "NiagaraComponent.h"
+#include <Data/ItemDataTable.h>
+#include <ZedEnums.h>
 #include "DropItem.generated.h"
 
 /**
@@ -23,15 +25,27 @@ public:
 
 	virtual void BeginPlay() override;
 	
+	bool Init(FItemDataTable* itemData);
 	//virtual void Tick(float DeltaTime) override;
 
 private:
 
-	UPROPERTY(Category = "Effect", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(Category = "DropItem", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	class UNiagaraComponent* mNiagaraComp = nullptr;
 
-	UPROPERTY(Category = "Effect", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	int mRank;
-
+	UPROPERTY(Category = "DropItem", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	FText mNameItem;
+	UPROPERTY(Category = "DropItem", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	FText mExplain;
+	UPROPERTY(Category = "DropItem", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UStaticMesh* mItemMesh;
+	UPROPERTY(Category = "DropItem", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<UObject> mObject;
+	UPROPERTY(Category = "DropItem", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	ItemType mItemType;
+	UPROPERTY(Category = "DropItem", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	RankItem mRank;
+	UPROPERTY(Category = "DropItem", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	uint8 mStackSize;
 
 };

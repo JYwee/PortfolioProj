@@ -34,7 +34,11 @@ public:
 
 	struct FBossDataTable* GetBossDataTable(FName _Name);
 
+	struct FItemDataTable* GetItemDataTable(FName name);
+
 private:
+
+	UDataTable* mDropItemData;
 
 	
 	UDataTable* mSubClassData;

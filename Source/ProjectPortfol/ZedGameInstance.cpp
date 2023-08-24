@@ -9,6 +9,7 @@
 #include "Data/MonsterDataTable.h"
 #include "Data/BossDataTable.h"
 #include "Data/SubClassData.h"
+#include "Data/ItemDataTable.h"
 
 
 UZedGameInstance::UZedGameInstance() {
@@ -89,7 +90,15 @@ UZedGameInstance::UZedGameInstance() {
 		}
 	}
 
+	{
+		FString DataPath = TEXT("/Script/Engine.DataTable'/Game/Data/DT_Item.DT_Item'");
+		ConstructorHelpers::FObjectFinder<UDataTable> DataTable(*DataPath);
 
+		if (DataTable.Succeeded())
+		{
+			mDropItemData = DataTable.Object;
+		}
+	}
 	
 	//mBossData
 	/// Script / Engine.DataTable'/Game/Data/DT_BossDesertDragon.DT_BossDesertDragon'
@@ -192,6 +201,22 @@ FBossDataTable* UZedGameInstance::GetBossDataTable(FName _Name)
 		return nullptr;
 	}
 
+	return FindTable;
+}
+
+FItemDataTable* UZedGameInstance::GetItemDataTable(FName name)
+{
+	if (nullptr == mDropItemData)
+	{
+		return nullptr;
+	}
+
+	FItemDataTable* FindTable = mDropItemData->FindRow<FItemDataTable>(name, name.ToString());
+
+	if (nullptr == FindTable)
+	{
+		return nullptr;
+	}
 	return FindTable;
 }
 

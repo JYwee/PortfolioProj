@@ -11,6 +11,7 @@
 #include "Interactive/MagnetAct.h"
 #include "Interactive/PortalActor.h"
 #include <Interactive/Battle/MagicProjectile.h>
+#include <Interactive/LootObject.h>
 #include <UI/InGameHud.h>
 
 AMyPlayerController::AMyPlayerController()
@@ -393,6 +394,11 @@ void AMyPlayerController::InteractAction()
 			//magnetAct->MovePast();
 
 			//UE_LOG(LogTemp, Error, TEXT("%S(%u) %S"), __FUNCTION__, __LINE__, myCharacter->GetNearInteractObj()[i]->StaticConfigName());
+		}
+		else if (myCharacter->GetNearInteractObj()[i]->Tags.Contains(TEXT("LootObj")))
+		{
+			ALootObject* lootObj = Cast<ALootObject>(myCharacter->GetNearInteractObj()[i]);
+			lootObj->TestDropItem();
 		}
 		//UE_LOG(LogTemp, Error, TEXT("%S(%u) %S"), __FUNCTION__, __LINE__, mNearInteractObj[i]->StaticConfigName());
 

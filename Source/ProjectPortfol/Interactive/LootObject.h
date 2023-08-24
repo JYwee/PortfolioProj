@@ -26,6 +26,15 @@ public:
 
 	//virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+	TArray<ADropItem*> GetDropItemArray()
+	{
+		return mDropItemArray;
+	};
+
+	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+	void TestDropItem();
+
 private:
 
 	UPROPERTY(Category = "Effect", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))

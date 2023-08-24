@@ -22,24 +22,50 @@ void ADropItem::BeginPlay()
 	Super::BeginPlay();
 	//mNiagaraComp->GetAsset()
 	//UNiagaraDataInterfaceArrayFunctionLibrary::SetNiagaraArrayColor(mNiagaraComp, TEXT("ArrColor"), ArrayData);
+	
+}
+
+bool ADropItem::Init(FItemDataTable* itemData)
+{
+	if (itemData == nullptr)
+	{
+		return false;
+	}
+
+	mNameItem = itemData->NameItem;
+
+	mExplain = itemData->Explain;
+
+
+	mItemMesh = itemData->ItemMesh;
+	GetStaticMeshComponent()->SetStaticMesh(mItemMesh);
+
+	mObject = itemData->Object;
+
+	mItemType = itemData->ItemType;
+
+	mRank = itemData->Rank;
+
+	mStackSize = itemData->StackSize;
 
 	switch (mRank)
 	{
+	case RankItem::SS:
+		mNiagaraComp->SetColorParameter(TEXT("ArrColor_2"), FLinearColor(1.0f, 0.0f, 0.0f, 1.0f));
+		break;
+	case RankItem::S:
+		mNiagaraComp->SetColorParameter(TEXT("ArrColor_2"), FLinearColor(1.0f, 1.0f, 0.0f, 1.0f));
+		break;
+	case RankItem::A:
+		mNiagaraComp->SetColorParameter(TEXT("ArrColor_2"), FLinearColor(1.0f, 1.0f, 1.0f, 0.8f));
+		break;
+	case RankItem::Normal:
+		mNiagaraComp->SetColorParameter(TEXT("ArrColor_2"), FLinearColor(0.3f, 0.3f, 0.3f, 1.0f));
+		break;
 	default:
-	{
-		mNiagaraComp->SetColorParameter(TEXT("ArrColor_2"), FLinearColor(0.5f, 0.5f, 1.5f, 1.0f));
-		break;
-	}
-	case 1:
-	{
-		mNiagaraComp->SetColorParameter(TEXT("ArrColor_2"), FLinearColor(1.0f, 1.0f, 1.0f, 1.0f));
-		break;
-	}
-	case 2:
-	{
+		mNiagaraComp->SetColorParameter(TEXT("ArrColor_2"), FLinearColor(0.2f, 0.2f, 0.2f, 0.4f));
 		break;
 	}
 
-		
-	}
+	return true;
 }
