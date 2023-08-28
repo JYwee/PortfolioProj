@@ -69,6 +69,7 @@ void ALootObject::TestDropItem()
 		}
 	}
 
+	Destroy();
 	//for (int i = 0; i < mDropItemArray.Num(); ++i)
 	//{
 	//	
