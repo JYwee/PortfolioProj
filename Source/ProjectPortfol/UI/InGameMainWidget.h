@@ -16,6 +16,8 @@ class PROJECTPORTFOL_API UInGameMainWidget : public UUserWidget
 	
 public:
 
+	void NativeConstruct();
+
 	void SetStatusWindowOnOffSwitch()
 	{
 		StatusWindowOnOff = StatusWindowOnOff == ESlateVisibility::Hidden ? ESlateVisibility::Visible : ESlateVisibility::Hidden;
@@ -50,6 +52,18 @@ public:
 
 
 private:
+	
+	class UInvenAndStatus* mInvenAndStatus;
+
+	UPROPERTY(Category = "UIzed", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	ESlateVisibility mInvenStatusWindowOnOff = ESlateVisibility::Hidden;
+
+
+
+
+	UPROPERTY(Category = "UIzed", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	TArray<UUserWidget*> mAllWidget;
+
 	UPROPERTY(Category = "UIzed", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		ESlateVisibility StatusWindowOnOff = ESlateVisibility::Hidden;
 

@@ -18,6 +18,7 @@
 #include "Interactive/InterObjStaticMeshAct.h"
 #include "Data/ObjDataTable.h"
 #include "UI/InteracTextSlot.h"
+#include "UI/InvenAndStatus.h"
 
 #include "MyPlayerController.h"
 #include "Kismet/GameplayStatics.h"
@@ -83,6 +84,8 @@ AMainCharacter::AMainCharacter()
 		WeaponArrays.Add(MeshLoader.Object);
 	}
 
+	
+
 
 	
 	
@@ -132,17 +135,26 @@ void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AAct
 			{
 				AActor* addedObj = Cast<AActor>(OtherActor);
 				mNearInteractObj.Add(addedObj);
-				/*UInteracObjData* Data = NewObject<UInteracObjData>();
-				Data->mObjData = gameInst->GetObjInteractData("TeleportGate");
-				listWdg->GetInteractListView()->AddItem(Data);*/
+				UInteracObjData* Data = NewObject<UInteracObjData>();
+				Data->mObjData = gameInst->GetObjInteractData("MagnetOBJ");
+				listWdg->GetInteractListView()->AddItem(Data);
 			}
 			else if (TEXT("LootObj") == OtherComp->ComponentTags[i])
 			{
 				AActor* addedObj = Cast<AActor>(OtherActor);
 				mNearInteractObj.Add(addedObj);
-				/*UInteracObjData* Data = NewObject<UInteracObjData>();
-				Data->mObjData = gameInst->GetObjInteractData("TeleportGate");
-				listWdg->GetInteractListView()->AddItem(Data);*/
+				UInteracObjData* Data = NewObject<UInteracObjData>();
+				Data->mObjData = gameInst->GetObjInteractData("LootObj");
+				listWdg->GetInteractListView()->AddItem(Data);
+			}
+
+			else if (TEXT("DropItem") == OtherComp->ComponentTags[i])
+			{
+				AActor* addedObj = Cast<AActor>(OtherActor);
+				mNearInteractObj.Add(addedObj);
+				UInteracObjData* Data = NewObject<UInteracObjData>();
+				Data->mObjData = gameInst->GetObjInteractData("DropItem");
+				listWdg->GetInteractListView()->AddItem(Data);
 			}
 		}
 
@@ -327,6 +339,30 @@ void AMainCharacter::BeginPlay()
 	}
 	myGameMode->SetMainCharacter(this);
 
+	if (mInventoryData.Num() == 0)
+	{
+		APlayerController* HUDController = Cast<APlayerController>(GetController());
+		AInGameHud* myHud = HUDController->GetHUD<AInGameHud>();
+		UInvenAndStatus* InventoryWdg = Cast<UInvenAndStatus>(myHud->GetMainWidget()->GetWidgetFromName(TEXT("UI_InventoryStatus")));
+
+		for (int i = 0; i < 25; ++i)
+		{
+		UInventoryItemData* Data = NewObject<UInventoryItemData>();
+		//Data->mData = gameInst->GetObjInteractData("TeleportGate");
+		Data->mData = nullptr;
+		InventoryWdg->GetInvenList()->AddItem(Data);
+
+		}
+
+		/*const TArray<UObject*>& Items = InvenList->GetListItems();
+		for (size_t i = 0; i < 3; i++)
+		{
+			UInvenItemData* DataObject = Cast<UInvenItemData>(Items[i]);
+			DataObject->Data = GameInstance->GetRandomItemData();
+		}*/
+	}
+
+
 
 	//for interativeObj
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMainCharacter::BeginOverLap);
@@ -334,6 +370,8 @@ void AMainCharacter::BeginPlay()
 
 	//mSphereComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMainCharacter::BeginOverLap);
 	//mSphereComponent()->OnComponentEndOverlap.AddDynamic(this, &AMainCharacter::EndOverlap);
+
+
 }
 
 // Called every frame

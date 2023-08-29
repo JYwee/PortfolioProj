@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "ZedEnums.h"
 #include "Components/SphereComponent.h"
+#include "UI/InventoryItemData.h"
 #include "MainCharacter.generated.h"
 
 UCLASS()
@@ -194,6 +195,12 @@ public:
 		return mIsChangeAimingState;
 	}
 
+	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+	TArray<UInventoryItemData*> GetInventoryData()
+	{
+		return mInventoryData;
+	}
+
 private:
 		int mHealthPoint;
 
@@ -221,5 +228,9 @@ private:
 		UPROPERTY(Category = "AMainCharacter", BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 			TArray<AActor*> mNearInteractObj;
 
+		UPROPERTY(Category = "AMainCharacter", BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
+			TArray<UInventoryItemData*> mInvento082ryData;
 
+			
+		
 };

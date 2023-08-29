@@ -9,11 +9,13 @@
 
 void UInvenAndStatus::AddInvenItem(UObject* data, UUserWidget* widget)
 {
-
+	
 }
 void UInvenAndStatus::NativeConstruct()
 {
 	Super::NativeConstruct();
+
+	mInvenList = Cast<UTileView>(GetWidgetFromName(TEXT("TileView_Item")));
 }
 
 void UInvenAndStatus::AddGameItem(const struct FItemDataTable* data)

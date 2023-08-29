@@ -83,6 +83,7 @@ void AMyPlayerController::SetupInputComponent()
 			UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("Lock_On"), EKeys::Q));
 			UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("ShiftAction"), EKeys::LeftShift));
 			UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("InteractAction"), EKeys::E));
+			UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("OpenInvenStatusAction"), EKeys::I));
 
 	}
 	InputComponent->BindAxis("MainPlayer_MoveForward", this, &AMyPlayerController::MoveForward);
@@ -110,6 +111,8 @@ void AMyPlayerController::SetupInputComponent()
 	
 	InputComponent->BindAction("ShiftAction", IE_Pressed, this, &AMyPlayerController::ShiftAction);
 	InputComponent->BindAction("InteractAction", IE_Pressed, this, &AMyPlayerController::InteractAction);
+	InputComponent->BindAction("OpenInvenStatusAction", IE_Pressed, this, &AMyPlayerController::OpenInvenStatusAction);
+	
 
 }
 
@@ -400,6 +403,12 @@ void AMyPlayerController::InteractAction()
 			ALootObject* lootObj = Cast<ALootObject>(myCharacter->GetNearInteractObj()[i]);
 			lootObj->TestDropItem();
 		}
+		else if (myCharacter->GetNearInteractObj()[i]->Tags.Contains(TEXT("DropItem")))
+		{
+			ADropItem* dropItem = Cast<ADropItem>(myCharacter->GetNearInteractObj()[i]);
+			//myCharacter->GetInventoryData().Add(dropItem)
+		}
+
 		//UE_LOG(LogTemp, Error, TEXT("%S(%u) %S"), __FUNCTION__, __LINE__, mNearInteractObj[i]->StaticConfigName());
 
 
@@ -408,6 +417,18 @@ void AMyPlayerController::InteractAction()
 
 
 	//myCharacter->InteractAction();
+}
+
+void AMyPlayerController::OpenInvenStatusAction()
+{
+	/*if (GetHUD() == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%S(%u) GetHud failed"), __FUNCTION__, __LINE__);
+		return;
+	}
+	AInGameHud* ingameHUD = Cast<AInGameHud>(GetHUD());
+	ingameHUD->GetMainWidget().;*/
+
 }
 
 void AMyPlayerController::Aiming(float Rate)

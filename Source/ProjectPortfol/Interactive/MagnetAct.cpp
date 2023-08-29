@@ -37,6 +37,18 @@ void AMagnetAct::BeginPlay()
 
 	mOriginMaterial = GetStaticMeshComponent()->GetMaterial(0);
 }
+
+void AMagnetAct::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherComp->ComponentHasTag(TEXT("PlayerCapsuleComp")))
+	{
+		/*UInteracObjData* Data = NewObject<UInteracObjData>();
+		Data->mObjData = gameInst->GetObjInteractData("TeleportGate");
+		listWdg->GetInteractListView()->AddItem(Data);*/
+
+		UE_LOG(LogTemp, Warning, TEXT("%S(%u) Find"), __FUNCTION__, __LINE__);
+	}
+}
 	
 
 void AMagnetAct::MovePast()
@@ -79,7 +91,7 @@ void AMagnetAct::Tick(float DeltaSeconds)
 		}
 	}
 	
-	UE_LOG(LogTemp, Error, TEXT("%S(%u) %f "), __FUNCTION__, __LINE__, mCurrnetTime);
+	//UE_LOG(LogTemp, Error, TEXT("%S(%u) %f "), __FUNCTION__, __LINE__, mCurrnetTime);
 	//if (mIsGotoPast == true)
 	//{
 	//	if (mCurrnetTime > 0.1)

@@ -11,6 +11,10 @@ ADropItem::ADropItem()
 	
 	mNiagaraComp = CreateDefaultSubobject<UNiagaraComponent>(TEXT("NiagaraComponent"));
 	mNiagaraComp->SetupAttachment(RootComponent, TEXT("attachNigara"));
+
+	mCapsuleComponent->ComponentTags.Add("DropItem");
+	//mCapsuleComponent->SetCapsuleSize(150.f, 150.f, true);
+	Tags.Add("DropItem");
 }
 
 ADropItem::~ADropItem()
@@ -66,6 +70,8 @@ bool ADropItem::Init(FItemDataTable* itemData)
 		mNiagaraComp->SetColorParameter(TEXT("ArrColor_2"), FLinearColor(0.2f, 0.2f, 0.2f, 0.4f));
 		break;
 	}
+
+	mCapsuleComponent->SetCapsuleSize(150.f, 150.f, true);
 
 	return true;
 }

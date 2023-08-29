@@ -27,6 +27,13 @@ public:
 	//UFUNCTION(BlueprintCallable)
 	//	void NewWidget(UUserWidget* widget);
 
+	UFUNCTION(BlueprintCallable)
+	UTileView* GetInvenList() const
+	{
+			return mInvenList;
+	}
+
+
 	void AddGameItem(const struct FItemDataTable* data);
 
 protected:

@@ -22,6 +22,9 @@ public:
 	virtual void OnPossess(APawn* InPawn) override;
 
 
+	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+	void OpenInvenStatusAction();
+
 
 protected:
 	
@@ -64,7 +67,8 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
 		void InteractAction();
-		
+	
+	
 	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
 		void Aiming(float Rate);
 
