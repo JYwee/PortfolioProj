@@ -229,7 +229,7 @@ private:
 			TArray<AActor*> mNearInteractObj;
 
 		UPROPERTY(Category = "AMainCharacter", BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
-			TArray<UInventoryItemData*> mInvento082ryData;
+			TArray<UInventoryItemData*> mInventoryData;
 
 			
 		

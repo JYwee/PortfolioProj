@@ -8,6 +8,9 @@ void UInteracTextSlot::NativeConstruct()
 	Super::NativeConstruct();
 
 	mTextBlock = Cast<UTextBlock>(GetWidgetFromName(TEXT("Text_InteractSlot")));
+
+	mArrowImg = Cast<UImage>(GetWidgetFromName(TEXT("Img_Arrow")));
+	mArrowBGImg = Cast<UImage>(GetWidgetFromName(TEXT("Img_back_Arrow")));
 	//mStringData
 }
 

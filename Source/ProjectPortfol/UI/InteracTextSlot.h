@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/TextBlock.h"
+#include "Components/Image.h"
 #include "../Data/ObjDataTable.h"
 #include "InteracObjData.h"
 #include "Blueprint/IUserObjectListEntry.h"
@@ -21,8 +22,17 @@ class PROJECTPORTFOL_API UInteracTextSlot : public UUserWidget, public IUserObje
 public:
 
 	UPROPERTY(Category = "Effect", EditAnywhere, BlueprintReadWrite)
+		ESlateVisibility mArrowFocusVisibility = ESlateVisibility::Hidden;
+
+	UPROPERTY(Category = "Effect", EditAnywhere, BlueprintReadWrite)
 		ESlateVisibility mTextSlotVisibility = ESlateVisibility::Hidden;
 	
+	UPROPERTY(Category = "Count", EditAnywhere, BlueprintReadWrite)
+		UImage* mArrowImg = nullptr;
+
+	UPROPERTY(Category = "Count", EditAnywhere, BlueprintReadWrite)
+		UImage* mArrowBGImg = nullptr;
+
 	UPROPERTY(Category = "Count", EditAnywhere, BlueprintReadWrite)
 		UTextBlock* mTextBlock = nullptr;
 
