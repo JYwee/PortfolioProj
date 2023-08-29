@@ -171,6 +171,11 @@ void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AAct
 		
 
 		TArray<UUserWidget*> asdfff = listWdg->GetInteractListView()->GetDisplayedEntryWidgets();
+		if(asdfff.Num() != 0)
+		{
+		UInteracTextSlot* tmp2 = Cast<UInteracTextSlot>(asdfff[0]);
+		tmp2->mArrowFocusVisibility = ESlateVisibility::Visible;
+		}
 		//UInteracTextSlot
 		//objMeshAct.
 		//FObjDataTable* objData = gameInst->GetObjInteractData(TEXT("TeleportGate"));
