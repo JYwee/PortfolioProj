@@ -5,6 +5,9 @@
 #include "../ZedGameInstance.h"
 #include "InteracTextSlot.h"
 #include "InteracObjData.h"
+//#include <UObject/Object.h>
+
+
 void UInteracTextListWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
@@ -21,15 +24,106 @@ void UInteracTextListWidget::NativeConstruct()
 
 	}*/
 	
-
+	//mFocusNowObjData = mListView->GetListItems()[0];
 
 }
 void UInteracTextListWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
 	Super::NativeTick( MyGeometry, InDeltaTime);
+
+	
 }
 
 
+UObject* UInteracTextListWidget::GetUpFocusSlotObj() 
+{
+	if (mListView->GetListItems().Num() == 0) {
+		return nullptr;
+	}
+	/*else if (mListView->GetListItems().Num() == 1)
+	{
+		return mFocusNowObjData;
+	}*/
+
+	for (int i = 0; i < mListView->GetListItems().Num(); ++i)
+	{
+		UObject* SlotData = mListView->GetListItems()[i];
+
+		if (SlotData == nullptr)
+		{
+			return nullptr;
+		}
+
+		if (mFocusNowObjData == SlotData)
+		{
+			if (i == 0)
+			{
+				return mFocusNowObjData;
+			}
+
+			UInteracObjData* SlotInteracData = Cast<UInteracObjData>(mFocusNowObjData);
+
+			SlotInteracData->mWidget->mArrowFocusVisibility = ESlateVisibility::Hidden;
+			
+			mFocusNowObjData = mListView->GetListItems()[i - 1];;
+
+			UInteracObjData* nextSlotData = Cast<UInteracObjData>(mFocusNowObjData);
+			
+			if (nextSlotData->mWidget != nullptr) { // 여러개 한번에 튀어나오는 경우 위젯 생성 전에 위젯 호출하는 경우가 있음.
+				nextSlotData->mWidget->mArrowFocusVisibility = ESlateVisibility::Visible;
+			}
+			
+
+			return mFocusNowObjData;
+		}
+	}
+	return mFocusNowObjData;
+
+}
+
+UObject* UInteracTextListWidget::GetDownFocusSlotObj()
+{
+	if (mListView->GetListItems().Num() == 0) {
+		return nullptr;
+	}
+	/*else if (mListView->GetListItems().Num() == 1)
+	{
+		return mFocusNowObjData;
+	}*/
+
+	for (int i = 0; i < mListView->GetListItems().Num(); ++i)
+	{
+		UObject* SlotData = mListView->GetListItems()[i];
+
+		if (SlotData == nullptr)
+		{
+			return nullptr;
+		}
+
+		if (mFocusNowObjData == SlotData)
+		{
+			if (i == mListView->GetListItems().Num() - 1)
+			{
+				return mFocusNowObjData;
+			}
+
+			UInteracObjData* SlotInteracData = Cast<UInteracObjData>(mFocusNowObjData);
+
+			SlotInteracData->mWidget->mArrowFocusVisibility = ESlateVisibility::Hidden;
+
+			mFocusNowObjData = mListView->GetListItems()[i + 1];;
+
+			UInteracObjData* nextSlotData = Cast<UInteracObjData>(mFocusNowObjData);
+
+			if (nextSlotData->mWidget != nullptr) { // 여러개 한번에 튀어나오는 경우 위젯 생성 전에 위젯 호출하는 경우가 있음.
+				nextSlotData->mWidget->mArrowFocusVisibility = ESlateVisibility::Visible;
+			}
+			
+			return mFocusNowObjData;
+		}
+	}
+	return mFocusNowObjData;
+}
 
 
 void UInteracTextListWidget::AddInteracTextSlot(UObject* objData, UUserWidget* widgetData)
@@ -43,12 +137,34 @@ void UInteracTextListWidget::AddInteracTextSlot(UObject* objData, UUserWidget* w
 	{
 		return;
 	}
-	ItemSlotWidget->mArrowFocusVisibility = ESlateVisibility::Hidden;
 
-	if (mListView->GetListItems().Num() == 1)
+	
+	//ItemSlotWidget->mArrowFocusVisibility = ESlateVisibility::Hidden;
+	InvenSlotData->mWidget = ItemSlotWidget;
+
+
+	if (mListView->GetListItems().Num() == 0)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%S(%u) mListView->GetListItems something worng "), __FUNCTION__, __LINE__);
+		return;
+	}
+	else if(mListView->GetListItems().Num() == 1)
+	{
+		InvenSlotData->mIndex = mListView->GetListItems().Num() - 1;
+		mFocusNowObjData = objData;
+		//ItemSlotWidget->mArrowFocusVisibility = ESlateVisibility::Visible;
+	}
+	else
+	{
+		InvenSlotData->mIndex = mListView->GetListItems().Num() - 1;
+		ItemSlotWidget->mArrowFocusVisibility = ESlateVisibility::Hidden;
+	}
+
+	if (mFocusNowObjData == objData)     // 여러개 한번에 튀어나오는 경우 위젯 생성 전에 위젯 호출하는 경우가 있어, 생성 될때 다시 호출하여 비지블로 세팅함.
 	{
 		ItemSlotWidget->mArrowFocusVisibility = ESlateVisibility::Visible;
 	}
+
 	//mListView->AddItem(objData);
 	ItemSlotWidget->SetItemData(InvenSlotData->mObjData);
 

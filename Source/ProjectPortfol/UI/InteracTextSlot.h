@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -21,6 +21,7 @@ class PROJECTPORTFOL_API UInteracTextSlot : public UUserWidget, public IUserObje
 	
 public:
 
+	//바인드 백그라운드 애로우 둘다 이거 하나로 해놓음.
 	UPROPERTY(Category = "Effect", EditAnywhere, BlueprintReadWrite)
 		ESlateVisibility mArrowFocusVisibility = ESlateVisibility::Hidden;
 

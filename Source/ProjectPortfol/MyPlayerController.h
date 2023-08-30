@@ -68,6 +68,12 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
 		void InteractAction();
 	
+	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+		void UpUiInteractAction();
+
+	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+		void DownUiInteractAction();
+
 	
 	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
 		void Aiming(float Rate);
@@ -120,6 +126,7 @@ private:
 	class AMainCharacter* myCharacter;
 
 	bool mIsShift = false;
+
 
 	/*UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AMainCharacter")
 	class ANpcCharacter* LockOnTargetNpcCharacter;*/

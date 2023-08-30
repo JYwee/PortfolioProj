@@ -126,9 +126,10 @@ void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AAct
 			{
 				UInteracObjData* Data = NewObject<UInteracObjData>();
 				Data->mObjData = gameInst->GetObjInteractData("TeleportGate");
-				
-				listWdg->GetInteractListView()->AddItem(Data);
+				Data->mOnwerComp = OtherComp;
 
+				listWdg->GetInteractListView()->AddItem(Data);
+				
 				//listWdg->AddInteracTextSlot(Data, )
 				//AddInteracTextSlot
 				//Cast<InteracTextSlot>listWdg->GetInteractListView()->GetListItems();
@@ -155,6 +156,7 @@ void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AAct
 				mNearInteractObj.Add(addedObj);
 				UInteracObjData* Data = NewObject<UInteracObjData>();
 				Data->mObjData = gameInst->GetObjInteractData("MagnetOBJ");
+				Data->mOnwerComp = OtherComp;
 				listWdg->GetInteractListView()->AddItem(Data);
 			}
 			else if (TEXT("LootObj") == OtherComp->ComponentTags[i])
@@ -163,6 +165,7 @@ void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AAct
 				mNearInteractObj.Add(addedObj);
 				UInteracObjData* Data = NewObject<UInteracObjData>();
 				Data->mObjData = gameInst->GetObjInteractData("LootObj");
+				Data->mOnwerComp = OtherComp;
 				listWdg->GetInteractListView()->AddItem(Data);
 			}
 
@@ -172,6 +175,7 @@ void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AAct
 				mNearInteractObj.Add(addedObj);
 				UInteracObjData* Data = NewObject<UInteracObjData>();
 				Data->mObjData = gameInst->GetObjInteractData("DropItem");
+				Data->mOnwerComp = OtherComp;
 				listWdg->GetInteractListView()->AddItem(Data);
 			}
 		}
@@ -236,24 +240,52 @@ void AMainCharacter::EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 		TArray<UObject*> listItems = tmp2->GetListItems();
 		for (int i = 0; i < listItems.Num(); ++i)
 		{
+
 			UInteracObjData* tmpData = Cast<UInteracObjData>(listItems[i]);
 
-			//if( listItems[i] == 
+			//if( tmpData == 
 			if (tmpData != nullptr || tmpData->IsValidLowLevel() == true)
 			{
+				UE_LOG(LogTemp, Error, TEXT("%S(%u) tmpData != nullptr "), __FUNCTION__, __LINE__);
 				
-				tmp2->RemoveItem(tmpData);
+				if (OtherComp == tmpData->mOnwerComp)
+				{
+					if (tmpData == listWdg->GetNowFocusSlotObj()){
+
+						UObject* moveFocus = listWdg->GetUpFocusSlotObj();
+						
+						if (moveFocus == nullptr)
+						{
+							listWdg->SetNowFocusSlotObj(nullptr);
+						}
+						else if (moveFocus == tmpData)
+						{
+								moveFocus = listWdg->GetDownFocusSlotObj();
+								if (moveFocus == nullptr) {
+									listWdg->SetNowFocusSlotObj(nullptr);
+								//tmpData->mWidget->mArrowFocusVisibility = ESlateVisibility::Hidden;
+								//else if (moveFocus == tmpData) {
+								//	//tmpData->mWidget->mArrowFocusVisibility = ESlateVisibility::Hidden;
+								//	}
+								}
+
+							
+						}
+					}
+					
+					tmp2->RemoveItem(tmpData);
+
+					AActor* removeObj = Cast<AActor>(OtherActor);
+					if (mNearInteractObj.Contains(removeObj))
+					{
+						mNearInteractObj.Remove(removeObj);
+					}
+					
+				}
 			}
 		}
 
-		for (int i = 0 ; i < mNearInteractObj.Num(); ++i)
-		{
-			AActor* removeObj = Cast<AActor>(OtherActor);
-			if (mNearInteractObj.Contains(removeObj))
-			{
-				mNearInteractObj.Remove(removeObj);
-			}
-		}
+		
 
 
 	}

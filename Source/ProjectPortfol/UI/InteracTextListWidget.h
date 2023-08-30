@@ -27,8 +27,21 @@ public:
 
 	//virtual void NativeOnListItemObjectSet(UObject* ListItemObject) override;
 
+	UFUNCTION(BlueprintCallable)
 	FORCEINLINE UListView* GetInteractListView() const { return mListView; }
 	
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE UObject* GetNowFocusSlotObj() const { return mFocusNowObjData; }
+
+	UFUNCTION(BlueprintCallable)
+		FORCEINLINE void SetNowFocusSlotObj(UObject* nextFocusObj) { mFocusNowObjData = nextFocusObj; }
+
+
+	UFUNCTION(BlueprintCallable)
+		UObject* GetUpFocusSlotObj();
+
+	UFUNCTION(BlueprintCallable)
+		UObject* GetDownFocusSlotObj();
 
 protected:
 	void NativeConstruct() override;
@@ -39,5 +52,6 @@ private:
 	UPROPERTY(Category = "IngameUI", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	UListView* mListView = nullptr;
 
-	
+	UPROPERTY(Category = "AMainCharacter", BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
+	UObject* mFocusNowObjData = nullptr;
 };

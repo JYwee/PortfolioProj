@@ -16,5 +16,10 @@ class PROJECTPORTFOL_API UInteracObjData : public UObject
 	GENERATED_BODY()
 	
 public:
+	class UInteracTextSlot* mWidget;
+	uint8 mIndex;
+	
+	UPrimitiveComponent* mOnwerComp;
+
 	const FObjDataTable* mObjData;
 };

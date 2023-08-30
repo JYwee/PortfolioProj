@@ -12,6 +12,7 @@
 #include "Interactive/PortalActor.h"
 #include <Interactive/Battle/MagicProjectile.h>
 #include <Interactive/LootObject.h>
+#include "UI/InteracTextListWidget.h"
 #include <UI/InGameHud.h>
 
 AMyPlayerController::AMyPlayerController()
@@ -84,6 +85,8 @@ void AMyPlayerController::SetupInputComponent()
 			UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("ShiftAction"), EKeys::LeftShift));
 			UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("InteractAction"), EKeys::E));
 			UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("OpenInvenStatusAction"), EKeys::I));
+			UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("UPInteractUI"), EKeys::T));
+			UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("DOWNInteractUI"), EKeys::G));
 
 	}
 	InputComponent->BindAxis("MainPlayer_MoveForward", this, &AMyPlayerController::MoveForward);
@@ -112,6 +115,9 @@ void AMyPlayerController::SetupInputComponent()
 	InputComponent->BindAction("ShiftAction", IE_Pressed, this, &AMyPlayerController::ShiftAction);
 	InputComponent->BindAction("InteractAction", IE_Pressed, this, &AMyPlayerController::InteractAction);
 	InputComponent->BindAction("OpenInvenStatusAction", IE_Pressed, this, &AMyPlayerController::OpenInvenStatusAction);
+	InputComponent->BindAction("UPInteractUI", IE_Pressed, this, &AMyPlayerController::UpUiInteractAction);
+	InputComponent->BindAction("DOWNInteractUI", IE_Pressed, this, &AMyPlayerController::DownUiInteractAction);
+
 	
 
 }
@@ -417,6 +423,31 @@ void AMyPlayerController::InteractAction()
 
 
 	//myCharacter->InteractAction();
+}
+//ui 위로 한칸
+void AMyPlayerController::UpUiInteractAction()
+{
+	AInGameHud* myHud = GetHUD<AInGameHud>();
+	
+	UInteracTextListWidget* listWdg = Cast<UInteracTextListWidget>(myHud->GetMainWidget()->GetWidgetFromName(TEXT("UI_IntractiveText")));
+
+	if (listWdg->GetUpFocusSlotObj() == nullptr)
+	{
+		
+	}
+}
+
+//ui 아래로 한칸
+void AMyPlayerController::DownUiInteractAction()
+{
+	AInGameHud* myHud = GetHUD<AInGameHud>();
+
+	UInteracTextListWidget* listWdg = Cast<UInteracTextListWidget>(myHud->GetMainWidget()->GetWidgetFromName(TEXT("UI_IntractiveText")));
+
+	if (listWdg->GetDownFocusSlotObj() == nullptr)
+	{
+
+	}
 }
 
 void AMyPlayerController::OpenInvenStatusAction()
