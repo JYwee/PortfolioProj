@@ -43,3 +43,5 @@ void UInteracTextSlot::NativeOnListItemObjectSet(UObject* ListItemObject)
 	}
 	mTextBlock->SetText(mObjData->mObjData->InteractiveText);
 }
+
+

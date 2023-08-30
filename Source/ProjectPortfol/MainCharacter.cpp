@@ -126,18 +126,26 @@ void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AAct
 			{
 				UInteracObjData* Data = NewObject<UInteracObjData>();
 				Data->mObjData = gameInst->GetObjInteractData("TeleportGate");
+				
 				listWdg->GetInteractListView()->AddItem(Data);
+
+				//listWdg->AddInteracTextSlot(Data, )
+				//AddInteracTextSlot
 				//Cast<InteracTextSlot>listWdg->GetInteractListView()->GetListItems();
 				//UInteracTextSlot* tmp2 = Cast<UInteracTextSlot>(listWdg->GetWidgetFromName(TEXT("UI_InteracTextSlot")));
 				//UListView* xxx = listWdg->GetInteractListView();
-				UUserWidget* txx = listWdg->GetInteractListView()->GetEntryWidgetFromItem(Data->GetClass());
+				/*
+				UUserWidget* txx = listWdg->GetInteractListView()->GetEntryWidgetFromItem(Data);
 				TSubclassOf<UUserWidget> ttp = listWdg->GetInteractListView()->GetEntryWidgetClass();
+				UInteracTextSlot* tmp1 = Cast<UInteracTextSlot>(ttp.Get());
+				UInteracTextSlot* tmp3 = Cast<UInteracTextSlot>(ttp);
 				UInteracTextSlot* tmp2 = Cast<UInteracTextSlot>(ttp.GetDefaultObject());
 				TArray<UUserWidget*> asdf = listWdg->GetInteractListView()->GetDisplayedEntryWidgets();
 				tmp2->mArrowFocusVisibility = ESlateVisibility::Visible;
-				
-				
-				const TArray<UObject*> ttt = listWdg->GetInteractListView()->GetListItems();
+				const TArray<UObject*> ttt = listWdg->GetInteractListView()->GetListItems();*/
+
+
+
 				AActor* addedObj = Cast<AActor>(OtherActor);
 				mNearInteractObj.Add(addedObj);
 			}
@@ -170,12 +178,12 @@ void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AAct
 
 		
 
-		TArray<UUserWidget*> asdfff = listWdg->GetInteractListView()->GetDisplayedEntryWidgets();
+		/*TArray<UUserWidget*> asdfff = listWdg->GetInteractListView()->GetDisplayedEntryWidgets();
 		if(asdfff.Num() != 0)
 		{
 		UInteracTextSlot* tmp2 = Cast<UInteracTextSlot>(asdfff[0]);
 		tmp2->mArrowFocusVisibility = ESlateVisibility::Visible;
-		}
+		}*/
 		//UInteracTextSlot
 		//objMeshAct.
 		//FObjDataTable* objData = gameInst->GetObjInteractData(TEXT("TeleportGate"));
@@ -226,11 +234,14 @@ void AMainCharacter::EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 		
 		UListView* tmp2 = listWdg->GetInteractListView()/*->RemoveItem()*/;
 		TArray<UObject*> listItems = tmp2->GetListItems();
-		for (int i = 0; i < tmp2->GetListItems().Num(); ++i)
+		for (int i = 0; i < listItems.Num(); ++i)
 		{
 			UInteracObjData* tmpData = Cast<UInteracObjData>(listItems[i]);
+
+			//if( listItems[i] == 
 			if (tmpData != nullptr || tmpData->IsValidLowLevel() == true)
 			{
+				
 				tmp2->RemoveItem(tmpData);
 			}
 		}

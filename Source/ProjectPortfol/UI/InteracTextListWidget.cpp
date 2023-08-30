@@ -43,7 +43,13 @@ void UInteracTextListWidget::AddInteracTextSlot(UObject* objData, UUserWidget* w
 	{
 		return;
 	}
-	mListView->AddItem(objData);
+	ItemSlotWidget->mArrowFocusVisibility = ESlateVisibility::Hidden;
+
+	if (mListView->GetListItems().Num() == 1)
+	{
+		ItemSlotWidget->mArrowFocusVisibility = ESlateVisibility::Visible;
+	}
+	//mListView->AddItem(objData);
 	ItemSlotWidget->SetItemData(InvenSlotData->mObjData);
 
 	//해야하는게 캡슐 충돌시 여기에서 슬롯이 추가되면서 main위젯에서 비지블을 해야함.

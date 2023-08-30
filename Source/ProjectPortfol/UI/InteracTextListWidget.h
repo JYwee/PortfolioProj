@@ -38,4 +38,6 @@ protected:
 private:
 	UPROPERTY(Category = "IngameUI", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	UListView* mListView = nullptr;
+
+	
 };

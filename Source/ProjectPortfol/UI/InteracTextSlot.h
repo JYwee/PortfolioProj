@@ -41,6 +41,8 @@ public:
 
 	virtual void NativeOnListItemObjectSet(UObject* ListItemObject) override;
 
+	
+
 protected:
 	void NativeConstruct() override;
 	void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
