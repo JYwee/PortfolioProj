@@ -409,9 +409,8 @@ void AMainCharacter::BeginPlay()
 			//Data->mData = gameInst->GetObjInteractData("TeleportGate");
 			Data->mData = nullptr;
 			mInventoryData.Add(Data);
-
 			InventoryWdg->GetInvenList()->AddItem(Data);
-
+			//mInventoryData[i] = Cast<UInventoryItemData>(InventoryWdg->GetInvenList()->GetListItems()[i]);
 
 
 		

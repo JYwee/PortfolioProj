@@ -507,11 +507,40 @@ void AMyPlayerController::OpenInvenStatusAction()
 	UInvenAndStatus* invenAndStatusWdg = Cast<UInvenAndStatus>(ingameHUD->GetMainWidget()->GetWidgetFromName(TEXT("UI_InventoryStatus")));
 	UTileView* invenTilelist = invenAndStatusWdg->GetInvenList();
 
+	TArray<UObject*> invenUIitems = invenTilelist->GetListItems();
+	TArray<UInventoryItemData*> invenCharacterItems = myCharacter->GetInventoryData();
+	
+	for (int i = 0; i < invenCharacterItems.Num(); ++i)
+	{	
+		UInventoryItemData* tmpItemData = Cast<UInventoryItemData>(invenUIitems[i]);
+		if (tmpItemData == nullptr)
+		{
+			UE_LOG(LogTemp, Error, TEXT("%S(%u) Item Casting failed"), __FUNCTION__, __LINE__)
+		}
+		else
+		{
+			if (tmpItemData == invenCharacterItems[i])
+			{
+				int j = 0;
+			}
+			if (tmpItemData->mWidget == invenCharacterItems[i]->mWidget)
+			{
+				int x = 0;
+			}
+
+			
+
+			/*tmpItemData->mWidget = invenCharacterItems[i]->mWidget;
+			tmpItemData->mData = invenCharacterItems[i]->mData;
+			tmpItemData->mCount = invenCharacterItems[i]->mCount;*/
+		}
+		
+	}
 	//UInventoryItemData
 
 	//invenTilelist.
 	//invenTilelist
-	myCharacter->GetInventoryData();
+	//myCharacter->GetInventoryData();
 	//mInventoryData
 }
 

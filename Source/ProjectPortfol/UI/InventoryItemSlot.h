@@ -19,30 +19,33 @@ class PROJECTPORTFOL_API UInventoryItemSlot : public UUserWidget
 
 public:
 
-	UPROPERTY(Category = "Effect", EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(Category = "InventoryItemSlot", EditAnywhere, BlueprintReadWrite)
 	ESlateVisibility ItemBackGroundVisibility = ESlateVisibility::Visible;
 
-	UPROPERTY(Category = "Effect", EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(Category = "InventoryItemSlot", EditAnywhere, BlueprintReadWrite)
 	ESlateVisibility ItemIconImgVisibility = ESlateVisibility::Hidden;
 
-	UPROPERTY(Category = "Effect", EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(Category = "InventoryItemSlot", EditAnywhere, BlueprintReadWrite)
 	ESlateVisibility ItemCountVisibility = ESlateVisibility::Hidden;
 
-	UPROPERTY(Category = "Effect", EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(Category = "InventoryItemSlot", EditAnywhere, BlueprintReadWrite)
 	ItemType ItemTypeValue = ItemType::Etc;
 
-	UPROPERTY(Category = "Icon", EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(Category = "InventoryItemSlot", EditAnywhere, BlueprintReadWrite)
 	UImage* ItemIconImage = nullptr;
 
-	UPROPERTY(Category = "Icon", EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(Category = "InventoryItemSlot", EditAnywhere, BlueprintReadWrite)
 	UImage* ItemIconBack = nullptr;
 
-	UPROPERTY(Category = "Count", EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(Category = "InventoryItemSlot", EditAnywhere, BlueprintReadWrite)
 	UTextBlock* ItemCountBlock = nullptr;
 
-	UPROPERTY(Category = "Count", EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(Category = "InventoryItemSlot", EditAnywhere, BlueprintReadWrite)
 	int ItemCountValue = 0;
 	
+	UPROPERTY(Category = "InventoryItemSlot", EditAnywhere, BlueprintReadWrite)
+	class UInventoryItemData* InvenSlotData;
+
 protected:
 
 

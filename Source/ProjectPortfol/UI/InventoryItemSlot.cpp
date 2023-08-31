@@ -2,6 +2,7 @@
 
 
 #include "UI/InventoryItemSlot.h"
+#include "InventoryItemData.h"
 
 void UInventoryItemSlot::NativeConstruct()
 {

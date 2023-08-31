@@ -10,6 +10,26 @@
 void UInvenAndStatus::AddInvenItem(UObject* data, UUserWidget* widget)
 {
 	
+	//UZedGameInstance* gameInstance = GetWorld()->GetGameInstance<UZedGameInstance>();
+
+	UInventoryItemSlot* ItemSlotWidget = Cast<UInventoryItemSlot>(widget);
+	UInventoryItemData* InvenSlotData = Cast<UInventoryItemData>(data);
+
+	if (nullptr == ItemSlotWidget)
+	{
+		return;
+	}
+
+
+	//ItemSlotWidget->mArrowFocusVisibility = ESlateVisibility::Hidden;
+	InvenSlotData->mWidget = ItemSlotWidget;
+	ItemSlotWidget->InvenSlotData = InvenSlotData;
+	//InvenSlotData->mCount
+
+
+	//mListView->AddItem(objData);
+	//ItemSlotWidget->SetItemData(InvenSlotData->mObjData);
+
 }
 void UInvenAndStatus::NativeConstruct()
 {
