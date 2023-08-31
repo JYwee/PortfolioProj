@@ -126,7 +126,7 @@ void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AAct
 			{
 				UInteracObjData* Data = NewObject<UInteracObjData>();
 				Data->mObjData = gameInst->GetObjInteractData("TeleportGate");
-				Data->mOnwerComp = OtherComp;
+				Data->mOnwerActor = OtherActor;
 
 				listWdg->GetInteractListView()->AddItem(Data);
 				
@@ -156,7 +156,7 @@ void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AAct
 				mNearInteractObj.Add(addedObj);
 				UInteracObjData* Data = NewObject<UInteracObjData>();
 				Data->mObjData = gameInst->GetObjInteractData("MagnetOBJ");
-				Data->mOnwerComp = OtherComp;
+				Data->mOnwerActor = OtherActor;
 				listWdg->GetInteractListView()->AddItem(Data);
 			}
 			else if (TEXT("LootObj") == OtherComp->ComponentTags[i])
@@ -165,7 +165,7 @@ void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AAct
 				mNearInteractObj.Add(addedObj);
 				UInteracObjData* Data = NewObject<UInteracObjData>();
 				Data->mObjData = gameInst->GetObjInteractData("LootObj");
-				Data->mOnwerComp = OtherComp;
+				Data->mOnwerActor = OtherActor;
 				listWdg->GetInteractListView()->AddItem(Data);
 			}
 
@@ -175,7 +175,7 @@ void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AAct
 				mNearInteractObj.Add(addedObj);
 				UInteracObjData* Data = NewObject<UInteracObjData>();
 				Data->mObjData = gameInst->GetObjInteractData("DropItem");
-				Data->mOnwerComp = OtherComp;
+				Data->mOnwerActor = OtherActor;
 				listWdg->GetInteractListView()->AddItem(Data);
 			}
 		}
@@ -248,7 +248,7 @@ void AMainCharacter::EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 			{
 				UE_LOG(LogTemp, Error, TEXT("%S(%u) tmpData != nullptr "), __FUNCTION__, __LINE__);
 				
-				if (OtherComp == tmpData->mOnwerComp)
+				if (OtherActor == tmpData->mOnwerActor)
 				{
 					if (tmpData == listWdg->GetNowFocusSlotObj()){
 

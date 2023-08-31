@@ -19,7 +19,7 @@ public:
 	class UInteracTextSlot* mWidget;
 	uint8 mIndex;
 	
-	UPrimitiveComponent* mOnwerComp;
+	AActor* mOnwerActor;
 
 	const FObjDataTable* mObjData;
 };

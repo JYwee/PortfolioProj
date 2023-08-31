@@ -29,4 +29,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ObjData")
 		FText InteractiveText;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ObjData")
+		FName Tag_Obj;
+
 };

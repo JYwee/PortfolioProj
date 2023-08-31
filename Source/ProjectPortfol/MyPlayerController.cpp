@@ -13,6 +13,7 @@
 #include <Interactive/Battle/MagicProjectile.h>
 #include <Interactive/LootObject.h>
 #include "UI/InteracTextListWidget.h"
+#include "UI/InteracObjData.h"
 #include <UI/InGameHud.h>
 
 AMyPlayerController::AMyPlayerController()
@@ -353,6 +354,7 @@ void AMyPlayerController::LockOnTarget()
 	}
 
 
+	
 	//UZedGameInstance* Inst = GetGameInstance<UZedGameInstance>();
 	//
 	//if (myCharacter) {
@@ -386,40 +388,81 @@ void AMyPlayerController::LockOnTarget()
 
 void AMyPlayerController::InteractAction()
 {
-	for (int i = 0; i < myCharacter->GetNearInteractObj().Num(); ++i)
-	{
+	AInGameHud* myHud = GetHUD<AInGameHud>();
 
-		if (myCharacter->GetNearInteractObj()[i]->Tags.Contains(TEXT("MagnetOBJ")))
+	UInteracTextListWidget* listWdg = Cast<UInteracTextListWidget>(myHud->GetMainWidget()->GetWidgetFromName(TEXT("UI_IntractiveText")));
+
+	UInteracObjData* focusedSlotObjData = Cast<UInteracObjData>(listWdg->GetNowFocusSlotObj());
+	
+	if (focusedSlotObjData == nullptr)
+	{
+		return;
+	}
+		
+		if (focusedSlotObjData->mOnwerActor->Tags.Contains(TEXT("MagnetOBJ")))
 		{
-			AMagnetAct* magnetAct = Cast<AMagnetAct>(myCharacter->GetNearInteractObj()[i]);
+			AMagnetAct* magnetAct = Cast<AMagnetAct>(focusedSlotObjData->mOnwerActor);
 			magnetAct->SetIsGotoPast(true);
 			//magnetAct->MovePast();
-			UE_LOG(LogTemp, Error, TEXT("%S(%u) %S"), __FUNCTION__, __LINE__, myCharacter->GetNearInteractObj()[i]->StaticConfigName());
+			//UE_LOG(LogTemp, Error, TEXT("%S(%u) %S"), __FUNCTION__, __LINE__, myCharacter->GetNearInteractObj()[i]->StaticConfigName());
 		}
-		else if (myCharacter->GetNearInteractObj()[i]->Tags.Contains(TEXT("TeleportGate")))
+		else if (focusedSlotObjData->mOnwerActor->Tags.Contains(TEXT("TeleportGate")))
 		{
-			APortalActor* portalAct = Cast<APortalActor>(myCharacter->GetNearInteractObj()[i]);
+			APortalActor* portalAct = Cast<APortalActor>(focusedSlotObjData->mOnwerActor);
 			portalAct->PlayerTeleport();
 			//magnetAct->MovePast();
 
 			//UE_LOG(LogTemp, Error, TEXT("%S(%u) %S"), __FUNCTION__, __LINE__, myCharacter->GetNearInteractObj()[i]->StaticConfigName());
 		}
-		else if (myCharacter->GetNearInteractObj()[i]->Tags.Contains(TEXT("LootObj")))
+		else if (focusedSlotObjData->mOnwerActor->Tags.Contains(TEXT("LootObj")))
 		{
-			ALootObject* lootObj = Cast<ALootObject>(myCharacter->GetNearInteractObj()[i]);
+			ALootObject* lootObj = Cast<ALootObject>(focusedSlotObjData->mOnwerActor);
 			lootObj->TestDropItem();
 		}
-		else if (myCharacter->GetNearInteractObj()[i]->Tags.Contains(TEXT("DropItem")))
+		else if (focusedSlotObjData->mOnwerActor->Tags.Contains(TEXT("DropItem")))
 		{
-			ADropItem* dropItem = Cast<ADropItem>(myCharacter->GetNearInteractObj()[i]);
+			ADropItem* dropItem = Cast<ADropItem>(focusedSlotObjData->mOnwerActor);
 			//myCharacter->GetInventoryData().Add(dropItem)
 		}
 
-		//UE_LOG(LogTemp, Error, TEXT("%S(%u) %S"), __FUNCTION__, __LINE__, mNearInteractObj[i]->StaticConfigName());
+
+	
+	//기존의 예전 테스트 코드 //캐릭터 근처의 오브잭트 전부를 훑음.
+	// 
+	//for (int i = 0; i < myCharacter->GetNearInteractObj().Num(); ++i)
+	//{
+
+	//	if (myCharacter->GetNearInteractObj()[i]->Tags.Contains(TEXT("MagnetOBJ")))
+	//	{
+	//		AMagnetAct* magnetAct = Cast<AMagnetAct>(myCharacter->GetNearInteractObj()[i]);
+	//		magnetAct->SetIsGotoPast(true);
+	//		//magnetAct->MovePast();
+	//		UE_LOG(LogTemp, Error, TEXT("%S(%u) %S"), __FUNCTION__, __LINE__, myCharacter->GetNearInteractObj()[i]->StaticConfigName());
+	//	}
+	//	else if (myCharacter->GetNearInteractObj()[i]->Tags.Contains(TEXT("TeleportGate")))
+	//	{
+	//		APortalActor* portalAct = Cast<APortalActor>(myCharacter->GetNearInteractObj()[i]);
+	//		portalAct->PlayerTeleport();
+	//		//magnetAct->MovePast();
+
+	//		//UE_LOG(LogTemp, Error, TEXT("%S(%u) %S"), __FUNCTION__, __LINE__, myCharacter->GetNearInteractObj()[i]->StaticConfigName());
+	//	}
+	//	else if (myCharacter->GetNearInteractObj()[i]->Tags.Contains(TEXT("LootObj")))
+	//	{
+	//		ALootObject* lootObj = Cast<ALootObject>(myCharacter->GetNearInteractObj()[i]);
+	//		lootObj->TestDropItem();
+	//	}
+	//	else if (myCharacter->GetNearInteractObj()[i]->Tags.Contains(TEXT("DropItem")))
+	//	{
+	//		ADropItem* dropItem = Cast<ADropItem>(myCharacter->GetNearInteractObj()[i]);
+	//		//myCharacter->GetInventoryData().Add(dropItem)
+	//	}
+
+	//	//UE_LOG(LogTemp, Error, TEXT("%S(%u) %S"), __FUNCTION__, __LINE__, mNearInteractObj[i]->StaticConfigName());
 
 
-		//UE_LOG mNearInteractObj[i];
-	}
+	//	//UE_LOG mNearInteractObj[i];
+	//}
 
 
 	//myCharacter->InteractAction();
