@@ -405,12 +405,18 @@ void AMainCharacter::BeginPlay()
 
 		for (int i = 0; i < 25; ++i)
 		{
-		UInventoryItemData* Data = NewObject<UInventoryItemData>();
-		//Data->mData = gameInst->GetObjInteractData("TeleportGate");
-		Data->mData = nullptr;
-		InventoryWdg->GetInvenList()->AddItem(Data);
+			UInventoryItemData* Data = NewObject<UInventoryItemData>();
+			//Data->mData = gameInst->GetObjInteractData("TeleportGate");
+			Data->mData = nullptr;
+			mInventoryData.Add(Data);
 
-		}
+			InventoryWdg->GetInvenList()->AddItem(Data);
+
+
+
+		
+
+	}
 
 		/*const TArray<UObject*>& Items = InvenList->GetListItems();
 		for (size_t i = 0; i < 3; i++)

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Engine/DataTable.h"
 #include <ZedEnums.h>
+//#include <Components/>
 #include "UObject/NoExportTypes.h"
 #include "ItemDataTable.generated.h"
 
@@ -48,5 +49,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ItemData")
 	uint8 StackSize;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ItemData")
+	UTexture* ItemIconImage;
 
 };

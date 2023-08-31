@@ -4,6 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Components/TextBlock.h"
+#include "Components/Image.h"
+#include <Data/ItemDataTable.h>
 #include "InventoryItemSlot.generated.h"
 
 /**
@@ -16,17 +19,17 @@ class PROJECTPORTFOL_API UInventoryItemSlot : public UUserWidget
 
 public:
 
-	/*UPROPERTY(Category = "Effect", EditAnywhere, BlueprintReadWrite)
-	ESlateVisibility ItemBackVisibility = ESlateVisibility::Visible;
+	UPROPERTY(Category = "Effect", EditAnywhere, BlueprintReadWrite)
+	ESlateVisibility ItemBackGroundVisibility = ESlateVisibility::Visible;
 
 	UPROPERTY(Category = "Effect", EditAnywhere, BlueprintReadWrite)
-	ESlateVisibility ItemIconVisibility = ESlateVisibility::Hidden;
+	ESlateVisibility ItemIconImgVisibility = ESlateVisibility::Hidden;
 
 	UPROPERTY(Category = "Effect", EditAnywhere, BlueprintReadWrite)
 	ESlateVisibility ItemCountVisibility = ESlateVisibility::Hidden;
 
 	UPROPERTY(Category = "Effect", EditAnywhere, BlueprintReadWrite)
-	ItemType ItemTypeValue = ItemType::NONE;
+	ItemType ItemTypeValue = ItemType::Etc;
 
 	UPROPERTY(Category = "Icon", EditAnywhere, BlueprintReadWrite)
 	UImage* ItemIconImage = nullptr;
@@ -38,6 +41,11 @@ public:
 	UTextBlock* ItemCountBlock = nullptr;
 
 	UPROPERTY(Category = "Count", EditAnywhere, BlueprintReadWrite)
-	int ItemCountValue = 0;*/
+	int ItemCountValue = 0;
 	
+protected:
+
+
+	void NativeConstruct() override;
+
 };

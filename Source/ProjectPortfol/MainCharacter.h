@@ -234,6 +234,8 @@ private:
 		UPROPERTY(Category = "AMainCharacter", BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 			TArray<UInventoryItemData*> mInventoryData;
 
+
+//		UInventoryItemData* Data
 		//UPROPERTY(Category = "AMainCharacter", BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 		//class UInteracTextSlot* mFocusNowInteractText;
 		

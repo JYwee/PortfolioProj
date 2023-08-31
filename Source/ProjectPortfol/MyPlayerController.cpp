@@ -14,6 +14,7 @@
 #include <Interactive/LootObject.h>
 #include "UI/InteracTextListWidget.h"
 #include "UI/InteracObjData.h"
+#include "UI/InvenAndStatus.h"
 #include <UI/InGameHud.h>
 
 AMyPlayerController::AMyPlayerController()
@@ -495,14 +496,23 @@ void AMyPlayerController::DownUiInteractAction()
 
 void AMyPlayerController::OpenInvenStatusAction()
 {
-	/*if (GetHUD() == nullptr)
+	if (GetHUD() == nullptr)
 	{
 		UE_LOG(LogTemp, Error, TEXT("%S(%u) GetHud failed"), __FUNCTION__, __LINE__);
 		return;
 	}
 	AInGameHud* ingameHUD = Cast<AInGameHud>(GetHUD());
-	ingameHUD->GetMainWidget().;*/
+	//	ingameHUD->GetMainWidget().
 
+	UInvenAndStatus* invenAndStatusWdg = Cast<UInvenAndStatus>(ingameHUD->GetMainWidget()->GetWidgetFromName(TEXT("UI_InventoryStatus")));
+	UTileView* invenTilelist = invenAndStatusWdg->GetInvenList();
+
+	//UInventoryItemData
+
+	//invenTilelist.
+	//invenTilelist
+	myCharacter->GetInventoryData();
+	//mInventoryData
 }
 
 void AMyPlayerController::Aiming(float Rate)
