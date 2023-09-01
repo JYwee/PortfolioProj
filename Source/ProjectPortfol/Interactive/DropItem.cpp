@@ -35,6 +35,7 @@ bool ADropItem::Init(FItemDataTable* itemData)
 	{
 		return false;
 	}
+	mItemData = itemData;
 
 	mNameItem = itemData->NameItem;
 

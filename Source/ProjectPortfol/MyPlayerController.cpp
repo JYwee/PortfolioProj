@@ -423,7 +423,8 @@ void AMyPlayerController::InteractAction()
 		else if (focusedSlotObjData->mOnwerActor->Tags.Contains(TEXT("DropItem")))
 		{
 			ADropItem* dropItem = Cast<ADropItem>(focusedSlotObjData->mOnwerActor);
-			//myCharacter->GetInventoryData().Add(dropItem)
+
+			myCharacter->AddInventoryItem(dropItem->mItemData);
 		}
 
 

@@ -513,5 +513,61 @@ FRotator AMainCharacter::GetFollowCameraRotator() const
 {
 	return mFollowCamera->GetComponentRotation();
 }
+
+bool AMainCharacter::AddInventoryItem(const struct FItemDataTable* itemData)
+{
+	if (itemData == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%S(%u) itemData == nullptr"), __FUNCTION__, __LINE__);
+		return false;
+	}
 
+	if (itemData->StackSize == 1)
+	{
+		for (int i = 0; i < mInventoryData.Num(); ++i)
+		{
+			if (mInventoryData[i]->mData == nullptr)
+			{
+				mInventoryData[i]->mData = itemData;
+				mInventoryData[i]->mCount=1;
+				
+
+				return true;
+			}
+		}
+	}
+	else
+	{
+		int firstFindIndex = FindIndexItemInInv(itemData, 0);
+		if (firstFindIndex < 0)
+		{
+			for (int i = 0; i < mInventoryData.Num(); ++i)
+			{
+				if (mInventoryData[i]->mData == nullptr)
+				{
+					mInventoryData[i]->mData = itemData;
+					return true;
+				}
+			}
+		}
+		else if(mInventoryData[firstFindIndex]->mData->StackSize == itemData->StackSize)
+		{
+			int a = 9;
+		}
+	}
+	return false;
+}
+
+
+int AMainCharacter::FindIndexItemInInv(const struct FItemDataTable* itemData, int index)
+{
+	for (int i = index; i < mInventoryData.Num(); ++i)
+	{
+		if (mInventoryData[i]->mData == itemData)
+		{
+			return i;
+		}
+	}
+	return -1;
+}
 

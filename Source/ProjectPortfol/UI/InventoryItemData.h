@@ -19,5 +19,5 @@ public:
 	
 	class UInventoryItemSlot* mWidget;
 	int mCount = 1;
-	const FItemDataTable* mData;
+	const FItemDataTable* mData;	
 };

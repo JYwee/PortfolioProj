@@ -201,8 +201,11 @@ public:
 		return mInventoryData;
 	}
 
-
+	//UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+	bool AddInventoryItem(const struct FItemDataTable* itemData);
 	
+	//UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+	int FindIndexItemInInv(const struct FItemDataTable* itemData , int index);
 
 private:
 		int mHealthPoint;

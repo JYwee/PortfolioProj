@@ -23,7 +23,11 @@ void UInvenAndStatus::AddInvenItem(UObject* data, UUserWidget* widget)
 
 	//ItemSlotWidget->mArrowFocusVisibility = ESlateVisibility::Hidden;
 	InvenSlotData->mWidget = ItemSlotWidget;
-	ItemSlotWidget->InvenSlotData = InvenSlotData;
+	
+	//ItemSlotWidget->InvenSlotData = InvenSlotData;
+	ItemSlotWidget->SetSlotData(InvenSlotData);
+	//UInventoryItemSlot::SetSlotData(UInventoryItemData * invenSlotData)
+	
 	//InvenSlotData->mCount
 
 

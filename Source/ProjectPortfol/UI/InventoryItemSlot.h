@@ -46,6 +46,8 @@ public:
 	UPROPERTY(Category = "InventoryItemSlot", EditAnywhere, BlueprintReadWrite)
 	class UInventoryItemData* InvenSlotData;
 
+	void SetSlotData(class UInventoryItemData* invenSlotData);
+
 protected:
 
 

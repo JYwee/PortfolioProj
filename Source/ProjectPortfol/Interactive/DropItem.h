@@ -28,6 +28,15 @@ public:
 	bool Init(FItemDataTable* itemData);
 	//virtual void Tick(float DeltaTime) override;
 
+	//UFUNCTION(BlueprintCallable)
+	//FItemDataTable* GetItemData()// const
+	//{
+	//	return mItemData;
+	//}
+
+	
+	const FItemDataTable* mItemData;
+
 private:
 
 	UPROPERTY(Category = "DropItem", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
@@ -47,5 +56,6 @@ private:
 	RankItem mRank;
 	UPROPERTY(Category = "DropItem", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	uint8 mStackSize;
-
+	//UPROPERTY(Category = "DropItem", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	
 };

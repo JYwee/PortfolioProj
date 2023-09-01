@@ -16,6 +16,8 @@ void UInteracTextListWidget::NativeConstruct()
 
 	UZedGameInstance* gameInstance = GetWorld()->GetGameInstance<UZedGameInstance>();
 	
+	//mListView->OnEntryWidgetReleased().AddUFunction(mListView, UListView::Han);
+
 	/*for (int i = 0; i < 5; ++i)
 	{
 	UInteracObjData* Data = NewObject<UInteracObjData>();
@@ -123,6 +125,10 @@ UObject* UInteracTextListWidget::GetDownFocusSlotObj()
 		}
 	}
 	return mFocusNowObjData;
+}
+
+void UInteracTextListWidget::Function(UUserWidget* _Data)
+{
 }
 
 

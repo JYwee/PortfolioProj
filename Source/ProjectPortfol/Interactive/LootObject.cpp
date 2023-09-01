@@ -60,11 +60,15 @@ void ALootObject::TestDropItem()
 
 		if (i == 0)
 		{
-			dropItem->Init(inst->GetItemDataTable("apple"));
+			dropItem->Init(inst->GetItemDataTable("bracer01"));
 			mDropItemArray.Add(dropItem);
 		}
 		else if (i == 1){
-			dropItem->Init(inst->GetItemDataTable("gold"));
+			dropItem->Init(inst->GetItemDataTable("Crystal_01"));
+			mDropItemArray.Add(dropItem);
+		}
+		else if (i == 2) {
+			dropItem->Init(inst->GetItemDataTable("Gold"));
 			mDropItemArray.Add(dropItem);
 		}
 	}
