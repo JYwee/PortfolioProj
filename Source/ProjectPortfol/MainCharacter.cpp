@@ -513,7 +513,8 @@ FRotator AMainCharacter::GetFollowCameraRotator() const
 {
 	return mFollowCamera->GetComponentRotation();
 }
-
+
+
 bool AMainCharacter::AddInventoryItem(const struct FItemDataTable* itemData)
 {
 	if (itemData == nullptr)
