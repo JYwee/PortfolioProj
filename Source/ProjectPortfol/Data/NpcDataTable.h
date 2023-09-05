@@ -21,37 +21,39 @@ struct PROJECTPORTFOL_API FNpcDataTable : public FTableRowBase
 
 public:
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MonsterData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CrowdNpcData")
 		USkeletalMesh* Mesh;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MonsterData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CrowdNpcData")
 		int HP;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MonsterData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CrowdNpcData")
 		int SP;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MonsterData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CrowdNpcData")
 		bool invincibility;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MonsterData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CrowdNpcData")
 		int Att;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MonsterData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CrowdNpcData")
 		int Def;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MonsterData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CrowdNpcData")
 		FText Dialog;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CrowdNpcData")
+	TArray<FVector> PositionPatrol;
 
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MonsterData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CrowdNpcData")
 		FVector PostionOri;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MonsterData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CrowdNpcData")
 		TMap<NPCEnemyAIControlState, class UAnimMontage*> MapAnimation;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MonsterData")
-		class UBehaviorTree* AI;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CrowdNpcData")
+	int MaterialIndex;
 
 	
 };

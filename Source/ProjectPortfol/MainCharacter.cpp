@@ -180,6 +180,9 @@ void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AAct
 			}
 		}
 
+		UListView* tmp2 = listWdg->GetInteractListView();
+		TArray<UObject*> listItems = tmp2->GetListItems();
+		UE_LOG(LogTemp, Error, TEXT("%S(%u) %d listSize "), __FUNCTION__, __LINE__, listItems.Num());
 		
 
 		/*TArray<UUserWidget*> asdfff = listWdg->GetInteractListView()->GetDisplayedEntryWidgets();
@@ -272,9 +275,13 @@ void AMainCharacter::EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 							
 						}
 					}
-					
-					tmp2->RemoveItem(tmpData);
 
+					tmp2->RemoveItem(tmpData);
+					//listItems.Remove(tmpData);
+
+					UE_LOG(LogTemp, Error, TEXT("%S(%u) %d, %d listSize "), __FUNCTION__, __LINE__, listItems.Num(), tmp2->GetNumItems());
+
+					
 					AActor* removeObj = Cast<AActor>(OtherActor);
 					if (mNearInteractObj.Contains(removeObj))
 					{
@@ -283,6 +290,11 @@ void AMainCharacter::EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 					
 				}
 			}
+		}
+
+		if (tmp2->GetNumItems() < 1)
+		{
+			listWdg->SetNowFocusSlotObj(nullptr);
 		}
 
 		

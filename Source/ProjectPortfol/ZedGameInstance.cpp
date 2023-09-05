@@ -10,7 +10,7 @@
 #include "Data/BossDataTable.h"
 #include "Data/SubClassData.h"
 #include "Data/ItemDataTable.h"
-
+#include "Data/NpcDataTable.h"
 
 UZedGameInstance::UZedGameInstance() {
 
@@ -100,6 +100,16 @@ UZedGameInstance::UZedGameInstance() {
 		}
 	}
 	
+	{
+		FString DataPath = TEXT("/Script/Engine.DataTable'/Game/Data/DT_Npc.DT_Npc'");
+		ConstructorHelpers::FObjectFinder<UDataTable> DataTable(*DataPath);
+
+		if (DataTable.Succeeded())
+		{
+			mCrowNpcData = DataTable.Object;
+		}
+	}
+
 	//mBossData
 	/// Script / Engine.DataTable'/Game/Data/DT_BossDesertDragon.DT_BossDesertDragon'
 
@@ -217,6 +227,23 @@ FItemDataTable* UZedGameInstance::GetItemDataTable(FName name)
 	{
 		return nullptr;
 	}
+	return FindTable;
+}
+
+FNpcDataTable* UZedGameInstance::GetNpcDataTable(FName name)
+{
+	if (nullptr == mCrowNpcData)
+	{
+		return nullptr;
+	}
+
+	FNpcDataTable* FindTable = mCrowNpcData->FindRow<FNpcDataTable>(name, name.ToString());
+
+	if (nullptr == FindTable)
+	{
+		return nullptr;
+	}
+
 	return FindTable;
 }
 

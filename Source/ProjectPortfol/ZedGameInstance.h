@@ -36,6 +36,9 @@ public:
 
 	struct FItemDataTable* GetItemDataTable(FName name);
 
+	struct FNpcDataTable* GetNpcDataTable(FName name);
+
+
 private:
 
 	UDataTable* mDropItemData;
@@ -50,6 +53,8 @@ private:
 	UDataTable* mBossData;
 
 	UDataTable* mObjInteractData;
+
+	UDataTable* mCrowNpcData;
 
 	TArray<UStaticMesh*> ArrWeaponMesh;
 };
