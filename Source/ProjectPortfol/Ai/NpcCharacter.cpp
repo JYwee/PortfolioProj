@@ -23,7 +23,7 @@ ANpcCharacter::ANpcCharacter()
 	mLockOnWidgetComp->SetupAttachment(RootComponent);
 	mLockOnWidgetComp->SetVisibility(false);
 
-
+	//GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ANpcCharacter::BeginOverLap);
 	//setcontroller
 }
 
