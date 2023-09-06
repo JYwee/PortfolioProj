@@ -38,7 +38,7 @@ protected:
 	virtual void BeginPlay() override;
 	
 	void AttackAction();
-	void JumpAction();
+	void JumpOrNextAction();
 	//void JumpAxis(float Rate);
 
 	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
@@ -127,7 +127,7 @@ private:
 
 	bool mIsShift = false;
 
-
+	bool mIsUiControlling = false;
 	/*UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AMainCharacter")
 	class ANpcCharacter* LockOnTargetNpcCharacter;*/
 };

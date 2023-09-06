@@ -53,7 +53,7 @@ void ACrowdNpc::BeginPlay()
 	GetBlackboardComponent()->SetValueAsEnum(TEXT("NPCEnemyAIControlState"), static_cast<uint8>(NPCEnemyAIControlState::Idle));
 
 	mPatrolPostion = inst->GetNpcDataTable(mNpcName)->PositionPatrol;
-	mInteractDialogues = inst->GetNpcDataTable(mNpcName)->Dialog;
+	mInteractDialogues = inst->GetNpcDataTable(mNpcName)->ArrDialog;
 }
 
 

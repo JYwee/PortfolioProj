@@ -16,6 +16,7 @@
 #include "UI/InteracObjData.h"
 #include "UI/InvenAndStatus.h"
 #include <UI/InGameHud.h>
+#include "Ai/CrowdNpc.h"
 
 AMyPlayerController::AMyPlayerController()
 {
@@ -82,7 +83,7 @@ void AMyPlayerController::SetupInputComponent()
 			//UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("ShiftAction", EKeys::LeftShift));
 
 			UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerAttack"), EKeys::LeftMouseButton));
-			UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerJumpAction"), EKeys::SpaceBar));
+			UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("JumpOrNextAction"), EKeys::SpaceBar));
 			UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("Lock_On"), EKeys::Q));
 			UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("ShiftAction"), EKeys::LeftShift));
 			UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("InteractAction"), EKeys::E));
@@ -111,7 +112,7 @@ void AMyPlayerController::SetupInputComponent()
 	//PlayerInputComponent->BindAxis("MainPlayer_LookUpRate", this, &AMainCharacter::LookUpAtRate);
 
 	InputComponent->BindAction("PlayerAttack", IE_Pressed, this, &AMyPlayerController::AttackAction);
-	InputComponent->BindAction("PlayerJumpAction", IE_Pressed, this, &AMyPlayerController::JumpAction);
+	InputComponent->BindAction("JumpOrNextAction", IE_Pressed, this, &AMyPlayerController::JumpOrNextAction);
 	InputComponent->BindAction("Lock_On", IE_Pressed, this, &AMyPlayerController::LockOnTarget);
 	
 	InputComponent->BindAction("ShiftAction", IE_Pressed, this, &AMyPlayerController::ShiftAction);
@@ -144,6 +145,11 @@ void AMyPlayerController::BeginPlay()
 
 void AMyPlayerController::MoveForward(float Val)
 {
+	if (mIsUiControlling == true)
+	{
+		return;
+	}
+
 
 	if (myCharacter->GetAniState() == ZEDAniState::Attack || myCharacter->GetAniState() == ZEDAniState::Jump) {
 		return;
@@ -188,6 +194,11 @@ void AMyPlayerController::MoveForward(float Val)
 
 void AMyPlayerController::MoveRight(float Val)
 {
+	if (mIsUiControlling == true)
+	{
+		return;
+	}
+
 	if (myCharacter->GetAniState() == ZEDAniState::Attack || myCharacter->GetAniState() == ZEDAniState::Jump) {
 		return;
 	}
@@ -260,6 +271,11 @@ void AMyPlayerController::FocusTurn(float Rate)
 
 void AMyPlayerController::ShiftAction()
 {
+	if (mIsUiControlling == true)
+	{
+		return;
+	}
+
 	if (myCharacter->IsLockOnTarget() == true)
 	{
 		FVector curFVector = myCharacter->GetCharacterMovement()->GetCurrentAcceleration();
@@ -284,6 +300,11 @@ void AMyPlayerController::ShiftAction()
 
 void AMyPlayerController::LockOnTarget()
 {
+	if (mIsUiControlling == true)
+	{
+		return;
+	}
+
 
 	UZedGameInstance* Inst = GetGameInstance<UZedGameInstance>();
 
@@ -428,9 +449,26 @@ void AMyPlayerController::InteractAction()
 		}
 		else if (focusedSlotObjData->mOnwerActor->Tags.Contains(TEXT("InteracNPC")))
 		{
-			ADropItem* dropItem = Cast<ADropItem>(focusedSlotObjData->mOnwerActor);
+			ACrowdNpc* crowdNpcCharacter = Cast<ACrowdNpc>(focusedSlotObjData->mOnwerActor);
 
-			myCharacter->AddInventoryItem(dropItem->mItemData);
+			mIsUiControlling = true;
+
+			if (crowdNpcCharacter->GetInteractDialogues().Num() > 0)
+			{
+				myHud->GetMainWidget()->SetMainTextWindowOnOff(ESlateVisibility::Visible);
+				myHud->GetMainWidget()->GetUIMainTextBox()->mArrMainText = crowdNpcCharacter->GetInteractDialogues();
+				myHud->GetMainWidget()->GetUIMainTextBox()->indexMainText = 0;
+				myHud->GetMainWidget()->GetUIMainTextBox()->mMainText =
+					crowdNpcCharacter->GetInteractDialogues()[0];
+
+			}
+
+
+				//crowdNpcCharacter->GetInteractDialogues();
+
+			/*ADropItem* dropItem = Cast<ADropItem>(focusedSlotObjData->mOnwerActor);
+
+			myCharacter->AddInventoryItem(dropItem->mItemData);*/
 		}
 
 	
@@ -502,6 +540,11 @@ void AMyPlayerController::DownUiInteractAction()
 
 void AMyPlayerController::OpenInvenStatusAction()
 {
+	if (mIsUiControlling == true)
+	{
+		return;
+	}
+
 	if (GetHUD() == nullptr)
 	{
 		UE_LOG(LogTemp, Error, TEXT("%S(%u) GetHud failed"), __FUNCTION__, __LINE__);
@@ -552,6 +595,11 @@ void AMyPlayerController::OpenInvenStatusAction()
 
 void AMyPlayerController::Aiming(float Rate)
 {
+	if (mIsUiControlling == true)
+	{
+		return;
+	}
+
 	if (Rate != 0.0f) {
 
 		if (myCharacter->IsAimingNow() == false)
@@ -597,6 +645,10 @@ ANpcCharacter* AMyPlayerController::Visibility_GetRenderedActors(ANpcCharacter* 
 
 void AMyPlayerController::AttackAction()
 {
+	if (mIsUiControlling == true)
+	{
+		return;
+	}
 
 	UZedGameInstance* Inst = GetWorld()->GetGameInstance<UZedGameInstance>();
 
@@ -622,9 +674,40 @@ void AMyPlayerController::AttackAction()
 	}
 }
 
-void AMyPlayerController::JumpAction()
+void AMyPlayerController::JumpOrNextAction()
 {
-	myCharacter->Jump();
+	if (mIsUiControlling == false)
+	{
+		myCharacter->Jump();
 
-	myCharacter->SetAniState(ZEDAniState::Jump);
+		myCharacter->SetAniState(ZEDAniState::Jump);
+		
+		return;
+	}
+
+	AInGameHud* myHud = GetHUD<AInGameHud>();
+
+	UInteracTextListWidget* listWdg = Cast<UInteracTextListWidget>(myHud->GetMainWidget()->GetWidgetFromName(TEXT("UI_IntractiveText")));
+
+	UInteracObjData* focusedSlotObjData = Cast<UInteracObjData>(listWdg->GetNowFocusSlotObj());
+
+	TArray<FText> arrTextDilog = myHud->GetMainWidget()->GetUIMainTextBox()->mArrMainText;
+
+	int indexText = myHud->GetMainWidget()->GetUIMainTextBox()->indexMainText;
+
+	if (indexText < arrTextDilog.Num() - 1)
+	{
+		++indexText;
+		myHud->GetMainWidget()->GetUIMainTextBox()->indexMainText = indexText;
+
+		myHud->GetMainWidget()->GetUIMainTextBox()->mMainText = arrTextDilog[indexText];
+	}
+	else
+	{
+		myHud->GetMainWidget()->SetMainTextWindowOnOff(ESlateVisibility::Hidden);
+		mIsUiControlling = false;
+		myHud->GetMainWidget()->GetUIMainTextBox()->indexMainText = 0;
+	}
+	//arrTextDilog
+	//myHud->GetMainWidget()->GetUIMainTextBox()->indexMainText
 }

@@ -22,4 +22,8 @@ public:
 	UPROPERTY(Category = "UI", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	FText mMainText;
 
+	UPROPERTY(Category = "UI", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	TArray<FText> mArrMainText;
+
+	int indexMainText = 0;
 };

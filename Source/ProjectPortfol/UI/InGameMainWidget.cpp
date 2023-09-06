@@ -14,7 +14,7 @@ void UInGameMainWidget::NativeConstruct()
 	mInvenAndStatus = Cast<UInvenAndStatus>(GetWidgetFromName(TEXT("UI_InventoryStatus")));
 	mAllWidget.Add(Cast<UUserWidget>(GetWidgetFromName(TEXT("UI_InventoryStatus"))));
 
-	mUIMainTextBox = Cast<UUserWidget>(GetWidgetFromName(TEXT("UI_MainTextBox")));
+	mUIMainTextBox = Cast<UMainTextWidget>(GetWidgetFromName(TEXT("UI_MainTextBox")));
 
 
 	//mAllWidget.Add(Cast<UUserWidget>(GetWidgetFromName(TEXT("WBP_Status"))));

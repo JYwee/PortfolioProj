@@ -21,6 +21,11 @@ public:
 	
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintCallable, Category = Npc)
+		FORCEINLINE  TArray<FText> GetInteractDialogues() const{
+		return mInteractDialogues;
+	}
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -47,6 +52,6 @@ private:
 	class UBehaviorTree* mAI;
 
 	UPROPERTY(Category = "NPC", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	FText mInteractDialogues;
+		TArray<FText> mInteractDialogues;
 
 };

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "MainTextWidget.h"
 #include "InGameMainWidget.generated.h"
 
 /**
@@ -49,16 +50,22 @@ public:
 		mCrossHairOnOff = _Visibility;
 	}
 
-	UUserWidget* GetUIMainTextBox()
+	UMainTextWidget* GetUIMainTextBox()
 	{
 		return mUIMainTextBox;
 	}
+
+	void SetMainTextWindowOnOff(ESlateVisibility _Visibility)
+	{
+		MainTextWindowOnOff = _Visibility;
+	}
+	
 
 private:
 	
 	class UInvenAndStatus* mInvenAndStatus;
 
-	UUserWidget* mUIMainTextBox;
+	UMainTextWidget* mUIMainTextBox;
 	
 
 	UPROPERTY(Category = "UIzed", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))

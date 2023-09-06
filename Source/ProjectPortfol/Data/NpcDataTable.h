@@ -43,7 +43,7 @@ public:
 		FText Dialog;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CrowdNpcData")
-	TArray<FString> ArrDialog;
+	TArray<FText> ArrDialog;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CrowdNpcData")
 	TArray<FVector> PositionPatrol;
