@@ -23,7 +23,7 @@ public:
 
 	UBTTask_NpcAiBase();
 
-	void OnGameplayTaskActivated(class UGameplayTask&) override;
+	void OnGameplayTaskActivated(class UGameplayTask& activated) override;
 
 	void TickTask(UBehaviorTreeComponent& ownerComp, uint8* nodeMemory, float delataSeconds) override;
 
@@ -32,6 +32,7 @@ public:
 	float GetStateTime(UBehaviorTreeComponent& ownerComp);
 
 	NPCEnemyAIControlState GetAiState(UBehaviorTreeComponent& ownerComp);
+	//NpcAiState
 
 	void ResetStateTime(UBehaviorTreeComponent& ownerComp);
 
@@ -53,4 +54,7 @@ public:
 
 	bool IsDeath(UBehaviorTreeComponent& ownerComp);
 
+protected:
+
+	FName mAIControlStateName;
 };

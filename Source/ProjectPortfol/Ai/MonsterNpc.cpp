@@ -36,8 +36,9 @@ void AMonsterNpc::BeginPlay()
 	}
 
 	Super::BeginPlay();
-
+	//GetBlackboardComponent().
 	GetBlackboardComponent()->SetValueAsEnum(TEXT("NPCEnemyAIControlState"), static_cast<uint8>(NPCEnemyAIControlState::Idle));
+	//GetBlackboardComponent()->SetValueAsEnum(mAIControlStateName, static_cast<uint8>(NPCEnemyAIControlState::Idle));
 	GetBlackboardComponent()->SetValueAsString(TEXT("TargetTag"), TEXT("Player"));
 	GetBlackboardComponent()->SetValueAsFloat(TEXT("SearchRange"), 1500.0f);
 	GetBlackboardComponent()->SetValueAsFloat(TEXT("AttackRange"), 200.0f);

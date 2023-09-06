@@ -19,13 +19,13 @@ ACrowdNpc::ACrowdNpc()
 void ACrowdNpc::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	UE_LOG(LogTemp, Warning, TEXT("now %d ") , static_cast<uint8>(GetAniState()))
 }
 
 
 void ACrowdNpc::BeginPlay()
 {
-	Super::BeginPlay();
-
 	UZedGameInstance* inst = Cast<UZedGameInstance>(GetWorld()->GetGameInstance());
 
 	if (inst == nullptr || inst->IsValidLowLevel() == false)
@@ -45,11 +45,15 @@ void ACrowdNpc::BeginPlay()
 		SetAniState(NPCEnemyAIControlState::Idle);
 	}
 
+	Super::BeginPlay();
+
+
 	//Super::BeginPlay();
 
-	GetBlackboardComponent()->SetValueAsEnum(TEXT("NpcAiState"), static_cast<uint8>(NPCEnemyAIControlState::Idle));
+	GetBlackboardComponent()->SetValueAsEnum(TEXT("NPCEnemyAIControlState"), static_cast<uint8>(NPCEnemyAIControlState::Idle));
 
 	mPatrolPostion = inst->GetNpcDataTable(mNpcName)->PositionPatrol;
+	mInteractDialogues = inst->GetNpcDataTable(mNpcName)->Dialog;
 }
 
 

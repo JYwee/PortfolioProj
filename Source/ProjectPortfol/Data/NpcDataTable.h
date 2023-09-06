@@ -43,8 +43,10 @@ public:
 		FText Dialog;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CrowdNpcData")
-	TArray<FVector> PositionPatrol;
+	TArray<FString> ArrDialog;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CrowdNpcData")
+	TArray<FVector> PositionPatrol;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CrowdNpcData")
 		FVector PostionOri;

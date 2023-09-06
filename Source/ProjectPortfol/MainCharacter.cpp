@@ -41,6 +41,7 @@ AMainCharacter::AMainCharacter()
 	mSphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("InteractSphereComp"));
 	mSphereComponent->SetupAttachment(RootComponent);
 	mSphereComponent->SetSphereRadius(300.f, true);
+	mSphereComponent->ComponentTags.Add(TEXT("PlayerCapsuleComp"));
 	mSphereComponent->ComponentTags.Add(TEXT("Interact_PlayerComp"));
 	
 	//캐릭터 이동 모션 관련
@@ -178,6 +179,8 @@ void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AAct
 				Data->mOnwerActor = OtherActor;
 				listWdg->GetInteractListView()->AddItem(Data);
 			}
+
+			
 		}
 
 		UListView* tmp2 = listWdg->GetInteractListView();
@@ -206,6 +209,29 @@ void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AAct
 		//AddInteracTextSlot(UObject* objData, UUserWidget* widgetData)
 	}
 
+	else if (OtherComp->ComponentHasTag(TEXT("InteracNPC")))
+	{
+		APlayerController* HUDController = Cast<APlayerController>(GetController());
+		AInGameHud* myHud = HUDController->GetHUD<AInGameHud>();
+
+		//UUserWidget* Window;
+
+		UInteracTextListWidget* listWdg = Cast<UInteracTextListWidget>(myHud->GetMainWidget()->GetWidgetFromName(TEXT("UI_IntractiveText")));
+		UInteracTextSlot* tmp = Cast<UInteracTextSlot>(listWdg->GetWidgetFromName(TEXT("UI_InteracTextSlot")));
+
+		UZedGameInstance* gameInst = GetWorld()->GetGameInstance<UZedGameInstance>();
+		if (gameInst == nullptr || gameInst->IsValidLowLevel() == false)
+		{
+			UE_LOG(LogTemp, Error, TEXT("%S(%u) Find failed"), __FUNCTION__, __LINE__);
+			return;
+		}
+		//AActor* addedObj = Cast<AActor>(OtherActor);
+		//mNearInteractObj.Add(addedObj);
+		UInteracObjData* Data = NewObject<UInteracObjData>();
+		Data->mObjData = gameInst->GetObjInteractData("InteracNPC");
+		Data->mOnwerActor = OtherActor;
+		listWdg->GetInteractListView()->AddItem(Data);
+	}
 
 
 }
@@ -296,11 +322,83 @@ void AMainCharacter::EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 		{
 			listWdg->SetNowFocusSlotObj(nullptr);
 		}
-
-		
-
-
 	}
+	else if (OtherComp->ComponentHasTag(TEXT("InteracNPC")))
+	{
+		APlayerController* HUDController = Cast<APlayerController>(GetController());
+		AInGameHud* myHud = HUDController->GetHUD<AInGameHud>();
+
+		//UUserWidget* Window;
+
+		UInteracTextListWidget* listWdg = Cast<UInteracTextListWidget>(myHud->GetMainWidget()->GetWidgetFromName(TEXT("UI_IntractiveText")));
+		UInteracTextSlot* tmp = Cast<UInteracTextSlot>(listWdg->GetWidgetFromName(TEXT("UI_InteracTextSlot")));
+
+		UZedGameInstance* gameInst = GetWorld()->GetGameInstance<UZedGameInstance>();
+		if (gameInst == nullptr || gameInst->IsValidLowLevel() == false)
+		{
+			UE_LOG(LogTemp, Error, TEXT("%S(%u) Find failed"), __FUNCTION__, __LINE__);
+			return;
+		}
+		UListView* tmp2 = listWdg->GetInteractListView()/*->RemoveItem()*/;
+		TArray<UObject*> listItems = tmp2->GetListItems();
+		for (int i = 0; i < listItems.Num(); ++i)
+		{
+
+			UInteracObjData* tmpData = Cast<UInteracObjData>(listItems[i]);
+
+			//if( tmpData == 
+			if (tmpData != nullptr || tmpData->IsValidLowLevel() == true)
+			{
+				UE_LOG(LogTemp, Error, TEXT("%S(%u) tmpData != nullptr "), __FUNCTION__, __LINE__);
+
+				if (OtherActor == tmpData->mOnwerActor)
+				{
+					if (tmpData == listWdg->GetNowFocusSlotObj()) {
+
+						UObject* moveFocus = listWdg->GetUpFocusSlotObj();
+
+						if (moveFocus == nullptr)
+						{
+							listWdg->SetNowFocusSlotObj(nullptr);
+						}
+						else if (moveFocus == tmpData)
+						{
+							moveFocus = listWdg->GetDownFocusSlotObj();
+							if (moveFocus == nullptr) {
+								listWdg->SetNowFocusSlotObj(nullptr);
+								//tmpData->mWidget->mArrowFocusVisibility = ESlateVisibility::Hidden;
+								//else if (moveFocus == tmpData) {
+								//	//tmpData->mWidget->mArrowFocusVisibility = ESlateVisibility::Hidden;
+								//	}
+							}
+
+
+						}
+					}
+
+					tmp2->RemoveItem(tmpData);
+					//listItems.Remove(tmpData);
+
+					UE_LOG(LogTemp, Error, TEXT("%S(%u) %d, %d listSize "), __FUNCTION__, __LINE__, listItems.Num(), tmp2->GetNumItems());
+
+
+					AActor* removeObj = Cast<AActor>(OtherActor);
+					if (mNearInteractObj.Contains(removeObj))
+					{
+						mNearInteractObj.Remove(removeObj);
+					}
+
+				}
+			}
+		}
+
+		if (tmp2->GetNumItems() < 1)
+		{
+			listWdg->SetNowFocusSlotObj(nullptr);
+		}
+	}
+
+
 
 }
 
@@ -440,11 +538,11 @@ void AMainCharacter::BeginPlay()
 
 
 	//for interativeObj
-	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMainCharacter::BeginOverLap);
-	GetCapsuleComponent()->OnComponentEndOverlap.AddDynamic(this, &AMainCharacter::EndOverlap);
+	//GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMainCharacter::BeginOverLap);
+	//GetCapsuleComponent()->OnComponentEndOverlap.AddDynamic(this, &AMainCharacter::EndOverlap);
 
-	//mSphereComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMainCharacter::BeginOverLap);
-	//mSphereComponent()->OnComponentEndOverlap.AddDynamic(this, &AMainCharacter::EndOverlap);
+	mSphereComponent->OnComponentBeginOverlap.AddDynamic(this, &AMainCharacter::BeginOverLap);
+	mSphereComponent->OnComponentEndOverlap.AddDynamic(this, &AMainCharacter::EndOverlap);
 
 
 }

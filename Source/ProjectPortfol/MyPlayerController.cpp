@@ -426,7 +426,12 @@ void AMyPlayerController::InteractAction()
 
 			myCharacter->AddInventoryItem(dropItem->mItemData);
 		}
+		else if (focusedSlotObjData->mOnwerActor->Tags.Contains(TEXT("InteracNPC")))
+		{
+			ADropItem* dropItem = Cast<ADropItem>(focusedSlotObjData->mOnwerActor);
 
+			myCharacter->AddInventoryItem(dropItem->mItemData);
+		}
 
 	
 	//기존의 예전 테스트 코드 //캐릭터 근처의 오브잭트 전부를 훑음.

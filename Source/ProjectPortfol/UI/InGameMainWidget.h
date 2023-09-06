@@ -49,11 +49,17 @@ public:
 		mCrossHairOnOff = _Visibility;
 	}
 
-
+	UUserWidget* GetUIMainTextBox()
+	{
+		return mUIMainTextBox;
+	}
 
 private:
 	
 	class UInvenAndStatus* mInvenAndStatus;
+
+	UUserWidget* mUIMainTextBox;
+	
 
 	UPROPERTY(Category = "UIzed", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	ESlateVisibility mInvenStatusWindowOnOff = ESlateVisibility::Hidden;
@@ -73,5 +79,7 @@ private:
 	UPROPERTY(Category = "UIzed", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		ESlateVisibility mCrossHairOnOff = ESlateVisibility::Hidden;
 
+	UPROPERTY(Category = "UIzed", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		ESlateVisibility MainTextWindowOnOff = ESlateVisibility::Hidden;
 
 };

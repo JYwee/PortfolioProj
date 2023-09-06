@@ -64,10 +64,26 @@ NPCEnemyAIControlState UBTTask_NpcAiBase::GetAiState(UBehaviorTreeComponent& own
 		return NPCEnemyAIControlState::None;
 	}
 
-	uint8 Enum = blackBoard->GetValueAsEnum(TEXT("NPCEnemyAIControlState"));
+	uint8 Enum = blackBoard->GetValueAsEnum(mAIControlStateName);
+
 
 	return static_cast<NPCEnemyAIControlState>(Enum);
 }
+//
+//NPCEnemyAIControlState UBTTask_NpcAiBase::GetAiState(UBehaviorTreeComponent& ownerComp)
+//{
+//	UBlackboardComponent* blackBoard = ownerComp.GetBlackboardComponent();
+//
+//	if (nullptr == blackBoard)
+//	{
+//		UE_LOG(LogTemp, Error, TEXT("if (nullptr == blackBoard)"), __FUNCTION__, __LINE__);
+//		return NPCEnemyAIControlState::None;
+//	}
+//
+//	uint8 Enum = blackBoard->GetValueAsEnum(mAIControlStateName);
+//
+//	return static_cast<NPCEnemyAIControlState>(Enum);
+//}
 
 void UBTTask_NpcAiBase::ResetStateTime(UBehaviorTreeComponent& ownerComp)
 {
@@ -92,8 +108,19 @@ void UBTTask_NpcAiBase::SetStateChange(UBehaviorTreeComponent& ownerComp, uint8 
 		return;
 	}
 
-	blackBoard->SetValueAsEnum(TEXT("NPCEnemyAIControlState"), state);
 
+	if (GetNpcCharacter(ownerComp)->ActorHasTag("Monster") == true)
+	{
+		mAIControlStateName = TEXT("NPCEnemyAIControlState");
+	}
+	else if (GetNpcCharacter(ownerComp)->ActorHasTag("InteracNPC") == true)
+	{
+		mAIControlStateName = TEXT("NPCEnemyAIControlState");
+	}
+	blackBoard->SetValueAsEnum(mAIControlStateName, state);
+	uint8 Enum = blackBoard->GetValueAsEnum(mAIControlStateName);
+	//blackBoard->SetValueAsEnum(TEXT("NPCEnemyAIControlState"), state);
+	//uint8 Enum2 = blackBoard->GetValueAsEnum(TEXT("NPCEnemyAIControlState"));
 	ResetStateTime(ownerComp);
 
 	FinishLatentTask(ownerComp, EBTNodeResult::Type::Failed);
@@ -174,5 +201,19 @@ UBlackboardComponent* UBTTask_NpcAiBase::GetBlackboardComponent(UBehaviorTreeCom
 
 EBTNodeResult::Type UBTTask_NpcAiBase::ExecuteTask(UBehaviorTreeComponent& ownerComp, uint8* nodeMemory)
 {
+	if (GetNpcCharacter(ownerComp)->ActorHasTag("Monster") == true)
+	{
+		mAIControlStateName = TEXT("NPCEnemyAIControlState");
+		int a = 0;
+	}
+	else if (GetNpcCharacter(ownerComp)->ActorHasTag("InteracNPC") == true)
+	{
+		mAIControlStateName = TEXT("NPCEnemyAIControlState");
+		int a = 0;
+	}
+	UE_LOG(LogTemp, Warning, TEXT("called"));
+
 	return EBTNodeResult::Type();
+
+	
 }
