@@ -455,12 +455,13 @@ void AMyPlayerController::InteractAction()
 
 			if (crowdNpcCharacter->GetInteractDialogues().Num() > 0)
 			{
-				myHud->GetMainWidget()->SetMainTextWindowOnOff(ESlateVisibility::Visible);
+				myHud->GetMainWidget()->SetTalkTextWindowOnOff(ESlateVisibility::Hidden);
 				myHud->GetMainWidget()->GetUIMainTextBox()->mArrMainText = crowdNpcCharacter->GetInteractDialogues();
 				myHud->GetMainWidget()->GetUIMainTextBox()->indexMainText = 0;
 				myHud->GetMainWidget()->GetUIMainTextBox()->mMainText =
 					crowdNpcCharacter->GetInteractDialogues()[0];
-
+				myHud->GetMainWidget()->SetMainTextWindowOnOff(ESlateVisibility::Visible);
+				
 			}
 
 
@@ -707,6 +708,7 @@ void AMyPlayerController::JumpOrNextAction()
 		myHud->GetMainWidget()->SetMainTextWindowOnOff(ESlateVisibility::Hidden);
 		mIsUiControlling = false;
 		myHud->GetMainWidget()->GetUIMainTextBox()->indexMainText = 0;
+		myHud->GetMainWidget()->SetTalkTextWindowOnOff(ESlateVisibility::Visible);
 	}
 	//arrTextDilog
 	//myHud->GetMainWidget()->GetUIMainTextBox()->indexMainText

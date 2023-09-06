@@ -59,6 +59,11 @@ public:
 	{
 		MainTextWindowOnOff = _Visibility;
 	}
+
+	void SetTalkTextWindowOnOff(ESlateVisibility _Visibility)
+	{
+		TalkTextWindowOnOff = _Visibility;
+	}
 	
 
 private:

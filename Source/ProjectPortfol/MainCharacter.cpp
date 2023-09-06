@@ -106,6 +106,8 @@ void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AAct
 		UInteracTextSlot* tmp = Cast<UInteracTextSlot>(listWdg->GetWidgetFromName(TEXT("UI_InteracTextSlot")));
 
 		UZedGameInstance* gameInst = GetWorld()->GetGameInstance<UZedGameInstance>();
+
+
 		if (gameInst == nullptr || gameInst->IsValidLowLevel() == false)
 		{
 			UE_LOG(LogTemp, Error, TEXT("%S(%u) Find failed"), __FUNCTION__, __LINE__);
@@ -120,6 +122,8 @@ void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AAct
 			UE_LOG(LogTemp, Error, TEXT("%S(%u) Find failed"), __FUNCTION__, __LINE__);
 				return;
 		}
+
+		myHud->GetMainWidget()->SetTalkTextWindowOnOff(ESlateVisibility::Visible);
 		
 		for (int i = 0; i < OtherComp->ComponentTags.Num(); ++i)
 		{
@@ -178,6 +182,7 @@ void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AAct
 				Data->mObjData = gameInst->GetObjInteractData("DropItem");
 				Data->mOnwerActor = OtherActor;
 				listWdg->GetInteractListView()->AddItem(Data);
+				
 			}
 
 			
@@ -225,6 +230,8 @@ void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AAct
 			UE_LOG(LogTemp, Error, TEXT("%S(%u) Find failed"), __FUNCTION__, __LINE__);
 			return;
 		}
+
+		myHud->GetMainWidget()->SetTalkTextWindowOnOff(ESlateVisibility::Visible);
 		//AActor* addedObj = Cast<AActor>(OtherActor);
 		//mNearInteractObj.Add(addedObj);
 		UInteracObjData* Data = NewObject<UInteracObjData>();
@@ -321,6 +328,7 @@ void AMainCharacter::EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 		if (tmp2->GetNumItems() < 1)
 		{
 			listWdg->SetNowFocusSlotObj(nullptr);
+			myHud->GetMainWidget()->SetTalkTextWindowOnOff(ESlateVisibility::Hidden);
 		}
 	}
 	else if (OtherComp->ComponentHasTag(TEXT("InteracNPC")))
@@ -395,6 +403,7 @@ void AMainCharacter::EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 		if (tmp2->GetNumItems() < 1)
 		{
 			listWdg->SetNowFocusSlotObj(nullptr);
+			myHud->GetMainWidget()->SetTalkTextWindowOnOff(ESlateVisibility::Hidden);
 		}
 	}
 

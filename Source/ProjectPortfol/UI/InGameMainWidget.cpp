@@ -2,6 +2,7 @@
 
 
 #include "UI/InGameMainWidget.h"
+
 #include "InvenAndStatus.h"
 
 void UInGameMainWidget::NativeConstruct()
@@ -16,6 +17,6 @@ void UInGameMainWidget::NativeConstruct()
 
 	mUIMainTextBox = Cast<UMainTextWidget>(GetWidgetFromName(TEXT("UI_MainTextBox")));
 
-
+	//TalkTextWindowOnOff = Cast<UInteracTextListWidget>(GetWidgetFromName(TEXT("UI_IntractiveText")));
 	//mAllWidget.Add(Cast<UUserWidget>(GetWidgetFromName(TEXT("WBP_Status"))));
 }
