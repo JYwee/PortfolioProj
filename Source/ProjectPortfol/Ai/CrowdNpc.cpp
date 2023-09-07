@@ -14,15 +14,35 @@ ACrowdNpc::ACrowdNpc()
 
 	GetCapsuleComponent()->ComponentTags.Add("InteracNPC");
 	Tags.Add("InteracNPC");
+
+	
+	mSplineComp = CreateDefaultSubobject<USplineComponent>(TEXT("SplineComp"));
+	mSplineComp->SetupAttachment(RootComponent);
+	//mSplineComp->SetSplinePointType()
+	//mSplineComp->SetWorldLocation(GetActorLocation());
+	//FVector tmpVec = GetActorLocation();
+
+	//mSplineComp->SetLocationAtSplinePoint(0, GetActorLocation(), ESplineCoordinateSpace::World, true);
+
+
 }
 
 void ACrowdNpc::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	UE_LOG(LogTemp, Warning, TEXT("now %d ") , static_cast<uint8>(GetAniState()))
+	//UE_LOG(LogTemp, Warning, TEXT("now %d ") , static_cast<uint8>(GetAniState()))
 }
 
+
+FVector ACrowdNpc::GetNextMovePos() 
+{
+	mCurSplinePointIndex;
+	FVector tmp = mSplineComp->GetLocationAtSplinePoint(1, ESplineCoordinateSpace::World);
+	GetBlackboardComponent()->SetValueAsVector(TEXT("TargetPosition"), mSplineComp->GetLocationAtSplinePoint(1, ESplineCoordinateSpace::World));
+
+	return FVector();
+}
 
 void ACrowdNpc::BeginPlay()
 {
@@ -38,6 +58,11 @@ void ACrowdNpc::BeginPlay()
 
 	if (nullptr != inst)
 	{
+		if (mNpcName.IsNone() == true)
+		{
+			UE_LOG(LogTemp, Error, TEXT("%S(%u) mNpcName.IsNone()"), __FUNCTION__, __LINE__);
+			return;
+		}
 		npcDT = inst->GetNpcDataTable(mNpcName);
 
 		//SetAllAnimation<NPCAniState>(mMonsterDT->MapAnimation);
@@ -51,7 +76,21 @@ void ACrowdNpc::BeginPlay()
 	//Super::BeginPlay();
 
 	GetBlackboardComponent()->SetValueAsEnum(TEXT("NPCEnemyAIControlState"), static_cast<uint8>(NPCEnemyAIControlState::Idle));
+	GetBlackboardComponent()->SetValueAsVector(TEXT("OriginPostion"), GetActorLocation());
+	
+	int32 tt = mSplineComp->GetNumberOfSplinePoints();
+	if (mSplineComp->GetNumberOfSplinePoints() > 2)
+	{
+		GetBlackboardComponent()->SetValueAsVector(TEXT("TargetPosition"), mSplineComp->GetLocationAtSplinePoint(1, ESplineCoordinateSpace::World));
+		FVector tmp = mSplineComp->GetLocationAtSplinePoint(1, ESplineCoordinateSpace::World);
 
+		int a = 0;
+	}
+	else
+	{
+		GetBlackboardComponent()->SetValueAsVector(TEXT("TargetPosition"), GetActorLocation());
+	}
+	
 	mPatrolPostion = inst->GetNpcDataTable(mNpcName)->PositionPatrol;
 	mInteractDialogues = inst->GetNpcDataTable(mNpcName)->ArrDialog;
 }

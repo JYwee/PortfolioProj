@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Ai/NpcCharacter.h"
 #include "Components/SceneComponent.h"
+#include "Components/SplineComponent.h"
 #include "CrowdNpc.generated.h"
 
 /**
@@ -26,6 +27,14 @@ public:
 		return mInteractDialogues;
 	}
 
+	UFUNCTION(BlueprintCallable, Category = Npc)
+	FORCEINLINE  FName GetNpcName() const {
+		return mNpcName;
+	}
+	
+	UFUNCTION(BlueprintCallable, Category = Npc)
+	FVector GetNextMovePos();
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -42,6 +51,10 @@ protected:
 private:
 
 	UPROPERTY(Category = "NPC", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	USplineComponent* mSplineComp;
+
+
+	UPROPERTY(Category = "NPC", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	TArray<FVector> mPatrolPostion;
 	//USceneComponent*
 
@@ -54,4 +67,5 @@ private:
 	UPROPERTY(Category = "NPC", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		TArray<FText> mInteractDialogues;
 
+		int mCurSplinePointIndex = 0;
 };

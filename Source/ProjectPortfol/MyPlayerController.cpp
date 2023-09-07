@@ -460,6 +460,7 @@ void AMyPlayerController::InteractAction()
 				myHud->GetMainWidget()->GetUIMainTextBox()->indexMainText = 0;
 				myHud->GetMainWidget()->GetUIMainTextBox()->mMainText =
 					crowdNpcCharacter->GetInteractDialogues()[0];
+				myHud->GetMainWidget()->GetUIMainTextBox()->mMainTextName = FText::FromName(crowdNpcCharacter->GetNpcName());
 				myHud->GetMainWidget()->SetMainTextWindowOnOff(ESlateVisibility::Visible);
 				
 			}
