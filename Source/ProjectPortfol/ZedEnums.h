@@ -118,3 +118,13 @@ enum class RankItem : uint8
 	Normal UMETA(DisplayName = "일반"),
 	// UMETA(DisplayName = "퀘스트관련"),
 };
+
+
+UENUM(BlueprintType)
+enum class NPCType : uint8
+{
+	None UMETA(DisplayName = "None"),
+	Gaurd UMETA(DisplayName = "장비함"),
+	Trader UMETA(DisplayName = "거래상"),
+	
+};

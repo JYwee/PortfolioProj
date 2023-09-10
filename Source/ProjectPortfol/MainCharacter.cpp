@@ -586,8 +586,8 @@ void AMainCharacter::Tick(float DeltaTime)
 		mTargetNpcCharacter->mLockOnSphere->SetVisibility(false);
 		mTargetNpcCharacter->mLockOnWidgetComp->SetVisibility(false);
 			//SetLockOnTargetNpc(nullptr);
+			//myController->mWdgLockOn->SetVisibility(ESlateVisibility::Hidden);    //적 hp창 ui 보이게
 			mTargetNpcCharacter = nullptr;
-			myController->mWdgLockOn->SetVisibility(ESlateVisibility::Hidden);    //적 hp창 ui 보이게
 		
 		GetCharacterMovement()->bOrientRotationToMovement = true;
 	}

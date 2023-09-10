@@ -11,6 +11,9 @@
 /**
  * 
  */
+
+
+
 USTRUCT(BlueprintType)
 struct PROJECTPORTFOL_API FNpcDataTable : public FTableRowBase
 {
@@ -20,9 +23,17 @@ struct PROJECTPORTFOL_API FNpcDataTable : public FTableRowBase
 	~FNpcDataTable() {}
 
 public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CrowdNpcData")
+		FText NameNpc;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CrowdNpcData")
+		NPCType NpcType;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CrowdNpcData")
 		USkeletalMesh* Mesh;
+
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CrowdNpcData")
 		int HP;

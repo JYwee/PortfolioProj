@@ -58,16 +58,20 @@ void ACrowdNpc::BeginPlay()
 
 	if (nullptr != inst)
 	{
-		if (mNpcName.IsNone() == true)
+		if (mNpcID.IsNone() == true)
 		{
-			UE_LOG(LogTemp, Error, TEXT("%S(%u) mNpcName.IsNone()"), __FUNCTION__, __LINE__);
+			UE_LOG(LogTemp, Error, TEXT("%S(%u) mNpcID.IsNone()"), __FUNCTION__, __LINE__);
 			return;
 		}
-		npcDT = inst->GetNpcDataTable(mNpcName);
+		npcDT = inst->GetNpcDataTable(mNpcID);
 
 		//SetAllAnimation<NPCAniState>(mMonsterDT->MapAnimation);
 		SetAllAnimation(npcDT->MapAnimation);
 		SetAniState(NPCEnemyAIControlState::Idle);
+		//if (npcDT->NameNpc != nullptr) {
+			mNpcFTextName = npcDT->NameNpc;
+		//}
+
 	}
 
 	Super::BeginPlay();
@@ -91,8 +95,8 @@ void ACrowdNpc::BeginPlay()
 		GetBlackboardComponent()->SetValueAsVector(TEXT("TargetPosition"), GetActorLocation());
 	}
 	
-	mPatrolPostion = inst->GetNpcDataTable(mNpcName)->PositionPatrol;
-	mInteractDialogues = inst->GetNpcDataTable(mNpcName)->ArrDialog;
+	mPatrolPostion = inst->GetNpcDataTable(mNpcID)->PositionPatrol;
+	mInteractDialogues = inst->GetNpcDataTable(mNpcID)->ArrDialog;
 }
 
 

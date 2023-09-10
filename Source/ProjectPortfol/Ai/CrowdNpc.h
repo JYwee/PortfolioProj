@@ -28,10 +28,15 @@ public:
 	}
 
 	UFUNCTION(BlueprintCallable, Category = Npc)
-	FORCEINLINE  FName GetNpcName() const {
-		return mNpcName;
+	FORCEINLINE  FName GetNpcID() const {
+		return mNpcID;
 	}
 	
+	UFUNCTION(BlueprintCallable, Category = Npc)
+		FORCEINLINE  FText GetNpcName() const {
+		return mNpcFTextName;
+	}
+
 	UFUNCTION(BlueprintCallable, Category = Npc)
 	FVector GetNextMovePos();
 
@@ -59,7 +64,10 @@ private:
 	//USceneComponent*
 
 	UPROPERTY(Category = "NPC", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	FName mNpcName;
+	FName mNpcID;
+
+	UPROPERTY(Category = "NPC", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	FText mNpcFTextName;
 
 	UPROPERTY(Category = "NPC", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	class UBehaviorTree* mAI;

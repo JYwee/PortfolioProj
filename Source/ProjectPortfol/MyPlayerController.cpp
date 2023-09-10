@@ -282,11 +282,12 @@ void AMyPlayerController::ShiftAction()
 		FVector tpFVector;
 		tpFVector.X = myCharacter->GetActorLocation().X + (curFVector.X * 0.1);
 		tpFVector.Y = myCharacter->GetActorLocation().Y + (curFVector.Y * 0.1);
-		tpFVector.Z = myCharacter->GetActorLocation().Z;   /*+ (curFVector.Z * 0.5f);*/
+		tpFVector.Z = myCharacter->GetActorLocation().Z + 30;   /*+ (curFVector.Z * 0.5f);*/
 
 		UE_LOG(LogTemp, Log, TEXT("%S(%u) %f, %f, %f"), __FUNCTION__, __LINE__, tpFVector.X, tpFVector.Y, tpFVector.Z);
 
-		myCharacter->SetActorLocation(tpFVector);
+		myCharacter->TeleportTo(tpFVector, myCharacter->GetActorRotation(), false, false);
+		//myCharacter->SetActorLocation(tpFVector);
 	}
 	else {
 		if (mIsShift == false)
@@ -460,7 +461,7 @@ void AMyPlayerController::InteractAction()
 				myHud->GetMainWidget()->GetUIMainTextBox()->indexMainText = 0;
 				myHud->GetMainWidget()->GetUIMainTextBox()->mMainText =
 					crowdNpcCharacter->GetInteractDialogues()[0];
-				myHud->GetMainWidget()->GetUIMainTextBox()->mMainTextName = FText::FromName(crowdNpcCharacter->GetNpcName());
+				myHud->GetMainWidget()->GetUIMainTextBox()->mMainTextName = crowdNpcCharacter->GetNpcName();
 				myHud->GetMainWidget()->SetMainTextWindowOnOff(ESlateVisibility::Visible);
 				
 			}
