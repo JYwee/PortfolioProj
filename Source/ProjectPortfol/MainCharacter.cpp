@@ -526,9 +526,10 @@ void AMainCharacter::BeginPlay()
 		{
 			UInventoryItemData* Data = NewObject<UInventoryItemData>();
 			//Data->mData = gameInst->GetObjInteractData("TeleportGate");
+			//Data->mWidget = 
 			Data->mData = nullptr;
-			mInventoryData.Add(Data);
 			InventoryWdg->GetInvenList()->AddItem(Data);
+			mInventoryData.Add(Data);
 			//mInventoryData[i] = Cast<UInventoryItemData>(InventoryWdg->GetInvenList()->GetListItems()[i]);
 
 
@@ -634,7 +635,7 @@ FRotator AMainCharacter::GetFollowCameraRotator() const
 }
 
 
-bool AMainCharacter::AddInventoryItem(const struct FItemDataTable* itemData)
+bool AMainCharacter::AddInventoryItem(const struct FItemDataTable* itemData, uint8 count)
 {
 	if (itemData == nullptr)
 	{
@@ -666,13 +667,32 @@ bool AMainCharacter::AddInventoryItem(const struct FItemDataTable* itemData)
 				if (mInventoryData[i]->mData == nullptr)
 				{
 					mInventoryData[i]->mData = itemData;
+					mInventoryData[i]->mCount += count;
 					return true;
 				}
 			}
 		}
-		else if(mInventoryData[firstFindIndex]->mData->StackSize == itemData->StackSize)
+		else if(mInventoryData[firstFindIndex]->mCount == itemData->StackSize)
 		{
-			int a = 9;
+			for (int i = firstFindIndex; i < mInventoryData.Num(); ++i)
+			{
+				if (mInventoryData[i]->mData == nullptr)
+				{
+					mInventoryData[i]->mData = itemData;
+					mInventoryData[i]->mCount += count;
+					return true;
+				}
+
+				if (i == mInventoryData.Num() - 1){
+					return false;
+				}
+			}
+		}
+		else
+		{
+			mInventoryData[firstFindIndex]->mData = itemData;
+			mInventoryData[firstFindIndex]->mCount += count;
+			return true;
 		}
 	}
 	return false;

@@ -202,7 +202,7 @@ public:
 	}
 
 	//UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
-	bool AddInventoryItem(const struct FItemDataTable* itemData);
+	bool AddInventoryItem(const struct FItemDataTable* itemData, uint8 count);
 	
 	//UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
 	int FindIndexItemInInv(const struct FItemDataTable* itemData , int index);

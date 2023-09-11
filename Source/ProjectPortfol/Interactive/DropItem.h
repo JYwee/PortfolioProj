@@ -37,13 +37,18 @@ public:
 	
 	const FItemDataTable* mItemData;
 
+	UPROPERTY(Category = "DropItem", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	uint8 mCount = 1;
+
+	UPROPERTY(Category = "DropItem", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	FText mNameItem;
+
+
 private:
 
 	UPROPERTY(Category = "DropItem", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	class UNiagaraComponent* mNiagaraComp = nullptr;
 
-	UPROPERTY(Category = "DropItem", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	FText mNameItem;
 	UPROPERTY(Category = "DropItem", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	FText mExplain;
 	UPROPERTY(Category = "DropItem", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
@@ -57,5 +62,6 @@ private:
 	UPROPERTY(Category = "DropItem", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	uint8 mStackSize;
 	//UPROPERTY(Category = "DropItem", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+
 	
 };

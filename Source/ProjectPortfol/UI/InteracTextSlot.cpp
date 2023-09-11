@@ -1,7 +1,9 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "UI/InteracTextSlot.h"
+#include <Interactive/DropItem.h>
+#include <Ai/CrowdNpc.h>
 
 void UInteracTextSlot::NativeConstruct()
 {
@@ -38,10 +40,34 @@ void UInteracTextSlot::NativeOnListItemObjectSet(UObject* ListItemObject)
 	IUserObjectListEntry::NativeOnListItemObjectSet(ListItemObject);
 
 	mObjData = Cast<UInteracObjData>(ListItemObject);
+
+	
+
 	if (mObjData == nullptr) {
 		return;
 	}
-	mTextBlock->SetText(mObjData->mObjData->InteractiveText);
+
+	if (mObjData->mObjData->Tag_Obj.IsEqual(FName("DropItem")))
+	{
+		ADropItem* item = Cast<ADropItem>(mObjData->mOnwerActor);
+		if (item == nullptr || item->IsValidLowLevel() == false)
+		{
+			UE_LOG(LogTemp, Error, TEXT("%S(%u) item == nullptr "), __FUNCTION__, __LINE__);
+		}
+		
+		mTextBlock->SetText(FText::FromString(item->mNameItem.ToString() + " " + mObjData->mObjData->InteractiveText.ToString()));
+	}
+	else if (mObjData->mObjData->Tag_Obj.IsEqual(FName("InteracNPC"))) {
+		ACrowdNpc* npc = Cast<ACrowdNpc>(mObjData->mOnwerActor);
+		if (npc == nullptr || npc->IsValidLowLevel() == false)
+		{
+			UE_LOG(LogTemp, Error, TEXT("%S(%u) item == nullptr "), __FUNCTION__, __LINE__);
+		}
+		mTextBlock->SetText(FText::FromString(npc->GetNpcName().ToString() + "와 " + mObjData->mObjData->InteractiveText.ToString()));
+	}
+	else {
+		mTextBlock->SetText(mObjData->mObjData->InteractiveText);
+	}
 }
 
 

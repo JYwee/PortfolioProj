@@ -11,9 +11,18 @@ void UInventoryItemSlot::SetSlotData(UInventoryItemData* invenSlotData)
 	if (InvenSlotData != nullptr) {
 		if (InvenSlotData->mData != nullptr) {
 	ItemIconImage->SetBrushFromTexture(Cast<UTexture2D>(invenSlotData->mData->ItemIconImage));
-
+	ItemIconImgVisibility = ESlateVisibility::Visible;
+		if (InvenSlotData->mData->StackSize > 1)
+		{
+			ItemCountValue = InvenSlotData->mCount;
+			ItemCountVisibility = ESlateVisibility::Visible;
 		}
-
+	}
+		else
+		{
+			ItemIconImgVisibility = ESlateVisibility::Hidden;
+			ItemCountVisibility = ESlateVisibility::Hidden;
+		}
 	}
 }
 

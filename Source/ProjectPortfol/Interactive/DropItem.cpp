@@ -53,6 +53,11 @@ bool ADropItem::Init(FItemDataTable* itemData)
 
 	mStackSize = itemData->StackSize;
 
+	if (mStackSize > 1)
+	{
+		mCount = 10;		//임시로 10개 생성  나중에 랜덤 생성 해야함.
+	}
+
 	switch (mRank)
 	{
 	case RankItem::SS:

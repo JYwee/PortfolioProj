@@ -446,7 +446,11 @@ void AMyPlayerController::InteractAction()
 		{
 			ADropItem* dropItem = Cast<ADropItem>(focusedSlotObjData->mOnwerActor);
 
-			myCharacter->AddInventoryItem(dropItem->mItemData);
+			if (myCharacter->AddInventoryItem(dropItem->mItemData, dropItem->mCount) == true)
+			{
+				dropItem->Destroy();
+			};
+
 		}
 		else if (focusedSlotObjData->mOnwerActor->Tags.Contains(TEXT("InteracNPC")))
 		{
