@@ -34,6 +34,7 @@ public:
 	}
 
 
+
 	void AddGameItem(const struct FItemDataTable* data);
 
 protected:

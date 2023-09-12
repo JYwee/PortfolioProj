@@ -92,6 +92,11 @@ AMainCharacter::AMainCharacter()
 	
 }
 
+AMainCharacter::~AMainCharacter()
+{
+	mInventoryData.Empty();
+}
+
 void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	
@@ -529,12 +534,14 @@ void AMainCharacter::BeginPlay()
 			//Data->mWidget = 
 			Data->mData = nullptr;
 			InventoryWdg->GetInvenList()->AddItem(Data);
-			mInventoryData.Add(Data);
+			//InventoryWdg->GetInvenList()
+			UInventoryItemData* listItemData = Cast<UInventoryItemData>(InventoryWdg->GetInvenList()->GetItemAt(i));
+			mInventoryData.Add(listItemData);
 			//mInventoryData[i] = Cast<UInventoryItemData>(InventoryWdg->GetInvenList()->GetListItems()[i]);
 
 
 		
-
+			
 	}
 
 		/*const TArray<UObject*>& Items = InvenList->GetListItems();
@@ -690,7 +697,7 @@ bool AMainCharacter::AddInventoryItem(const struct FItemDataTable* itemData, uin
 		}
 		else
 		{
-			mInventoryData[firstFindIndex]->mData = itemData;
+			//mInventoryData[firstFindIndex]->mData = itemData;
 			mInventoryData[firstFindIndex]->mCount += count;
 			return true;
 		}

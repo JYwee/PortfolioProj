@@ -65,6 +65,8 @@ public:
 		TalkTextWindowOnOff = _Visibility;
 	}
 	
+	UPROPERTY(Category = "UIzed", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	ESlateVisibility mInvenStatusWindowOnOff = ESlateVisibility::Hidden;
 
 private:
 	
@@ -73,8 +75,7 @@ private:
 	UMainTextWidget* mUIMainTextBox;
 	
 
-	UPROPERTY(Category = "UIzed", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	ESlateVisibility mInvenStatusWindowOnOff = ESlateVisibility::Hidden;
+	
 
 
 

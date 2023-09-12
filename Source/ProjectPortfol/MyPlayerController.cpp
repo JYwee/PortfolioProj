@@ -16,6 +16,7 @@
 #include "UI/InteracObjData.h"
 #include "UI/InvenAndStatus.h"
 #include <UI/InGameHud.h>
+#include "UI/InGameMainWidget.h"
 #include "Ai/CrowdNpc.h"
 
 AMyPlayerController::AMyPlayerController()
@@ -557,7 +558,14 @@ void AMyPlayerController::OpenInvenStatusAction()
 		UE_LOG(LogTemp, Error, TEXT("%S(%u) GetHud failed"), __FUNCTION__, __LINE__);
 		return;
 	}
+
 	AInGameHud* ingameHUD = Cast<AInGameHud>(GetHUD());
+	
+	if(ingameHUD->GetMainWidget()->mInvenStatusWindowOnOff == ESlateVisibility::Visible)
+	{
+		ingameHUD->GetMainWidget()->mInvenStatusWindowOnOff = ESlateVisibility::Hidden;
+		return;
+	}
 	//	ingameHUD->GetMainWidget().
 
 	UInvenAndStatus* invenAndStatusWdg = Cast<UInvenAndStatus>(ingameHUD->GetMainWidget()->GetWidgetFromName(TEXT("UI_InventoryStatus")));
@@ -575,17 +583,8 @@ void AMyPlayerController::OpenInvenStatusAction()
 		}
 		else
 		{
-			if (tmpItemData == invenCharacterItems[i])
-			{
-				int j = 0;
-			}
-			if (tmpItemData->mWidget == invenCharacterItems[i]->mWidget)
-			{
-				int x = 0;
-			}
-
-			
-
+			tmpItemData = invenCharacterItems[i];
+			ingameHUD->GetMainWidget()->mInvenStatusWindowOnOff = ESlateVisibility::Visible;
 			/*tmpItemData->mWidget = invenCharacterItems[i]->mWidget;
 			tmpItemData->mData = invenCharacterItems[i]->mData;
 			tmpItemData->mCount = invenCharacterItems[i]->mCount;*/

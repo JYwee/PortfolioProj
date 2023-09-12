@@ -19,7 +19,7 @@ class PROJECTPORTFOL_API AMainCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	AMainCharacter();
-
+	~AMainCharacter();
 
 	UFUNCTION(BlueprintCallable, Category = AMainCharacter)
 		void BeginOverLap(
