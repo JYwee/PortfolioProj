@@ -48,6 +48,8 @@ public:
 
 	void SetSlotData(class UInventoryItemData* invenSlotData);
 
+	void CheckSlotData();
+
 protected:
 
 

@@ -26,6 +26,43 @@ void UInventoryItemSlot::SetSlotData(UInventoryItemData* invenSlotData)
 	}
 }
 
+void UInventoryItemSlot::CheckSlotData()
+{
+	
+	if (InvenSlotData == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("%S(%u)> if (nullptr == ItemData)"), __FUNCTION__, __LINE__);
+	}
+	else {
+	
+		if (InvenSlotData->mData != nullptr) {
+			ItemIconImage->SetBrushFromTexture(Cast<UTexture2D>(InvenSlotData->mData->ItemIconImage));
+			ItemIconImgVisibility = ESlateVisibility::Visible;
+			if (InvenSlotData->mData->StackSize > 1)
+			{
+				if (InvenSlotData->mCount > 1) {
+					ItemCountValue = InvenSlotData->mCount;
+					ItemCountVisibility = ESlateVisibility::Visible;
+				}
+				else {
+					ItemCountVisibility = ESlateVisibility::Hidden;
+				}
+			}
+			else {
+				ItemCountVisibility = ESlateVisibility::Hidden;
+			}
+		}
+		else
+		{
+			
+			ItemIconImgVisibility = ESlateVisibility::Hidden;
+			ItemCountVisibility = ESlateVisibility::Hidden;
+		}
+	}
+
+
+
+}
+
 void UInventoryItemSlot::NativeConstruct()
 {
 	/*ItemIconImage = nullptr;

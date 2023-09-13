@@ -535,8 +535,9 @@ void AMainCharacter::BeginPlay()
 			Data->mData = nullptr;
 			InventoryWdg->GetInvenList()->AddItem(Data);
 			//InventoryWdg->GetInvenList()
-			UInventoryItemData* listItemData = Cast<UInventoryItemData>(InventoryWdg->GetInvenList()->GetItemAt(i));
-			mInventoryData.Add(listItemData);
+			mInventoryData.Add(Data);
+			//UInventoryItemData* listItemData = Cast<UInventoryItemData>(InventoryWdg->GetInvenList()->GetItemAt(i));
+			//mInventoryData.Add(listItemData);
 			//mInventoryData[i] = Cast<UInventoryItemData>(InventoryWdg->GetInvenList()->GetListItems()[i]);
 
 
@@ -697,7 +698,7 @@ bool AMainCharacter::AddInventoryItem(const struct FItemDataTable* itemData, uin
 		}
 		else
 		{
-			//mInventoryData[firstFindIndex]->mData = itemData;
+			mInventoryData[firstFindIndex]->mData = itemData;
 			mInventoryData[firstFindIndex]->mCount += count;
 			return true;
 		}

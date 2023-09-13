@@ -49,4 +49,21 @@ void UInvenAndStatus::AddGameItem(const struct FItemDataTable* data)
 void UInvenAndStatus::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
 	Super::NativeTick(MyGeometry, InDeltaTime);
+
+
+	const TArray<UObject*>& Items = mInvenList->GetListItems();
+	for (size_t i = 0; i < Items.Num(); i++)
+	{
+		UInventoryItemData* tmpItemData = Cast<UInventoryItemData>(Items[i]);
+
+
+		if (nullptr == tmpItemData->mWidget)
+		{			
+			continue;
+		}
+
+		UInventoryItemSlot* InvenSlotData = tmpItemData->mWidget;
+		InvenSlotData->CheckSlotData();
+	}
+
 }
