@@ -5,7 +5,9 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "MainTextWidget.h"
+#include "Components/ProgressBar.h"
 #include "InGameMainWidget.generated.h"
+
 
 /**
  * 
@@ -64,9 +66,24 @@ public:
 	{
 		TalkTextWindowOnOff = _Visibility;
 	}
+
+	void SetStaminaUIOnOff(ESlateVisibility _Visibility)
+	{
+		mStaminaUIOnOff = _Visibility;
+	}
+
+	void SetStaminaPercent(float staminaPercent)
+	{
+		mStaminaUIPercent = staminaPercent;
+	}
+
 	
 	UPROPERTY(Category = "UIzed", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	ESlateVisibility mInvenStatusWindowOnOff = ESlateVisibility::Hidden;
+
+protected:
+	void NativeTick(const FGeometry& MyGeometry, float InDeltaTime);
+
 
 private:
 	
@@ -74,9 +91,11 @@ private:
 
 	UMainTextWidget* mUIMainTextBox;
 	
-
+	UProgressBar* mUIStamina;
 	
 
+	UPROPERTY(Category = "UIzed", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	float mStaminaUIPercent;
 
 
 
@@ -94,5 +113,8 @@ private:
 
 	UPROPERTY(Category = "UIzed", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		ESlateVisibility MainTextWindowOnOff = ESlateVisibility::Hidden;
+
+	UPROPERTY(Category = "UIzed", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		ESlateVisibility mStaminaUIOnOff = ESlateVisibility::Hidden;
 
 };

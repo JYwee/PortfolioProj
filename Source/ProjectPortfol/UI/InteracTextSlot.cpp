@@ -55,7 +55,7 @@ void UInteracTextSlot::NativeOnListItemObjectSet(UObject* ListItemObject)
 			UE_LOG(LogTemp, Error, TEXT("%S(%u) item == nullptr "), __FUNCTION__, __LINE__);
 		}
 		
-		mTextBlock->SetText(FText::FromString(item->mNameItem.ToString() + " " + mObjData->mObjData->InteractiveText.ToString()));
+		mTextBlock->SetText(FText::FromString(item->mNameItem.ToString() + TEXT(" ") + mObjData->mObjData->InteractiveText.ToString()));
 	}
 	else if (mObjData->mObjData->Tag_Obj.IsEqual(FName("InteracNPC"))) {
 		ACrowdNpc* npc = Cast<ACrowdNpc>(mObjData->mOnwerActor);
@@ -63,7 +63,7 @@ void UInteracTextSlot::NativeOnListItemObjectSet(UObject* ListItemObject)
 		{
 			UE_LOG(LogTemp, Error, TEXT("%S(%u) item == nullptr "), __FUNCTION__, __LINE__);
 		}
-		mTextBlock->SetText(FText::FromString(npc->GetNpcName().ToString() + "와 " + mObjData->mObjData->InteractiveText.ToString()));
+		mTextBlock->SetText(FText::FromString(npc->GetNpcName().ToString() + TEXT("와 ") + mObjData->mObjData->InteractiveText.ToString()));
 	}
 	else {
 		mTextBlock->SetText(mObjData->mObjData->InteractiveText);

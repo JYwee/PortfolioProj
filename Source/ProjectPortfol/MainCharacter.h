@@ -210,7 +210,7 @@ public:
 private:
 		int mHealthPoint;
 
-		float mStaminaPoint;
+		float mStaminaPoint = 1.f;
 
 		int mAttack;
 

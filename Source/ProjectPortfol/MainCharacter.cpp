@@ -577,9 +577,33 @@ void AMainCharacter::Tick(float DeltaTime)
 	UE_LOG(LogTemp, Error, TEXT("%S(%u) %f %f %f "), __FUNCTION__, __LINE__, GetCharacterMovement()->GetCurrentAcceleration().X
 		, GetCharacterMovement()->GetCurrentAcceleration().Y
 		, GetCharacterMovement()->GetCurrentAcceleration().Z);*/
+
+	if (myController->GetIsShift() == true)
+	{
+		if (mStaminaPoint <= 0.0f)
+		{
+			myController->SetIsShift(false);
+			GetCharacterMovement()->MaxWalkSpeed = 400.f;
+		}
+		else {
+			mStaminaPoint -= 0.1f * DeltaTime;
+		}
+	}
+	else {
+		//걷는 경우 회복
+		if (mStaminaPoint < 1.0f) {
+			mStaminaPoint += 0.1f * DeltaTime;
+		}
+	}
 	if (GetCharacterMovement()->GetCurrentAcceleration() == FVector::Zero())
 	{
 		GetCharacterMovement()->MaxWalkSpeed = 400.f;
+		
+		//멈춰서 쉬는 경우 한번더
+		if (mStaminaPoint < 1.0f) {
+			mStaminaPoint += 0.1f * DeltaTime;
+		}
+		
 		
 		//UE_LOG(LogTemp, Error, TEXT("%S(%u) %f "), __FUNCTION__, __LINE__, GetCharacterMovement()->MaxWalkSpeed);
 		
@@ -587,6 +611,14 @@ void AMainCharacter::Tick(float DeltaTime)
 			myController->SetIsShift(false);
 		}
 	}
+	
+	AInGameHud* myHud = myController->GetHUD<AInGameHud>();
+	myHud->GetMainWidget()->SetStaminaPercent(mStaminaPoint);
+
+	//UUserWidget* Window;
+
+	
+	
 
 	if (GetDistanceTo(mTargetNpcCharacter) > 2000.f)
 	{
