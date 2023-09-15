@@ -69,6 +69,7 @@ void ABossCharacter::BeginPlay()
 	GetBlackboardComponent()->SetValueAsString(TEXT("TargetTag"), TEXT("Player"));
 	GetBlackboardComponent()->SetValueAsFloat(TEXT("SearchRange"), 2000.0f);
 	GetBlackboardComponent()->SetValueAsFloat(TEXT("AttackRange"), 250.0f);
+	GetBlackboardComponent()->SetValueAsEnum(TEXT("Phase"), static_cast<uint8>(mPhase));
 	FVector Pos = GetActorLocation();
 	GetBlackboardComponent()->SetValueAsVector(TEXT("OriginPosition"), Pos);
 	/*mBaseTurnRate = 65.f;

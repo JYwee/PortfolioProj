@@ -14,4 +14,12 @@ class PROJECTPORTFOL_API UBTTask_BossMove : public UBTTask_DesertDragonBase
 {
 	GENERATED_BODY()
 	
+public:
+	UBTTask_BossMove();
+
+protected:
+	EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& ownerComp, uint8* nodeMemory);
+
+	void TickTask(UBehaviorTreeComponent& ownerComp, uint8* nodeMemory, float delataSeconds);
+
 };

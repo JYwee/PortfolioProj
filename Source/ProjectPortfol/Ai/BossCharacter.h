@@ -24,8 +24,17 @@ public:
 
 	void BeginPlay() override;
 
-
+	BossPhase GetPhase()
+	{
+		return mPhase;
+	}
 	
+	void SetPhase(BossPhase newPhase)
+	{
+		mPhase = newPhase;
+		return;
+	}
+
 private:
 
 	UPROPERTY(Category = "BossChara", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
@@ -51,9 +60,10 @@ private:
 		int mDef;
 
 	UPROPERTY(Category = "BossChara", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		int mPhase;
+	BossPhase mPhase;
 
-
+	UPROPERTY(Category = "BossChara", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	ZEDElementalState mElementalType;
 
 	UPROPERTY(Category = "BossChara", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		FVector mPostionOri;

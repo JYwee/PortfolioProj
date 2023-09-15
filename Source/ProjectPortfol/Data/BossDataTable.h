@@ -45,7 +45,7 @@ public:
 		int Def;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BossMonsterData")
-		int Phase;
+	BossPhase Phase;
 
 
 

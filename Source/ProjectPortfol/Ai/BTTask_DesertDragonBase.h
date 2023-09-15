@@ -40,6 +40,8 @@ public:
 
 	class ANpcCharacter* GetNpcCharacter(UBehaviorTreeComponent& ownerComp);
 
+	class ABossCharacter* GetBossCharacter(UBehaviorTreeComponent& ownerComp);
+
 	class AActor* GetTargetSearch(UBehaviorTreeComponent& ownerComp);
 
 	class UBlackboardComponent* GetBlackboardComponent(UBehaviorTreeComponent& ownerComp);
@@ -50,6 +52,6 @@ public:
 
 protected:
 
-	FName mAIControlStateName;
+	FName mBossAiControlStateName;
 	
 };
