@@ -11,7 +11,7 @@ EBTNodeResult::Type UBTTask_DD_PhaseChange::ExecuteTask(UBehaviorTreeComponent& 
 	BossPhase myPhase = GetBossCharacter(ownerComp)->GetPhase();
 	GetBlackboardComponent(ownerComp)->SetValueAsEnum(TEXT("Phase"), static_cast<uint8>(myPhase));
 
-	return EBTNodeResult0::Type::InProgress;
+	return EBTNodeResult::Type::InProgress;
 }
 
 void UBTTask_DD_PhaseChange::TickTask(UBehaviorTreeComponent& ownerComp, uint8* nodeMemory, float delataSeconds)
