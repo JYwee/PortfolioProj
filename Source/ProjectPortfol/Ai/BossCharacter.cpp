@@ -5,6 +5,7 @@
 #include <ZedEnums.h>
 #include <ZedGameInstance.h>
 #include "BehaviorTree/BlackboardComponent.h"
+#include "NpcAnimInstance.h"
 
 
 ABossCharacter::ABossCharacter()
@@ -29,6 +30,8 @@ ABossCharacter::ABossCharacter()
 void ABossCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	
 }
 
 void ABossCharacter::BeginPlay()
@@ -74,5 +77,7 @@ void ABossCharacter::BeginPlay()
 	GetBlackboardComponent()->SetValueAsVector(TEXT("OriginPosition"), Pos);
 	/*mBaseTurnRate = 65.f;
 	BaseLookUpRate = 65.f;*/
+
+	SetNpcAnimInstance(Cast<UNpcAnimInstance>(GetMesh()->GetAnimInstance()));
 
 }
