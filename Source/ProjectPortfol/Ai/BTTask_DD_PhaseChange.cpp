@@ -7,7 +7,7 @@
 EBTNodeResult::Type UBTTask_DD_PhaseChange::ExecuteTask(UBehaviorTreeComponent& ownerComp, uint8* nodeMemory)
 {
 	//GetNpcCharacter(ownerComp)->SetAniState(NPCAniState::Idle);
-	GetNpcCharacter(ownerComp)->SetAniState(BossAniState::PhaseChange);
+	GetNpcCharacter(ownerComp)->SetAniState(BossDragonAIControlState::PhaseChange);
 	BossPhase myPhase = GetBossCharacter(ownerComp)->GetPhase();
 	GetBlackboardComponent(ownerComp)->SetValueAsEnum(TEXT("Phase"), static_cast<uint8>(myPhase));
 

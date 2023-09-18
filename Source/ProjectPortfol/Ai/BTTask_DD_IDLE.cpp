@@ -24,7 +24,7 @@ void UBTTask_DD_IDLE::TickTask(UBehaviorTreeComponent& ownerComp, uint8* nodeMem
 	if (nullptr != ResultActor)
 	{
 		GetBlackboardComponent(ownerComp)->SetValueAsObject(TEXT("TargetActor"), ResultActor);
-		SetStateChange(ownerComp, BossDragonAIControlState::Move);
+		SetStateChange(ownerComp, BossDragonAIControlState::PhaseChange);
 		return;
 	}
 	return;
