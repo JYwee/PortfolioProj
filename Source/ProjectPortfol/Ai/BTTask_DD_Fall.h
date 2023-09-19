@@ -13,5 +13,9 @@ UCLASS()
 class PROJECTPORTFOL_API UBTTask_DD_Fall : public UBTTask_DesertDragonBase
 {
 	GENERATED_BODY()
-	
+
+
+	EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& ownerComp, uint8* nodeMemory);
+
+	void TickTask(UBehaviorTreeComponent& ownerComp, uint8* nodeMemory, float delataSeconds);
 };
