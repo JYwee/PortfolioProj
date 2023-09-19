@@ -2,6 +2,7 @@
 
 
 #include "Ai/BTTask_DD_IDLE.h"
+#include "BossCharacter.h"
 
 EBTNodeResult::Type UBTTask_DD_IDLE::ExecuteTask(UBehaviorTreeComponent& ownerComp, uint8* nodeMemory)
 {
@@ -23,8 +24,23 @@ void UBTTask_DD_IDLE::TickTask(UBehaviorTreeComponent& ownerComp, uint8* nodeMem
 
 	if (nullptr != ResultActor)
 	{
-		GetBlackboardComponent(ownerComp)->SetValueAsObject(TEXT("TargetActor"), ResultActor);
-		SetStateChange(ownerComp, BossDragonAIControlState::PhaseChange);
+		if (static_cast<int>(BossPhase::None) == GetBlackboardComponent(ownerComp)->GetValueAsEnum(TEXT("Phase")))
+		{
+			ABossCharacter* bossChar = Cast<ABossCharacter>(GetNpcCharacter(ownerComp));
+
+			if (bossChar == nullptr || bossChar->IsValidLowLevel() == false)
+			{
+				UE_LOG(LogTemp, Error, TEXT("%S(%u) bossChar == nullptr"), __FUNCTION__, __LINE__);
+				return;
+			}
+
+			GetBlackboardComponent(ownerComp)->SetValueAsEnum(TEXT("Phase"), static_cast<int>(BossPhase::FIRST));
+			
+			GetBlackboardComponent(ownerComp)->SetValueAsObject(TEXT("TargetActor"), ResultActor);
+		//GetBlackboardComponent(ownerComp)->GetValueAsEnum(TEXT("Phase"));
+			SetStateChange(ownerComp, BossDragonAIControlState::PhaseChange);
+			//bossChar->SetPhase()
+		}
 		return;
 	}
 	return;

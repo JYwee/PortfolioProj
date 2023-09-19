@@ -9,8 +9,8 @@ EBTNodeResult::Type UBTTask_DD_PhaseChange::ExecuteTask(UBehaviorTreeComponent& 
 {
 	//GetNpcCharacter(ownerComp)->SetAniState(NPCAniState::Idle);
 	GetNpcCharacter(ownerComp)->SetAniState(BossDragonAIControlState::PhaseChange);
-	BossPhase myPhase = GetBossCharacter(ownerComp)->GetPhase();
-	GetBlackboardComponent(ownerComp)->SetValueAsEnum(TEXT("Phase"), static_cast<uint8>(myPhase));
+	//BossPhase myPhase = GetBossCharacter(ownerComp)->GetPhase();
+	//GetBlackboardComponent(ownerComp)->SetValueAsEnum(TEXT("Phase"), static_cast<uint8>(myPhase));
 
 	return EBTNodeResult::Type::InProgress;
 }
@@ -31,6 +31,8 @@ void UBTTask_DD_PhaseChange::TickTask(UBehaviorTreeComponent& ownerComp, uint8* 
 		SetStateChange(ownerComp, BossDragonAIControlState::Idle);
 		return;
 	}
+
+
 	
 	if (GetNpcCharacter(ownerComp)->GetNpcAnimInstance() != nullptr) {
 		if (GetNpcCharacter(ownerComp)->GetNpcAnimInstance()->Montage_IsPlaying(GetNpcCharacter(ownerComp)->GetCurrentMontage())
@@ -62,6 +64,13 @@ void UBTTask_DD_PhaseChange::TickTask(UBehaviorTreeComponent& ownerComp, uint8* 
 				FRotator Rot = Dir.Rotation();
 				GetNpcCharacter(ownerComp)->SetActorRotation(Rot);
 			}
+		}
+
+		else if (GetNpcCharacter(ownerComp)->GetAniState() == static_cast<int>(BossDragonAIControlState::Idle))
+		{
+			SetStateChange(ownerComp, BossDragonAIControlState::Idle);
+			
+			return;
 		}
 		
 	}

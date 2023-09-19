@@ -139,21 +139,26 @@ UAnimMontage* ANpcCharacter::GetAnimMontage(int index) const
 
 void ANpcCharacter::MontageEnd(UAnimMontage* animMontage, bool inter)
 {
-	TSubclassOf<UAnimInstance> Inst = ANpcCharacter::StaticClass();
-	
-	// Anim 辆丰等 根鸥林
+	//TSubclassOf<UAnimInstance> Inst = ANpcCharacter::StaticClass();
+	//
+	//if (Tags.Contains(TEXT("Boss")))
+	//{
+	//	int a =0;
+	//}
 
-	if (mAllAnimations[static_cast<int>(NPCAniState::Attack)] == animMontage)
-	{
-		SetAniState<NPCAniState>(NPCAniState::Idle);
-		//Montage_Play(AllAnimations[ZEDAniState::Idle], 1.0f);
-	}
+	//// Anim 辆丰等 根鸥林
 
-	if (mAllAnimations[static_cast<int>(NPCAniState::Jump)] == animMontage)
-	{
-		SetAniState<NPCAniState>(NPCAniState::Idle);
-		//Montage_Play(AllAnimations[ZEDAniState::Idle], 1.0f)
-	}
+	//if (mAllAnimations[static_cast<int>(NPCAniState::Attack)] == animMontage)
+	//{
+	//	SetAniState<NPCAniState>(NPCAniState::Idle);
+	//	//Montage_Play(AllAnimations[ZEDAniState::Idle], 1.0f);
+	//}
+
+	//if (mAllAnimations[static_cast<int>(NPCAniState::Jump)] == animMontage)
+	//{
+	//	SetAniState<NPCAniState>(NPCAniState::Idle);
+	//	//Montage_Play(AllAnimations[ZEDAniState::Idle], 1.0f)
+	//}
 
 }
 

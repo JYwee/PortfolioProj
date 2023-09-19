@@ -63,6 +63,10 @@ private:
 	BossPhase mPhase;
 
 	UPROPERTY(Category = "BossChara", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	BossPhase mFinalPhase;
+
+
+	UPROPERTY(Category = "BossChara", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	ZEDElementalState mElementalType;
 
 	UPROPERTY(Category = "BossChara", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))

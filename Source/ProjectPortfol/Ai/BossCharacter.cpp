@@ -65,7 +65,8 @@ void ABossCharacter::BeginPlay()
 	mStemina = mCurBossData->Stemina;
 	mAtt = mCurBossData->Att;
 	mDef = mCurBossData->Def;
-	mPhase = mCurBossData->Phase;
+	mPhase = BossPhase::None;
+	mFinalPhase = mCurBossData->FinalPhase;
 	mPostionOri = mCurBossData->PostionOri;
 
 	GetBlackboardComponent()->SetValueAsEnum(TEXT("BossDragonAIControlState"), static_cast<uint8>(BossDragonAIControlState::Idle));
@@ -73,6 +74,7 @@ void ABossCharacter::BeginPlay()
 	GetBlackboardComponent()->SetValueAsFloat(TEXT("SearchRange"), 2000.0f);
 	GetBlackboardComponent()->SetValueAsFloat(TEXT("AttackRange"), 250.0f);
 	GetBlackboardComponent()->SetValueAsEnum(TEXT("Phase"), static_cast<uint8>(mPhase));
+	GetBlackboardComponent()->SetValueAsEnum(TEXT("FinalPhase"), static_cast<uint8>(mFinalPhase));
 	FVector Pos = GetActorLocation();
 	GetBlackboardComponent()->SetValueAsVector(TEXT("OriginPosition"), Pos);
 	/*mBaseTurnRate = 65.f;

@@ -16,8 +16,8 @@ class PROJECTPORTFOL_API UNpcAnimInstance : public UAnimInstance
 	
 public:
 	
-	//UFUNCTION(Category = "Anime", BlueprintCallable)
-	//	void MontageEnd(UAnimMontage* aniMontage, bool inter);
+	UFUNCTION(Category = "Anime", BlueprintCallable)
+		void MontageEnd(UAnimMontage* aniMontage, bool inter);
 
 	
 	template<typename EnumType>

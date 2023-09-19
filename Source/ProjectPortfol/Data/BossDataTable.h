@@ -47,6 +47,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BossMonsterData")
 	BossPhase Phase;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BossMonsterData")
+	BossPhase FinalPhase;
+
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BossMonsterData")

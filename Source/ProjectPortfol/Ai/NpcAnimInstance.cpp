@@ -10,11 +10,47 @@
 //
 //}
 
+void UNpcAnimInstance::MontageEnd(UAnimMontage* aniMontage, bool inter)
+{
+	TSubclassOf<UAnimInstance> Inst = ANpcCharacter::StaticClass();
+
+	ANpcCharacter* character = Cast<ANpcCharacter>(GetOwningActor());
+
+	if (character->Tags.Contains(TEXT("Boss")))
+	{
+		int a = 0;
+		if (mAllAnimations[static_cast<int>(BossDragonAIControlState::PhaseChange)] == aniMontage)
+		{
+			character->SetAniState<BossDragonAIControlState>(BossDragonAIControlState::Idle);
+			Montage_Play(mAllAnimations[static_cast<int>(BossAniState::Idle)], 1.0f);
+		}
+	}
+
+	// Anim 종료된 몽타주
+
+	if (character->Tags.Contains(TEXT("Monster")))
+	{
+		int a = 0;
+		//if (mAllAnimations[static_cast<int>(NPCAniState::Attack)] == aniMontage)
+		//{
+		//	character->SetAniState<NPCAniState>(NPCAniState::Idle);
+		//	//Montage_Play(AllAnimations[ZEDAniState::Idle], 1.0f);
+		//}
+
+		//if (mAllAnimations[static_cast<int>(NPCAniState::Jump)] == aniMontage)
+		//{
+		//	character->SetAniState<NPCAniState>(NPCAniState::Idle);
+		//	//Montage_Play(AllAnimations[ZEDAniState::Idle], 1.0f)
+		//}
+	}
+
+}
+
 void UNpcAnimInstance::NativeBeginPlay()
 {
 	Super::NativeBeginPlay();
 
-	//OnMontageBlendingOut.AddDynamic(this, &UZedAnimInstance::MontageEnd);
+	OnMontageBlendingOut.AddDynamic(this, &UNpcAnimInstance::MontageEnd);
 
 	ANpcCharacter* character = Cast<ANpcCharacter>(GetOwningActor());
 
@@ -57,3 +93,4 @@ void UNpcAnimInstance::NativeUpdateAnimation(float deltaTime)
 		Montage_Play(montage, 1.0f);
 	}
 }
+
