@@ -66,9 +66,9 @@ void UBTTask_DD_PhaseChange::TickTask(UBehaviorTreeComponent& ownerComp, uint8* 
 			}
 		}
 
-		else if (GetNpcCharacter(ownerComp)->GetAniState() == static_cast<int>(BossDragonAIControlState::Idle))
+		else if (GetNpcCharacter(ownerComp)->GetAniState() == static_cast<int>(BossDragonAIControlState::TakeOff))
 		{
-			SetStateChange(ownerComp, BossDragonAIControlState::Idle);
+			SetStateChange(ownerComp, BossDragonAIControlState::TakeOff);
 			
 			return;
 		}

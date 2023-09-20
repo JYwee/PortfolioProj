@@ -8,7 +8,7 @@ EBTNodeResult::Type UBTTask_DD_IDLE::ExecuteTask(UBehaviorTreeComponent& ownerCo
 {
 	Super::ExecuteTask(ownerComp, nodeMemory);
 
-	GetNpcCharacter(ownerComp)->SetAniState(BossAniState::Idle);
+	GetNpcCharacter(ownerComp)->SetAniState(BossDragonAIControlState::Idle);
 
 	GetBlackboardComponent(ownerComp)->SetValueAsObject(TEXT("TargetActor"), nullptr);
 

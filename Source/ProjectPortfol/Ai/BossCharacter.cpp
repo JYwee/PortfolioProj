@@ -12,7 +12,7 @@ ABossCharacter::ABossCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	
-	SetAniState(BossAniState::Idle);
+	SetAniState(BossDragonAIControlState::Idle);
 
 	Tags.Add("Boss");
 

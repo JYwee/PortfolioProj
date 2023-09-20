@@ -7,7 +7,7 @@ EBTNodeResult::Type UBTTask_DD_Fall::ExecuteTask(UBehaviorTreeComponent& ownerCo
 {
 	Super::ExecuteTask(ownerComp, nodeMemory);
 
-	GetNpcCharacter(ownerComp)->SetAniState(BossAniState::Falling);
+	GetNpcCharacter(ownerComp)->SetAniState(BossDragonAIControlState::Falling);
 
 	return EBTNodeResult::Type();
 }

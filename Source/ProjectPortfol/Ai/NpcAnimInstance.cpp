@@ -21,8 +21,13 @@ void UNpcAnimInstance::MontageEnd(UAnimMontage* aniMontage, bool inter)
 		int a = 0;
 		if (mAllAnimations[static_cast<int>(BossDragonAIControlState::PhaseChange)] == aniMontage)
 		{
-			character->SetAniState<BossDragonAIControlState>(BossDragonAIControlState::Idle);
-			Montage_Play(mAllAnimations[static_cast<int>(BossAniState::Idle)], 1.0f);
+			character->SetAniState<BossDragonAIControlState>(BossDragonAIControlState::TakeOff);
+			Montage_Play(mAllAnimations[static_cast<int>(BossDragonAIControlState::TakeOff)], 1.0f);
+		}
+		else if (mAllAnimations[static_cast<int>(BossDragonAIControlState::TakeOff)] == aniMontage)
+		{
+			character->SetAniState<BossDragonAIControlState>(BossDragonAIControlState::IdleFlyStaionary);
+			Montage_Play(mAllAnimations[static_cast<int>(BossDragonAIControlState::IdleFlyStaionary)], 1.0f);
 		}
 	}
 
