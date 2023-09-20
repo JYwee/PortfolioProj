@@ -21,4 +21,6 @@ public:
 	void BeginPlay() override;
 
 	const struct FMonsterDataTable* mMonsterDT = nullptr;
+
+
 };

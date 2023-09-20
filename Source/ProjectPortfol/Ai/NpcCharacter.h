@@ -22,6 +22,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 		class UWidgetComponent* mLockOnWidgetComp;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+		class UWidgetComponent* mHP_WidgetComp;
 
 //	UPROPERTY(Category = "CharacterBase", EditAnywhere, BlueprintReadWrite)
 //		NPCAniState AniState = NPCAniState::Idle;

@@ -12,7 +12,7 @@ UBTTask_BossMove::UBTTask_BossMove()
 
 EBTNodeResult::Type UBTTask_BossMove::ExecuteTask(UBehaviorTreeComponent& ownerComp, uint8* nodeMemory)
 {
-	GetNpcCharacter(ownerComp)->SetAniState(NPCEnemyAIControlState::Move);
+	GetNpcCharacter(ownerComp)->SetAniState(BossDragonAIControlState::MoveWork);
 
 	UCharacterMovementComponent* moveComp = Cast<UCharacterMovementComponent>(GetNpcCharacter(ownerComp)->GetMovementComponent());
 
@@ -32,13 +32,13 @@ void UBTTask_BossMove::TickTask(UBehaviorTreeComponent& ownerComp, uint8* nodeMe
 
 	if (nullptr == targetActor)
 	{
-		SetStateChange(ownerComp, NPCEnemyAIControlState::Return);
+		SetStateChange(ownerComp, BossDragonAIControlState::Return);
 		return;
 	}
 
 	/*if (true == IsDeathCheck(ownerComp))
 	{
-		SetStateChange(ownerComp, NPCEnemyAIControlState::Death);
+		SetStateChange(ownerComp, BossDragonAIControlState::Death);
 		return;
 	}*/
 

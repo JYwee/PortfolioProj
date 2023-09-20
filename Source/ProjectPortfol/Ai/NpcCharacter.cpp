@@ -23,6 +23,10 @@ ANpcCharacter::ANpcCharacter()
 	mLockOnWidgetComp->SetupAttachment(RootComponent);
 	mLockOnWidgetComp->SetVisibility(false);
 
+	mHP_WidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("HP_NPC_WDG"));
+	
+	mHP_WidgetComp->SetupAttachment(GetMesh());
+	mHP_WidgetComp->SetVisibility(true);
 	//GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ANpcCharacter::BeginOverLap);
 	//setcontroller
 }
