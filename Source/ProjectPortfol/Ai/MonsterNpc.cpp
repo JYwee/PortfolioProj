@@ -4,12 +4,16 @@
 #include "MonsterNpc.h"
 #include <ZedGameInstance.h>
 #include <Data/MonsterDataTable.h>
+#include "Components/WidgetComponent.h"
+#include "Components/ProgressBar.h"
 #include "BehaviorTree/BlackboardComponent.h"
-
+#include <UI/UIHpBar.h>
 
 AMonsterNpc::AMonsterNpc()
 {
 	Tags.Add("Monster");
+	
+	
 }
 
 void AMonsterNpc::BeginPlay()
@@ -22,7 +26,26 @@ void AMonsterNpc::BeginPlay()
 		return;
 	}
 
-	
+	UUIHpBar* HealthBarWidget = Cast<UUIHpBar>(mHP_WidgetComp->GetWidget());
+
+	if (HealthBarWidget == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%S(%u) HealthBarWidget == nullptr"), __FUNCTION__, __LINE__);
+		return;
+	}
+
+	else {
+	HealthBarWidget->mHpProgressBar->PercentDelegate.BindUFunction(this, "GetHpPercent");
+	HealthBarWidget->mHpProgressBar->SynchronizeProperties();
+	////HealthBarWidget
+
+	}
+
+
+	//if (HealthBarWidget != nullptr)
+	//{
+	//	
+	//}
 
 	
 

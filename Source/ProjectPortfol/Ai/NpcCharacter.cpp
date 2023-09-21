@@ -9,6 +9,7 @@
 #include "../Data/MonsterDataTable.h"
 #include "NpcAnimInstance.h"
 
+
 // Sets default values
 ANpcCharacter::ANpcCharacter()
 {

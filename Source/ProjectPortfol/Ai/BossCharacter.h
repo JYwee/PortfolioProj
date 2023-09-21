@@ -43,7 +43,7 @@ private:
 	//UPROPERTY(Category = "BossChara", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	//	USkeletalMesh* Mesh;
 
-	UPROPERTY(Category = "BossChara", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	/*UPROPERTY(Category = "BossChara", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		int mHealthPoint;
 
 	UPROPERTY(Category = "BossChara", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
@@ -57,7 +57,7 @@ private:
 		int mAtt;
 
 	UPROPERTY(Category = "BossChara", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		int mDef;
+		int mDef;*/
 
 	UPROPERTY(Category = "BossChara", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	BossPhase mPhase;

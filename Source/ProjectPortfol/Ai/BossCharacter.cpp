@@ -5,6 +5,7 @@
 #include <ZedEnums.h>
 #include <ZedGameInstance.h>
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Components/WidgetComponent.h"
 #include "NpcAnimInstance.h"
 
 
@@ -22,7 +23,8 @@ ABossCharacter::ABossCharacter()
 	GetMesh()->SetSimulatePhysics(false);
 	
 	
-
+	mHP_WidgetComp->SetupAttachment(GetMesh(),TEXT("HEAD_UI_Socket"));
+	mHP_WidgetComp->SetVisibility(true);
 
 
 }
@@ -63,8 +65,8 @@ void ABossCharacter::BeginPlay()
 	mHealthPoint = mCurBossData->HealthPoint;
 	mShieldPoint = mCurBossData->ShieldPoint;
 	mStemina = mCurBossData->Stemina;
-	mAtt = mCurBossData->Att;
-	mDef = mCurBossData->Def;
+	mAttack = mCurBossData->Att;
+	mDefense = mCurBossData->Def;
 	mPhase = BossPhase::None;
 	mFinalPhase = mCurBossData->FinalPhase;
 	mPostionOri = mCurBossData->PostionOri;

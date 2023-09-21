@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "../ZedEnums.h"
+
 #include "NpcCharacter.generated.h"
 
 UCLASS()
@@ -35,6 +36,16 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Npc)
 	class UBlackboardComponent* GetBlackboardComponent();
+
+	UFUNCTION(BlueprintCallable, Category = Npc)
+	FORCEINLINE float GetHpPercent() {
+		if (mFullHealthPoint == 0) {
+			UE_LOG(LogTemp, Error, TEXT("%S(%u) mFullHealthPoint == 0"), __FUNCTION__, __LINE__);
+			return 1.0f;
+		}
+		return (mHealthPoint / mFullHealthPoint) ;
+	}
+
 
 
 
@@ -142,16 +153,34 @@ protected:
 	UPROPERTY(Category = "CharacterBase", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		TMap<int, class UAnimMontage*> mAllAnimations;
 
-private:
+	UPROPERTY(Category = "CharacterBase", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	int mHealthPoint;
 
+	UPROPERTY(Category = "CharacterBase", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	int mFullHealthPoint;
+
+
+	UPROPERTY(Category = "CharacterBase", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	float mShieldPoint;
 
+	UPROPERTY(Category = "CharacterBase", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	float mFullShieldPoint;
+
+
+	UPROPERTY(Category = "CharacterBase", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	int mStemina;
 
+	UPROPERTY(Category = "CharacterBase", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	int mFullStemina;
+
+
+	UPROPERTY(Category = "CharacterBase", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	int mAttack;
 
+	UPROPERTY(Category = "CharacterBase", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	int mDefense;
+
+private:
 
 	UFUNCTION()
 		void MontageEnd(UAnimMontage* animMontage, bool inter);
