@@ -38,6 +38,7 @@ public:
 
 	struct FNpcDataTable* GetNpcDataTable(FName name);
 
+	static FRandomStream MainRandom;
 
 private:
 

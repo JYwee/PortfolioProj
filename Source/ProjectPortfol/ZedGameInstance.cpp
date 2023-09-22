@@ -12,9 +12,13 @@
 #include "Data/ItemDataTable.h"
 #include "Data/NpcDataTable.h"
 
+FRandomStream UZedGameInstance::MainRandom;
+
 UZedGameInstance::UZedGameInstance() {
 
 	{
+		MainRandom.GenerateNewSeed();
+
 		FString DataPath = TEXT("/Script/Engine.DataTable'/Game/Data/DT_Weapon.DT_Weapon'");
 		ConstructorHelpers::FObjectFinder<UDataTable> DataTable(*DataPath);
 

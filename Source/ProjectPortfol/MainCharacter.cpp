@@ -9,6 +9,7 @@
 #include "Components/InputComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/WidgetComponent.h"
+#include "Components/SceneCaptureComponent2D.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -61,6 +62,16 @@ AMainCharacter::AMainCharacter()
 	mFollowCamera->SetRelativeRotation(FRotator(-10.f, 0, 0));
 
 	mFollowCamera->bUsePawnControlRotation = false;
+
+	mMiniMapSpringArmComp = CreateDefaultSubobject<USpringArmComponent>(TEXT("MiniMapSpringArmComp"));
+	mMiniMapSpringArmComp->SetupAttachment(RootComponent);
+	
+	mUSceneCaptureComponent2D = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("SceneCaptureComponent2D"));
+	mUSceneCaptureComponent2D->SetupAttachment(mMiniMapSpringArmComp);
+
+
+	
+
 
 	//mFollowCamera->ComponentTags.Add
 	GetCapsuleComponent()->ComponentTags.Add(TEXT("PlayerCapsuleComp"));
