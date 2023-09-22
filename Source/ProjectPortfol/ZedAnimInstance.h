@@ -28,7 +28,8 @@ public:
 	UFUNCTION(Category = "Anime", BlueprintCallable)
 		void MontageEnd(UAnimMontage* aniMontage, bool inter);
 
-	
+	UFUNCTION(Category = "Anime")
+	void AnimNotifyBegin(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointPayload);
 
 protected:
 	void NativeBeginPlay() override;

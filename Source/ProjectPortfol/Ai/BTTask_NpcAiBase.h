@@ -8,6 +8,8 @@
 #include "MyAIController.h"
 #include "NpcCharacter.h"
 #include <ZedEnums.h>
+#include <NavigationSystem.h>
+#include <NavigationPath.h>
 #include "BTTask_NpcAiBase.generated.h"
 
 /**
@@ -53,6 +55,14 @@ public:
 	EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& ownerComp, uint8* nodeMemory);
 
 	bool IsDeath(UBehaviorTreeComponent& ownerComp);
+
+	TArray<FVector> PathFind(UBehaviorTreeComponent& ownerComp, AActor* actor);
+		
+	TArray<FVector> PathFind(UBehaviorTreeComponent& ownerComp, FVector targetPos);
+
+	UNavigationPath* PathFindNavPath(UBehaviorTreeComponent& ownerComp, AActor* actor);
+
+	UNavigationPath* PathFindNavPath(UBehaviorTreeComponent& ownerComp, FVector targetPos);
 
 protected:
 

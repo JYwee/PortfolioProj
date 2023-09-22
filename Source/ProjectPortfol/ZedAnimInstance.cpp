@@ -38,12 +38,27 @@ void UZedAnimInstance::MontageEnd(UAnimMontage* aniMontage, bool inter)
 	}
 }
 
+void UZedAnimInstance::AnimNotifyBegin(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointPayload)
+{
+	AMainCharacter* character = Cast<AMainCharacter>(GetOwningActor());
+	if (NotifyName == TEXT("RightSpell")) {
+		character->SpellRightMagic();
+	}
+	else if (NotifyName == TEXT("startattack")) {
+		character->SetIsMeleeAttProcess(true);
+	}
+	else if (NotifyName == TEXT("endattack")) {
+		character->SetIsMeleeAttProcess(false);
+	}
+}
+
 void UZedAnimInstance::NativeBeginPlay()
 {
 	Super::NativeBeginPlay();
 
 	OnMontageBlendingOut.AddDynamic(this, &UZedAnimInstance::MontageEnd);
-	
+	OnPlayMontageNotifyBegin.AddDynamic(this, &UZedAnimInstance::AnimNotifyBegin);
+
 	AMainCharacter* character = Cast<AMainCharacter>(GetOwningActor());
 
 	if (character == nullptr && character->IsValidLowLevel() == false)

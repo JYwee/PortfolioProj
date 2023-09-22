@@ -102,6 +102,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
 	void InteractAction();
 
+	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+		void TakeDamage(uint8 damage);
 	/*UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
 	FORCEINLINE	void SetAllAnimations(ZEDAniState aniState) {
 		mA
@@ -172,6 +174,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class ANpcCharacter* mTargetNpcCharacter;
 
+	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+		void SpellRightMagic();
 //mNearInteractObj
 	
 	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
@@ -188,7 +192,15 @@ public:
 		return mIsAimingNow;
 	}
 
-	
+	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+		FORCEINLINE bool IsMeleeAttProcessing() const{
+		return mIsMeleeAttProcess;
+	}
+
+	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+		FORCEINLINE void SetIsMeleeAttProcess(bool meleeAttProcess) {
+		mIsMeleeAttProcess = meleeAttProcess;
+	}
 	bool IsChangeAimingState(bool curAimState)
 	{
 		//if()
@@ -210,6 +222,9 @@ public:
 private:
 		int mHealthPoint;
 
+		int mMaxHealthPoint = 1000;
+
+
 		float mStaminaPoint = 1.f;
 
 		int mAttack;
@@ -222,11 +237,14 @@ private:
 
 		bool mIsChangeAimingState = false;
 
+		bool mIsMeleeAttProcess = false;;
+
 		UPROPERTY(Category = "AMainCharacter", BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 			ZEDAniState mAniState;
 		//ZEDAniState AniState;
 		
-		
+		class UZedAnimInstance* mAnimInstance = nullptr;
+
 		UPROPERTY(Category = "AMainCharacter", BlueprintReadWrite, EditAnywhere, meta = (AllowPrivateAccess = "true"))
 			TMap<ZEDAniState, class UAnimMontage*> mAllAnimations;
 		//TMap<ZEDAniState, class UAnimMontage*> AllAnimations;

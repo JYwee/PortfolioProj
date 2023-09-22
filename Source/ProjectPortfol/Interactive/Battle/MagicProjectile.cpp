@@ -4,6 +4,8 @@
 #include "Interactive/Battle/MagicProjectile.h"
 #include <MyPlayerController.h>
 #include <MainCharacter.h>
+#include <Ai/BossCharacter.h>
+#include <Ai/MonsterNpc.h>
 #include "GameFramework/ProjectileMovementComponent.h"
 
 // Sets default values
@@ -17,7 +19,7 @@ AMagicProjectile::AMagicProjectile()
 	mSphereComp->SetCollisionProfileName(TEXT("NoCollision"), true);
 	mSphereComp->ComponentTags.Add(FName("SphereMagicProj"));
 	
-
+	
 	mNiagaraComp = CreateDefaultSubobject<UNiagaraComponent>(TEXT("NiagaraComponent"));
 	mNiagaraComp->SetupAttachment(RootComponent, TEXT("attachNigara"));
 
@@ -39,6 +41,7 @@ void AMagicProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	mSphereComp->OnComponentBeginOverlap.AddDynamic(this, &AMagicProjectile::BeginOverLap);
 	OnDestroyed.AddDynamic(this, &AMagicProjectile::DestroyProjectile);
 }
 
@@ -85,5 +88,36 @@ void AMagicProjectile::DestroyProjectile(AActor* _Destroy)
 
 	Actor->SetActorLocation(GetActorLocation());
 	Actor->SetActorRotation(GetActorRotation());
+}
+
+void AMagicProjectile::BeginOverLap(UPrimitiveComponent* OverlappedComponent, 
+	AActor* OtherActor, UPrimitiveComponent* OtherComp, 
+	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor->ActorHasTag(TEXT("Boss")))
+	{
+		this->Destroy();
+		ABossCharacter* bossCharacter = Cast<ABossCharacter>(OtherActor);
+		if (bossCharacter == nullptr || bossCharacter->IsValidLowLevel() == false) {
+			UE_LOG(LogTemp, Error, TEXT("%S(%u) bossCharacter == nullptr"), __FUNCTION__, __LINE__);
+			return;
+		}
+		bossCharacter->TakeDamageNpcBase(10);
+	}
+	else if (OtherActor->ActorHasTag(TEXT("Monster")))
+	{
+		this->Destroy();
+
+		AMonsterNpc* monsterCharacter = Cast<AMonsterNpc>(OtherActor);
+		if (monsterCharacter == nullptr || monsterCharacter->IsValidLowLevel() == false) {
+			UE_LOG(LogTemp, Error, TEXT("%S(%u) monsterCharacter == nullptr"), __FUNCTION__, __LINE__);
+			return;
+		}
+		monsterCharacter->TakeDamageNpcBase(10);
+	}
+	/*if (OtherComp->ComponentHasTag(TEXT("Weapon")))
+	{
+		this->Destroy();
+	}*/
 }
 

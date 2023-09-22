@@ -17,7 +17,7 @@ void UInGameMainWidget::NativeConstruct()
 
 	mUIMainTextBox = Cast<UMainTextWidget>(GetWidgetFromName(TEXT("UI_MainTextBox")));
 	mUIStamina = Cast<UProgressBar>(GetWidgetFromName(TEXT("UI_playerStamina")));
-
+	mUIHpBar = Cast<UProgressBar>(GetWidgetFromName(TEXT("UI_playerHP_Bar")));
 	//TalkTextWindowOnOff = Cast<UInteracTextListWidget>(GetWidgetFromName(TEXT("UI_IntractiveText")));
 	//mAllWidget.Add(Cast<UUserWidget>(GetWidgetFromName(TEXT("WBP_Status"))));
 }

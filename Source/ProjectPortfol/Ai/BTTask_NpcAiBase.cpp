@@ -39,6 +39,63 @@ bool UBTTask_NpcAiBase::IsDeath(UBehaviorTreeComponent& ownerComp)
 	return false;
 }
 
+TArray<FVector> UBTTask_NpcAiBase::PathFind(UBehaviorTreeComponent& ownerComp, AActor* actor)
+{
+	return PathFind(ownerComp, actor->GetActorLocation());
+}
+
+TArray<FVector> UBTTask_NpcAiBase::PathFind(UBehaviorTreeComponent& ownerComp, FVector targetPos)
+{
+	UNavigationPath* pathObject = nullptr;
+	FVector startPos = GetNpcCharacter(ownerComp)->GetActorLocation();
+	FVector endPos = targetPos;
+	// FindPathAsync <= 바로 결과가 안나오고 함수 포인터를 넣어주면 결과가 나오면 알려줄게.
+	// Sync , 
+
+	pathObject = UNavigationSystemV1::FindPathToLocationSynchronously(
+		GetWorld(),
+		startPos,
+		endPos
+	);
+
+	if (nullptr == pathObject)
+	{
+		return TArray<FVector>();
+	}
+
+	if (false == pathObject->IsValid())
+	{
+		return TArray<FVector>();
+	}
+
+	TArray<FVector> pathPoints = pathObject->PathPoints;
+
+	//if (0 != pathPoints.Num())
+
+	return pathObject->PathPoints;
+}
+
+UNavigationPath* UBTTask_NpcAiBase::PathFindNavPath(UBehaviorTreeComponent& ownerComp, AActor* actor)
+{
+	return PathFindNavPath(ownerComp, actor->GetActorLocation());
+}
+
+UNavigationPath* UBTTask_NpcAiBase::PathFindNavPath(UBehaviorTreeComponent& ownerComp, FVector targetPos)
+{
+	UNavigationPath* pathObject = nullptr;
+	FVector startPos = GetNpcCharacter(ownerComp)->GetActorLocation();
+	FVector endPos = targetPos;
+	// FindPathAsync <= 바로 결과가 안나오고 함수 포인터를 넣어주면 결과가 나오면 알려줄게.
+	// Sync , 
+
+	pathObject = UNavigationSystemV1::FindPathToLocationSynchronously(
+		GetWorld(),
+		startPos,
+		endPos
+	);
+	return pathObject;
+}
+
 float UBTTask_NpcAiBase::GetStateTime(UBehaviorTreeComponent& ownerComp)
 {
 	UBlackboardComponent* blackBoard = ownerComp.GetBlackboardComponent();

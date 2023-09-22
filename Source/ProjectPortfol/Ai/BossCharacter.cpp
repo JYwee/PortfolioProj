@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "BossCharacter.h"
@@ -6,6 +6,8 @@
 #include <ZedGameInstance.h>
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Components/WidgetComponent.h"
+#include "Components/ProgressBar.h"
+#include <UI/UIHpBar.h>
 #include "NpcAnimInstance.h"
 
 
@@ -24,7 +26,7 @@ ABossCharacter::ABossCharacter()
 	
 	
 	mHP_WidgetComp->SetupAttachment(GetMesh(),TEXT("HEAD_UI_Socket"));
-	mHP_WidgetComp->SetVisibility(true);
+	//mHP_WidgetComp->SetVisibility(true);
 
 
 }
@@ -33,6 +35,20 @@ void ABossCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	UUIHpBar* HealthBarWidget = Cast<UUIHpBar>(mHP_WidgetComp->GetWidget());
+
+	if (HealthBarWidget->mHpProgressBar != nullptr) {
+		HealthBarWidget->mHpProgressBar->SetPercent(GetHpPercent());
+
+		if (HealthBarWidget->mHpProgressBar->Percent < 1.0f)
+		{
+			mHP_WidgetComp->SetVisibility(true);
+			//HealthBarWidget->SetVisibility(ESlateVisibility::Visible);
+		}
+		else {
+			mHP_WidgetComp->SetVisibility(false);
+		}
+	}
 	
 }
 
@@ -62,7 +78,8 @@ void ABossCharacter::BeginPlay()
 	//WeaponArrays.Add(GetGameInstance<UZedGameInstance>()->GetMesh(TEXT("Staff01SM")));
 	
 	//mBossName = mCurBossData->Subtitle;
-	mHealthPoint = mCurBossData->HealthPoint;
+	mFullHealthPoint = mCurBossData->HealthPoint;
+	mHealthPoint = mFullHealthPoint;
 	mShieldPoint = mCurBossData->ShieldPoint;
 	mStemina = mCurBossData->Stemina;
 	mAttack = mCurBossData->Att;
@@ -70,6 +87,23 @@ void ABossCharacter::BeginPlay()
 	mPhase = BossPhase::None;
 	mFinalPhase = mCurBossData->FinalPhase;
 	mPostionOri = mCurBossData->PostionOri;
+
+
+	//UUIHpBar* HealthBarWidget = Cast<UUIHpBar>(mHP_WidgetComp->GetWidget());
+
+	//if (HealthBarWidget->mHpProgressBar == nullptr)
+	//{
+	//	UE_LOG(LogTemp, Error, TEXT("%S(%u) HealthBarWidget == nullptr"), __FUNCTION__, __LINE__);
+	//	//return;
+	//}
+
+	//else {
+	//	HealthBarWidget->mHpProgressBar->PercentDelegate.BindUFunction(this, "GetHpPercent");
+	//	HealthBarWidget->mHpProgressBar->SynchronizeProperties();
+	//	////HealthBarWidget
+
+	//}
+
 
 	GetBlackboardComponent()->SetValueAsEnum(TEXT("BossDragonAIControlState"), static_cast<uint8>(BossDragonAIControlState::Idle));
 	GetBlackboardComponent()->SetValueAsString(TEXT("TargetTag"), TEXT("Player"));
@@ -84,4 +118,34 @@ void ABossCharacter::BeginPlay()
 
 	SetNpcAnimInstance(Cast<UNpcAnimInstance>(GetMesh()->GetAnimInstance()));
 
+	UUIHpBar* HealthBarWidget = Cast<UUIHpBar>(mHP_WidgetComp->GetWidget());
+	HealthBarWidget->mHpProgressBar = Cast<UProgressBar>(HealthBarWidget->GetWidgetFromName(TEXT("ProgBarHP")));;
+	HealthBarWidget->mBackGroundProgress = Cast<UImage>(HealthBarWidget->GetWidgetFromName(TEXT("BackgroundHPBar")));
+
 }
+
+void ABossCharacter::TakeDamageNpcBase(uint8 damageValue)
+{
+	//Super::TakeDamageNpcBase(damageValue);
+
+	mHealthPoint -= damageValue;
+
+	if (mHealthPoint < 0)
+	{
+		//죽음 처리
+		return;
+	}
+
+	SetAniState(BossDragonAIControlState::GetHit);
+}
+
+//float ABossCharacter::GetHpPercent()
+//{
+//	{
+//		if (mFullHealthPoint == 0) {
+//			UE_LOG(LogTemp, Error, TEXT("%S(%u) mFullHealthPoint == 0"), __FUNCTION__, __LINE__);
+//			return 1.0f;
+//		}
+//		return (static_cast<float>(mHealthPoint) / static_cast<float>(mFullHealthPoint));
+//	}
+//}

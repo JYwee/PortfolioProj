@@ -35,6 +35,13 @@ public:
 		return;
 	}
 
+
+	UFUNCTION(BlueprintCallable, Category = "BossChara")
+		void TakeDamageNpcBase(uint8 damageValue) override;
+
+	//UFUNCTION(BlueprintCallable, Category = Npc)
+	//	float GetHpPercent();
+
 private:
 
 	UPROPERTY(Category = "BossChara", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
@@ -48,7 +55,7 @@ private:
 
 	UPROPERTY(Category = "BossChara", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		int mShieldPoint;
-
+		i
 	UPROPERTY(Category = "BossChara", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		int mStemina;
 

@@ -34,6 +34,15 @@ EBTNodeResult::Type UBTTask_NpcMove::ExecuteTask(UBehaviorTreeComponent& ownerCo
 		moveComp->MaxWalkSpeed = 300.0f;
 	}
 
+	UObject* targetObject = GetBlackboardComponent(ownerComp)->GetValueAsObject(TEXT("TargetActor"));
+	AActor* targetActor = Cast<AActor>(targetObject);
+	FVector targetPos = targetActor->GetActorLocation();
+
+	UNavigationPath* pathPoint = PathFindNavPath(ownerComp, targetPos);
+	GetBlackboardComponent(ownerComp)->SetValueAsObject(TEXT("NavPath"), pathPoint);
+	GetBlackboardComponent(ownerComp)->SetValueAsVector(TEXT("LastPos"), targetPos);
+
+
 	return EBTNodeResult::Type::InProgress;
 }
 
@@ -54,14 +63,46 @@ void UBTTask_NpcMove::TickTask(UBehaviorTreeComponent& ownerComp, uint8* nodeMem
 		return;
 	}*/
 
-
-	{
 		FVector targetPos = targetActor->GetActorLocation();
 		FVector thisPos = GetNpcCharacter(ownerComp)->GetActorLocation();
+		FVector targetLastPos = targetActor->GetActorLocation();
+		FVector checkLastPos = GetBlackboardComponent(ownerComp)->GetValueAsVector(TEXT("LastPos"));
+
+		if (targetLastPos != checkLastPos)
+		{
+			UNavigationPath* NewPath = PathFindNavPath(ownerComp, targetLastPos);
+			GetBlackboardComponent(ownerComp)->SetValueAsObject(TEXT("NavPath"), NewPath);
+		}
+
+		UObject* navObject = GetBlackboardComponent(ownerComp)->GetValueAsObject(TEXT("NavPath"));
+		UNavigationPath* navPath = Cast<UNavigationPath>(navObject);
+
+
+		if (nullptr == navPath)
+		{
+			SetStateChange(ownerComp, NPCEnemyAIControlState::Return);
+			return;
+		}
+
+		// 길을 제대로 못찾았다는 이야기가 된다.
+		if (nullptr != navPath && true == navPath->PathPoints.IsEmpty())
+		{
+			SetStateChange(ownerComp, NPCEnemyAIControlState::Return);
+			return;
+		}
+
+		if (nullptr != navPath)
+		{
+			targetPos = navPath->PathPoints[1];
+		}
+
 		// 혹시라도 z축이 있을 가능성을 없애는게 보통입니다.
 		targetPos.Z = 0.0f;
 		thisPos.Z = 0.0f;
+		targetLastPos.Z = 0.0f;
 
+
+	{
 		FVector Dir = targetPos - thisPos;
 		Dir.Normalize();
 
@@ -87,12 +128,12 @@ void UBTTask_NpcMove::TickTask(UBehaviorTreeComponent& ownerComp, uint8* nodeMem
 
 
 	{
-		FVector PawnPos = GetNpcCharacter(ownerComp)->GetActorLocation();
+		/*FVector PawnPos = GetNpcCharacter(ownerComp)->GetActorLocation();
 		FVector TargetPos = targetActor->GetActorLocation();
 		PawnPos.Z = 0.0f;
-		TargetPos.Z = 0.0f;
+		TargetPos.Z = 0.0f;*/
 
-		FVector Dir = TargetPos - PawnPos;
+		FVector Dir = targetPos - thisPos;
 
 		GetNpcCharacter(ownerComp)->AddMovementInput(Dir);
 		//GetGlobalCharacter(OwnerComp)->SetActorRotation(Dir.Rotation());
@@ -102,7 +143,7 @@ void UBTTask_NpcMove::TickTask(UBehaviorTreeComponent& ownerComp, uint8* nodeMem
 		float AttackRange = GetBlackboardComponent(ownerComp)->GetValueAsFloat(TEXT("AttackRange"));
 
 		OriginPos.Z = 0.0f;
-		FVector OriginDir = OriginPos - PawnPos;
+		FVector OriginDir = OriginPos - thisPos;
 
 		if (OriginDir.Size() >= SearchRange * 1.5f)
 		{

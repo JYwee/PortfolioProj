@@ -37,14 +37,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Npc)
 	class UBlackboardComponent* GetBlackboardComponent();
 
-	UFUNCTION(BlueprintCallable, Category = Npc)
-	FORCEINLINE float GetHpPercent() {
-		if (mFullHealthPoint == 0) {
-			UE_LOG(LogTemp, Error, TEXT("%S(%u) mFullHealthPoint == 0"), __FUNCTION__, __LINE__);
-			return 1.0f;
-		}
-		return (mHealthPoint / mFullHealthPoint) ;
-	}
+	
+	virtual void TakeDamageNpcBase(uint8 damageValue);
+
 
 
 
@@ -145,6 +140,15 @@ public:
 		mNpcAnimInstance = animInst;
 	}
 
+	FORCEINLINE float GetHpPercent() {
+		if (mFullHealthPoint == 0) {
+			UE_LOG(LogTemp, Error, TEXT("%S(%u) mFullHealthPoint == 0"), __FUNCTION__, __LINE__);
+			return 1.0f;
+		}
+		return (static_cast<float>(mHealthPoint) / static_cast<float>(mFullHealthPoint));
+	}
+
+
 protected:
 
 	UPROPERTY(Category = "CharacterBase", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
@@ -195,9 +199,15 @@ private:
 			bool bFromSweep,
 			const FHitResult& SweepResult
 		);
+	UFUNCTION(BlueprintCallable, Category = AMainCharacter)
+		void EndOverLap(
+			UPrimitiveComponent* OverlappedComponent,
+			AActor* OtherActor,
+			UPrimitiveComponent* OtherComp,
+			int32 OtherBodyIndex
+		);
 
-
-	
+	bool mIsOverlapWithPlayerAtt = false;
 
 //	const struct FMonsterDataTable* mMonsterDT = nullptr;
 

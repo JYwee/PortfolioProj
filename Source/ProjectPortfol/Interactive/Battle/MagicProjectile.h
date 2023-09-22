@@ -30,6 +30,8 @@ public:
 	{
 		return mSphereComp;
 	}
+	
+
 
 private:
 	UPROPERTY(Category = "MagicProj", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
@@ -51,6 +53,18 @@ private:
 		class UNiagaraComponent* mNiagaraComp = nullptr;
 
 	FVector mDirection = FVector::Zero();
+
+
+	UFUNCTION(BlueprintCallable, Category = "MagicProj")
+		void BeginOverLap(
+			UPrimitiveComponent* OverlappedComponent,
+			AActor* OtherActor,
+			UPrimitiveComponent* OtherComp,
+			int32 OtherBodyIndex,
+			bool bFromSweep,
+			const FHitResult& SweepResult
+		);
+
 	//UPROPERTY(VisibleAnywhere, Category = Movement)
 	//	class UProjectileMovementComponent* mProjectileMovementComponent;
 };

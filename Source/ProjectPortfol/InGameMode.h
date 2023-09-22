@@ -24,6 +24,16 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = InGameMode)
 	FORCEINLINE void SetMainCharacter(AMainCharacter* mainCharac) { mMainCharacter = mainCharac; }
+
+	// get mMainCharacter->IsMeleeAttProcessing() true or false
+	UFUNCTION(BlueprintCallable, Category = InGameMode)
+		FORCEINLINE bool GetPlayerAttProcessing() const;
+
+	// set mMainCharacter->IsMeleeAttProcessing() true or false
+	UFUNCTION(BlueprintCallable, Category = InGameMode)
+		FORCEINLINE void SetPlayerAttProcess(bool meleeAttProcess);
+	
+	
 protected:
 
 
@@ -31,4 +41,6 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = InGameMode, meta = (AllowPrivateAccess = "true"))
 	AMainCharacter* mMainCharacter;
+
+	
 };

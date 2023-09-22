@@ -76,7 +76,10 @@ public:
 	{
 		mStaminaUIPercent = staminaPercent;
 	}
-
+	void SetHpPercent(float hpPercent)
+	{
+		mHpUIPercent = hpPercent;
+	}
 	
 	UPROPERTY(Category = "UIzed", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	ESlateVisibility mInvenStatusWindowOnOff = ESlateVisibility::Hidden;
@@ -93,11 +96,13 @@ private:
 	
 	UProgressBar* mUIStamina;
 	
+	UProgressBar* mUIHpBar;
 
 	UPROPERTY(Category = "UIzed", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	float mStaminaUIPercent;
 
-
+	UPROPERTY(Category = "UIzed", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		float mHpUIPercent;
 
 	UPROPERTY(Category = "UIzed", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	TArray<UUserWidget*> mAllWidget;

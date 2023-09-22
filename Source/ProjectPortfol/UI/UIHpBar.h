@@ -17,7 +17,6 @@ class PROJECTPORTFOL_API UUIHpBar : public UUserWidget
 	GENERATED_BODY()
 
 
-
 public:
 	UPROPERTY(Category = "UiHpBar", EditAnywhere, BlueprintReadWrite)
 	UImage* mBackGroundProgress = nullptr;
@@ -28,4 +27,7 @@ public:
 protected:
 
 	void NativeConstruct() override;
+
+	void NativeTick(const FGeometry& MyGeometry, float InDeltaTime);
+
 };

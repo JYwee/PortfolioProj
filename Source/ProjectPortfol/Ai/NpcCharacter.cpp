@@ -7,6 +7,9 @@
 #include "MyAIController.h"
 #include "../ZedGameInstance.h"
 #include "../Data/MonsterDataTable.h"
+#include <UI/UIHpBar.h>
+#include <InGameMode.h>
+#include "Kismet/GameplayStatics.h"
 #include "NpcAnimInstance.h"
 
 
@@ -27,7 +30,9 @@ ANpcCharacter::ANpcCharacter()
 	mHP_WidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("HP_NPC_WDG"));
 	
 	mHP_WidgetComp->SetupAttachment(GetMesh());
-	mHP_WidgetComp->SetVisibility(true);
+
+
+	//mHP_WidgetComp->SetVisibility(true);
 	//GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ANpcCharacter::BeginOverLap);
 	//setcontroller
 }
@@ -46,6 +51,11 @@ UBlackboardComponent* ANpcCharacter::GetBlackboardComponent()
 		mBlackboardComponent = myAiCon->GetBlackboardComponent();
 	}
 	return mBlackboardComponent;
+}
+
+void ANpcCharacter::TakeDamageNpcBase(uint8 damageValue)
+{
+	
 }
 
 // Called when the game starts or when spawned
@@ -70,6 +80,7 @@ void ANpcCharacter::BeginPlay()
 	// 
 
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ANpcCharacter::BeginOverLap);
+	GetCapsuleComponent()->OnComponentEndOverlap.AddDynamic(this, &ANpcCharacter::EndOverLap);
 
 	UZedGameInstance* Inst = GetGameInstance<UZedGameInstance>();
 	
@@ -81,6 +92,8 @@ void ANpcCharacter::BeginPlay()
 
 	Inst->AllNpcCharac.Add(this);
 	
+
+	//
 	/*UAnimInstance* tmp = GetMesh()->GetAnimInstance();
 	mNpcAnimInstance = Cast<UNpcAnimInstance>(GetMesh()->GetAnimInstance());
 
@@ -91,6 +104,38 @@ void ANpcCharacter::BeginPlay()
 void ANpcCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	UUIHpBar* HealthBarWidget = Cast<UUIHpBar>(mHP_WidgetComp->GetWidget());
+
+	if (HealthBarWidget != nullptr)
+	{
+	if (HealthBarWidget->mHpProgressBar != nullptr && Tags.Contains("InteracNPC") == false) {
+		HealthBarWidget->mHpProgressBar->SetPercent(GetHpPercent());
+
+		if (HealthBarWidget->mHpProgressBar->Percent < 1.0f)
+		{
+			HealthBarWidget->SetVisibility(ESlateVisibility::Visible);
+		}
+		else {
+			HealthBarWidget->SetVisibility(ESlateVisibility::Hidden);
+		}
+	}
+	}
+
+	if (mHealthPoint <= 0)
+	{
+		this->Destroy();
+	}
+
+	if (mIsOverlapWithPlayerAtt == true)
+	{
+		AInGameMode* myGameMode = Cast<AInGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+		if (myGameMode->GetPlayerAttProcessing() == true)
+		{
+			TakeDamageNpcBase(20);
+			myGameMode->SetPlayerAttProcess(false);
+		}
+	}
 
 }
 
@@ -177,19 +222,42 @@ void ANpcCharacter::BeginOverLap(
 )
 {
 
-	if (OtherActor->ActorHasTag(TEXT("Weapon")))
+	/*if (OtherActor->ActorHasTag(TEXT("Weapon")))
 	{
 		this->Destroy();
-	}
+	}*/
 	if (OtherComp->ComponentHasTag(TEXT("Weapon")))
 	{
-		this->Destroy();
+		AInGameMode* myGameMode = Cast<AInGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+		if (myGameMode->GetPlayerAttProcessing() == true)
+		{
+			TakeDamageNpcBase(20);
+			myGameMode->SetPlayerAttProcess(false);
+		}
+		else 
+		{
+			mIsOverlapWithPlayerAtt = true;
+		}
+		//OtherActor
+		//UZedGameInstance* Inst = GetGameInstance<UZedGameInstance>();
+		//AMainCharacter* character = Cast<AMainCharacter>(GetOwningActor());
+
+		
 	}
 
 	SweepResult.Distance;
 	SweepResult.FaceIndex;
 	SweepResult.GetActor();
 
+}
+
+void ANpcCharacter::EndOverLap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if (OtherComp->ComponentHasTag(TEXT("Weapon")))
+	{
+		mIsOverlapWithPlayerAtt = false;
+	}
 }
 
 

@@ -46,6 +46,7 @@ enum class NPCEnemyAIControlState : uint8
 	Return UMETA(DisplayName = "복귀"),
 	Patrol UMETA(DisplayName = "정찰"),
 	Death UMETA(DisplayName = "죽음"),
+	GetHit UMETA(DisplayName = "피격"),
 };
 
 

@@ -18,7 +18,7 @@ void UNpcAnimInstance::MontageEnd(UAnimMontage* aniMontage, bool inter)
 
 	if (character->Tags.Contains(TEXT("Boss")))
 	{
-		int a = 0;
+		
 		if (mAllAnimations[static_cast<int>(BossDragonAIControlState::PhaseChange)] == aniMontage)
 		{
 			character->SetAniState<BossDragonAIControlState>(BossDragonAIControlState::TakeOff);
@@ -35,12 +35,12 @@ void UNpcAnimInstance::MontageEnd(UAnimMontage* aniMontage, bool inter)
 
 	if (character->Tags.Contains(TEXT("Monster")))
 	{
-		int a = 0;
-		//if (mAllAnimations[static_cast<int>(NPCAniState::Attack)] == aniMontage)
-		//{
-		//	character->SetAniState<NPCAniState>(NPCAniState::Idle);
-		//	//Montage_Play(AllAnimations[ZEDAniState::Idle], 1.0f);
-		//}
+		
+		if (mAllAnimations[static_cast<int>(NPCEnemyAIControlState::GetHit)] == aniMontage)
+		{
+			character->SetAniState<NPCEnemyAIControlState>(NPCEnemyAIControlState::Idle);
+			//Montage_Play(AllAnimations[ZEDAniState::Idle], 1.0f);
+		}
 
 		//if (mAllAnimations[static_cast<int>(NPCAniState::Jump)] == aniMontage)
 		//{

@@ -3,6 +3,7 @@
 
 #include "MainCharacter.h"
 #include "ZedGameInstance.h"
+#include "ZedAnimInstance.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
@@ -19,9 +20,10 @@
 #include "Data/ObjDataTable.h"
 #include "UI/InteracTextSlot.h"
 #include "UI/InvenAndStatus.h"
-
+#include <Interactive/Battle/MagicProjectile.h>
 #include "MyPlayerController.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "InGameMode.h"
 //#include "Math/Vector.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -68,6 +70,8 @@ AMainCharacter::AMainCharacter()
 	mParticleSystemComp->SetupAttachment(GetMesh());
 
 	mIsLockOn = false;
+
+	mHealthPoint = mMaxHealthPoint;
 	
 	//addTag
 	Tags.Add(TEXT("Player"));
@@ -78,12 +82,12 @@ AMainCharacter::AMainCharacter()
 
 	WeaponMesh->SetupAttachment(GetMesh(), TEXT("WeaponSocket"));
 	
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> MeshLoader(TEXT("/Script/Engine.StaticMesh'/Game/Resource/BattleWizardPolyart/Meshes/MagicStaffs/Staff02SM.Staff02SM'"));
-	//static ConstructorHelpers::FObjectFinder<UStaticMesh> MeshLoader(GetGameInstance<UZedGameInstance>()->GetMesh(TEXT("Staff01SM")));
-	if (true == MeshLoader.Succeeded())
-	{
-		WeaponArrays.Add(MeshLoader.Object);
-	}
+	//static ConstructorHelpers::FObjectFinder<UStaticMesh> MeshLoader(TEXT("/Script/Engine.StaticMesh'/Game/Resource/BattleWizardPolyart/Meshes/MagicStaffs/Staff02SM.Staff02SM'"));
+	////static ConstructorHelpers::FObjectFinder<UStaticMesh> MeshLoader(GetGameInstance<UZedGameInstance>()->GetMesh(TEXT("Staff01SM")));
+	//if (true == MeshLoader.Succeeded())
+	//{
+	//	WeaponArrays.Add(MeshLoader.Object);
+	//}
 
 	
 
@@ -97,9 +101,11 @@ AMainCharacter::~AMainCharacter()
 	mInventoryData.Empty();
 }
 
-void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	
+
 	if (OtherComp->ComponentHasTag(TEXT("Interactive")))
 	{
 		APlayerController* HUDController = Cast<APlayerController>(GetController());
@@ -245,6 +251,11 @@ void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AAct
 		listWdg->GetInteractListView()->AddItem(Data);
 	}
 
+	if (OtherComp->ComponentHasTag(TEXT("monsterweapon")))
+	{
+		TakeDamage(20);
+	}
+	
 
 }
 
@@ -489,6 +500,12 @@ void AMainCharacter::EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 // Sets default values
 
 // Called when the game starts or when spawned
+
+
+
+
+
+
 void AMainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
@@ -502,7 +519,7 @@ void AMainCharacter::BeginPlay()
 	//WeaponArrays.Add(GetGameInstance<UZedGameInstance>()->GetMesh(TEXT("Staff3")));
 
 
-	WeaponMesh->SetStaticMesh(WeaponArrays[1]);
+	WeaponMesh->SetStaticMesh(WeaponArrays[0]);
 
 	myController = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
 
@@ -539,11 +556,7 @@ void AMainCharacter::BeginPlay()
 			//UInventoryItemData* listItemData = Cast<UInventoryItemData>(InventoryWdg->GetInvenList()->GetItemAt(i));
 			//mInventoryData.Add(listItemData);
 			//mInventoryData[i] = Cast<UInventoryItemData>(InventoryWdg->GetInvenList()->GetListItems()[i]);
-
-
-		
-			
-	}
+		}
 
 		/*const TArray<UObject*>& Items = InvenList->GetListItems();
 		for (size_t i = 0; i < 3; i++)
@@ -552,11 +565,15 @@ void AMainCharacter::BeginPlay()
 			DataObject->Data = GameInstance->GetRandomItemData();
 		}*/
 	}
+	mAnimInstance = Cast<UZedAnimInstance>(GetMesh()->GetAnimInstance());
 
 
 
+	//mAnimInstance->OnMontageBlendingOut.AddDynamic(this, &)
+	/*GetGlobalAnimInstance()->OnMontageBlendingOut.AddDynamic(this, &AAIPlayerCharacter::MontageEnd);
+	GetGlobalAnimInstance()->OnPlayMontageNotifyBegin.AddDynamic(this, &AAIPlayerCharacter::AnimNotifyBegin);*/
 	//for interativeObj
-	//GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMainCharacter::BeginOverLap);
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMainCharacter::BeginOverLap);
 	//GetCapsuleComponent()->OnComponentEndOverlap.AddDynamic(this, &AMainCharacter::EndOverlap);
 
 	mSphereComponent->OnComponentBeginOverlap.AddDynamic(this, &AMainCharacter::BeginOverLap);
@@ -577,6 +594,12 @@ void AMainCharacter::Tick(float DeltaTime)
 	UE_LOG(LogTemp, Error, TEXT("%S(%u) %f %f %f "), __FUNCTION__, __LINE__, GetCharacterMovement()->GetCurrentAcceleration().X
 		, GetCharacterMovement()->GetCurrentAcceleration().Y
 		, GetCharacterMovement()->GetCurrentAcceleration().Z);*/
+	if (mHealthPoint <= 0)
+	{
+		//gameOver
+		//GetWorld()->GetFirstPlayerController()->ConsoleCommand("quit");
+		UKismetSystemLibrary::QuitGame(GetWorld(), nullptr, EQuitPreference::Quit, false);
+	}
 
 	if (myController->GetIsShift() == true)
 	{
@@ -615,6 +638,8 @@ void AMainCharacter::Tick(float DeltaTime)
 	AInGameHud* myHud = myController->GetHUD<AInGameHud>();
 	myHud->GetMainWidget()->SetStaminaPercent(mStaminaPoint);
 
+	float hpPercent = static_cast<float>(mHealthPoint) / static_cast<float>(mMaxHealthPoint);
+	myHud->GetMainWidget()->SetHpPercent(hpPercent);
 	//UUserWidget* Window;
 
 	
@@ -639,11 +664,11 @@ void AMainCharacter::AimingAction()
 {
 	if (mIsAimingNow == true)
 	{
-		mSpringArmComp->TargetArmLength = 100;
+		mSpringArmComp->TargetArmLength = 200;
 		//set 말고 add 로 바꿀것 나중에
 		//mSpringArmComp.addlo
 		//mSpringArmComp->SetRelativeLocation(FVector(0.f, 45.f, 0.f));
-		mFollowCamera->SetRelativeLocation(FVector(0.f, 45.f, 100.f));
+		mFollowCamera->SetRelativeLocation(FVector(0.f, 45.f, 120.f));
 		mFollowCamera->SetRelativeRotation(FRotator(0, 0, 0));
 		bUseControllerRotationYaw = true;
 		//mFollowCamera.
@@ -669,9 +694,35 @@ void AMainCharacter::InteractAction()
 	
 }
 
+void AMainCharacter::TakeDamage(uint8 damage)
+{
+	mHealthPoint -= damage;
+
+	
+}
+
 FRotator AMainCharacter::GetFollowCameraRotator() const
 {
 	return mFollowCamera->GetComponentRotation();
+}
+
+void AMainCharacter::SpellRightMagic()
+{
+	UZedGameInstance* Inst = GetWorld()->GetGameInstance<UZedGameInstance>();
+
+	TSubclassOf<UObject> ShineBolt = Inst->GetSubClassData(TEXT("ShineBolt"));
+	AActor* Actor = GetWorld()->SpawnActor<AActor>(ShineBolt);
+	Actor->Tags.Add(TEXT("MagicProjectile"));
+	AMagicProjectile* magicProjectile = Cast<AMagicProjectile>(Actor);
+
+	/*if (magicProjectile == nullptr)
+		UE_LOG(LogTemp, Error, TEXT("%S(%u) magicProjec nullptr"), __FUNCTION__, __LINE__);
+	*/
+	FVector Pos = GetActorLocation() + FVector(20.f, 20.f, 20.f);
+	magicProjectile->SetActorLocation(Pos);//tmp  pos
+	magicProjectile->SetActorRotation(GetActorRotation());
+	magicProjectile->GetSphereComponent()->SetCollisionProfileName(TEXT("PlayerAttack"), true);
+
 }
 
 

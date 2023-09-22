@@ -99,6 +99,11 @@ void ACrowdNpc::BeginPlay()
 	mInteractDialogues = inst->GetNpcDataTable(mNpcID)->ArrDialog;
 }
 
+void ACrowdNpc::TakeDamageNpcBase(uint8 damageValue)
+{
+	//Super::TakeDamageNpcBase(damageValue);
+}
+
 
 //void ACrowdNpc::BeginOverLap(
 //	UPrimitiveComponent* OverlappedComponent,

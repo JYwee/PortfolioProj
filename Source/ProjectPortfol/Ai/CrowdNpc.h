@@ -76,4 +76,8 @@ private:
 		TArray<FText> mInteractDialogues;
 
 		int mCurSplinePointIndex = 0;
+
+	
+		void TakeDamageNpcBase(uint8 damageValue) override;
+
 };

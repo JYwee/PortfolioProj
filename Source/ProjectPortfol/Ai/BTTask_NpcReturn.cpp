@@ -21,7 +21,7 @@ EBTNodeResult::Type UBTTask_NpcReturn::ExecuteTask(UBehaviorTreeComponent& owner
 void UBTTask_NpcReturn::TickTask(UBehaviorTreeComponent& ownerComp, uint8* nodeMemory, float delataSeconds)
 {
 
-	FVector OriginPos = GetBlackboardComponent(ownerComp)->GetValueAsVector(TEXT("OriginPos"));
+	FVector OriginPos = GetBlackboardComponent(ownerComp)->GetValueAsVector(TEXT("OriginPosition"));
 
 	{
 		FVector TargetPos = OriginPos;

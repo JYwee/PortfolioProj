@@ -21,6 +21,14 @@ public:
 	void BeginPlay() override;
 
 	const struct FMonsterDataTable* mMonsterDT = nullptr;
+	
+	void TakeDamageNpcBase(uint8 damageValue) override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UStaticMeshComponent* WeaponMesh;
+
+protected:
+	virtual void Tick(float DeltaTime) override;
 
 
 };
