@@ -6,8 +6,10 @@
 #include <Data/MonsterDataTable.h>
 #include "Components/WidgetComponent.h"
 #include "Components/ProgressBar.h"
+
 #include "BehaviorTree/BlackboardComponent.h"
 #include <UI/UIHpBar.h>
+#include <UI/MiniMapComponent.h>
 
 AMonsterNpc::AMonsterNpc()
 {
@@ -18,6 +20,10 @@ AMonsterNpc::AMonsterNpc()
 	WeaponMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WeaponMesh"));
 
 	WeaponMesh->SetupAttachment(GetMesh(), TEXT("weaponSocket"));
+
+	mMiniMapComp = CreateDefaultSubobject<UMiniMapComponent>(TEXT("MiniMapComp"));
+	mMiniMapComp->SetupAttachment(RootComponent);
+	mMiniMapComp->Init(this);
 }
 
 void AMonsterNpc::BeginPlay()

@@ -40,7 +40,10 @@ public:
 	
 	virtual void TakeDamageNpcBase(uint8 damageValue);
 
-
+	UFUNCTION(BlueprintCallable, Category = Npc)
+		FORCEINLINE void PushComponent(UActorComponent* component) {
+		mCompArr.Add(component);
+	}
 
 
 
@@ -74,6 +77,8 @@ protected:
 		mAllAnimations.Add(static_cast<int>(index), animMontage);
 	}
 
+	UPROPERTY(Category = "CharacterBase", EditAnywhere, BlueprintReadWrite)
+		TArray<UActorComponent*> mCompArr;
 
 public:	
 	// Called every frame

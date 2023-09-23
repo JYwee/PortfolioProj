@@ -8,6 +8,7 @@
 #include "Components/WidgetComponent.h"
 #include "Components/ProgressBar.h"
 #include <UI/UIHpBar.h>
+#include <UI/MiniMapComponent.h>
 #include "NpcAnimInstance.h"
 
 
@@ -26,6 +27,10 @@ ABossCharacter::ABossCharacter()
 	
 	
 	mHP_WidgetComp->SetupAttachment(GetMesh(),TEXT("HEAD_UI_Socket"));
+
+	mMiniMapComp = CreateDefaultSubobject<UMiniMapComponent>(TEXT("MiniMapComp"));
+	mMiniMapComp->SetupAttachment(RootComponent);
+	mMiniMapComp->Init(this);
 	//mHP_WidgetComp->SetVisibility(true);
 
 

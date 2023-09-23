@@ -85,4 +85,7 @@ private:
 	UPROPERTY(Category = "BossChara", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		class UBehaviorTree* mAI;
 	
+	UPROPERTY(Category = "BossChara", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	class UMiniMapComponent* mMiniMapComp;
+
 };
