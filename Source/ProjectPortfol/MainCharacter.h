@@ -33,7 +33,26 @@ public:
 	
 	
 	UFUNCTION(BlueprintCallable, Category = AMainCharacter)
+		void BeginOverLapWithCap(
+			UPrimitiveComponent* OverlappedComponent,
+			AActor* OtherActor,
+			UPrimitiveComponent* OtherComp,
+			int32 OtherBodyIndex,
+			bool bFromSweep,
+			const FHitResult& SweepResult
+		);
+
+
+	UFUNCTION(BlueprintCallable, Category = AMainCharacter)
 		void EndOverlap(
+			UPrimitiveComponent* OverlappedComponent,
+			AActor* OtherActor,
+			UPrimitiveComponent* OtherComp,
+			int32 OtherBodyIndex
+		);
+
+	UFUNCTION(BlueprintCallable, Category = AMainCharacter)
+		void EndOverlapWithCap(
 			UPrimitiveComponent* OverlappedComponent,
 			AActor* OtherActor,
 			UPrimitiveComponent* OtherComp,
@@ -225,9 +244,19 @@ public:
 	//UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
 	int FindIndexItemInInv(const struct FItemDataTable* itemData , int index);
 
+	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+	class USoundBase* GetSound(SoundName index)
+	{
+		if (false == mAllSoundsMap.Contains(index))
+		{
+			return nullptr;
+		}
+		return mAllSoundsMap[index];
+	}
+
 private:
 		int mHealthPoint;
-
+		UPROPERTY(Category = "AMainCharacter", BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 		int mMaxHealthPoint = 1000;
 
 
@@ -243,7 +272,9 @@ private:
 
 		bool mIsChangeAimingState = false;
 
-		bool mIsMeleeAttProcess = false;;
+		bool mIsOverlapWihtEnemyAttack = false;
+
+		bool mIsMeleeAttProcess = false;
 
 		UPROPERTY(Category = "AMainCharacter", BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 			ZEDAniState mAniState;
@@ -261,6 +292,8 @@ private:
 		UPROPERTY(Category = "AMainCharacter", BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 			TArray<UInventoryItemData*> mInventoryData;
 
+		UPROPERTY(Category = "AMainCharacter", BlueprintReadWrite, EditAnywhere, meta = (AllowPrivateAccess = "true"))
+			TMap<SoundName, class USoundBase*> mAllSoundsMap;
 
 //		UInventoryItemData* Data
 		//UPROPERTY(Category = "AMainCharacter", BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))

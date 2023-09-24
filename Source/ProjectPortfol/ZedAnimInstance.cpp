@@ -3,6 +3,9 @@
 
 #include "ZedAnimInstance.h"
 #include "MainCharacter.h"
+#include "Kismet/GameplayStatics.h"
+#include <UI/InGameHud.h>
+#include "Kismet/KismetSystemLibrary.h"
 
 void UZedAnimInstance::MontageEnd(UAnimMontage* aniMontage, bool inter)
 {
@@ -23,19 +26,27 @@ void UZedAnimInstance::MontageEnd(UAnimMontage* aniMontage, bool inter)
 		Montage_Play(AllAnimations[ZEDAniState::Idle], 1.0f);
 	}
 
-	if (AllAnimations[ZEDAniState::Jump] == aniMontage)
+	else if (AllAnimations[ZEDAniState::Jump] == aniMontage)
 	{
 		AniState = ZEDAniState::Idle;
 		character->SetAniState(ZEDAniState::Idle);
 		Montage_Play(AllAnimations[ZEDAniState::Idle], 1.0f);
 	}
 
-	if (AllAnimations[ZEDAniState::SimpleMagicCasting] == aniMontage)
+	else if (AllAnimations[ZEDAniState::SimpleMagicCasting] == aniMontage)
 	{
 		AniState = ZEDAniState::Idle;
 		character->SetAniState(ZEDAniState::Idle);
 		Montage_Play(AllAnimations[ZEDAniState::Idle], 1.0f);
 	}
+
+	else if(AllAnimations[ZEDAniState::GetHIT] == aniMontage)
+	{
+		AniState = ZEDAniState::Idle;
+		character->SetAniState(ZEDAniState::Idle);
+		Montage_Play(AllAnimations[ZEDAniState::Idle], 1.0f);
+	}
+	
 }
 
 void UZedAnimInstance::AnimNotifyBegin(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointPayload)
@@ -49,6 +60,22 @@ void UZedAnimInstance::AnimNotifyBegin(FName NotifyName, const FBranchingPointNo
 	}
 	else if (NotifyName == TEXT("endattack")) {
 		character->SetIsMeleeAttProcess(false);
+	}
+	else if (NotifyName == TEXT("Death")) {
+		
+		APlayerController* HUDController = Cast<APlayerController>(character->GetController());
+		AInGameHud* myHud = HUDController->GetHUD<AInGameHud>();
+		myHud->GetMainWidget()->SetGameOverWindowOnOffSwitch();
+		HUDController->SetInputMode(FInputModeUIOnly());
+		HUDController->SetShowMouseCursor(true);
+
+		AniState = character->GetAniState();
+		class UAnimMontage* montage = AllAnimations[AniState];
+		//GetOwningActor()->Destroy(true);
+		mIsDeath = true;
+		Montage_Pause();
+		
+		//UKismetSystemLibrary::QuitGame(GetWorld(), nullptr, EQuitPreference::Quit, false);
 	}
 }
 
@@ -81,7 +108,10 @@ void UZedAnimInstance::NativeUpdateAnimation(float deltaTime)
 	{
 		return;
 	}
-
+	if (mIsDeath == true) {
+		return;
+	}
+	
 	AMainCharacter* character = Cast<AMainCharacter>(GetOwningActor());
 
 	if (character == nullptr && character->IsValidLowLevel() == false)
@@ -98,8 +128,10 @@ void UZedAnimInstance::NativeUpdateAnimation(float deltaTime)
 		return;
 	}
 
+
 	if (false == Montage_IsPlaying(montage))
 	{
 		Montage_Play(montage, 1.0f);
 	}
+
 }

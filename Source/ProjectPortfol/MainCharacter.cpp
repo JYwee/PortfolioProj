@@ -262,13 +262,41 @@ void AMainCharacter::BeginOverLap(UPrimitiveComponent* OverlappedComponent, AAct
 		listWdg->GetInteractListView()->AddItem(Data);
 	}
 
-	if (OtherComp->ComponentHasTag(TEXT("monsterweapon")))
-	{
-		TakeDamage(20);
-	}
+	
 	
 
 }
+
+void AMainCharacter::BeginOverLapWithCap(UPrimitiveComponent* OverlappedComponent, 
+	AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (GetAniState() == ZEDAniState::Death) {
+		return;
+	}
+
+	if (OtherComp->ComponentHasTag(TEXT("monsterweapon")))
+	{
+		ANpcCharacter* enemyCharacter = Cast<ANpcCharacter>(OtherActor);
+		if (enemyCharacter->IsMeleeAttProcessing() == true) {
+			TakeDamage(100);
+			enemyCharacter->SetIsMeleeAttProcess(false);
+		}
+		else {
+
+		}
+		mIsOverlapWihtEnemyAttack = true;
+		//TakeDamage(20);
+	}
+}
+void AMainCharacter::EndOverlapWithCap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if (OtherComp->ComponentHasTag(TEXT("monsterweapon")))
+	{
+		mIsOverlapWihtEnemyAttack = true;
+		//TakeDamage(20);
+	}
+}
+
 
 void AMainCharacter::EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
@@ -584,8 +612,8 @@ void AMainCharacter::BeginPlay()
 	/*GetGlobalAnimInstance()->OnMontageBlendingOut.AddDynamic(this, &AAIPlayerCharacter::MontageEnd);
 	GetGlobalAnimInstance()->OnPlayMontageNotifyBegin.AddDynamic(this, &AAIPlayerCharacter::AnimNotifyBegin);*/
 	//for interativeObj
-	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMainCharacter::BeginOverLap);
-	//GetCapsuleComponent()->OnComponentEndOverlap.AddDynamic(this, &AMainCharacter::EndOverlap);
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMainCharacter::BeginOverLapWithCap);
+	GetCapsuleComponent()->OnComponentEndOverlap.AddDynamic(this, &AMainCharacter::EndOverlapWithCap);
 
 	mSphereComponent->OnComponentBeginOverlap.AddDynamic(this, &AMainCharacter::BeginOverLap);
 	mSphereComponent->OnComponentEndOverlap.AddDynamic(this, &AMainCharacter::EndOverlap);
@@ -609,7 +637,10 @@ void AMainCharacter::Tick(float DeltaTime)
 	{
 		//gameOver
 		//GetWorld()->GetFirstPlayerController()->ConsoleCommand("quit");
-		UKismetSystemLibrary::QuitGame(GetWorld(), nullptr, EQuitPreference::Quit, false);
+		APlayerController* HUDController = Cast<APlayerController>(GetController());
+		DisableInput(HUDController);
+		SetAniState(ZEDAniState::Death);
+		
 	}
 
 	if (myController->GetIsShift() == true)
@@ -707,6 +738,8 @@ void AMainCharacter::InteractAction()
 
 void AMainCharacter::TakeDamage(uint8 damage)
 {
+	SetAniState(ZEDAniState::GetHIT);
+
 	mHealthPoint -= damage;
 
 	

@@ -34,4 +34,6 @@ public:
 protected:
 	void NativeBeginPlay() override;
 	void NativeUpdateAnimation(float deltaTime) override;
+
+	bool mIsDeath = false;
 };

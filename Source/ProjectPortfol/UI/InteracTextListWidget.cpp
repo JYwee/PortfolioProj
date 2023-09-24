@@ -33,7 +33,11 @@ void UInteracTextListWidget::NativeTick(const FGeometry& MyGeometry, float InDel
 {
 	Super::NativeTick( MyGeometry, InDeltaTime);
 
-	
+	if (mListView->GetListItems().Num() == 1) {
+		if (mFocusNowObjData == nullptr) {
+			mFocusNowObjData = mListView->GetListItems()[0];
+		}
+	}
 }
 
 

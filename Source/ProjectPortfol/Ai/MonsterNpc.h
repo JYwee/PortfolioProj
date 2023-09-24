@@ -27,6 +27,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UStaticMeshComponent* WeaponMesh;
 
+	virtual void Destroyed() override;
+	
+
+
+
 protected:
 	virtual void Tick(float DeltaTime) override;
 

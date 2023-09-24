@@ -6,6 +6,7 @@
 #include <Data/MonsterDataTable.h>
 #include "Components/WidgetComponent.h"
 #include "Components/ProgressBar.h"
+#include "NpcAnimInstance.h"
 
 #include "BehaviorTree/BlackboardComponent.h"
 #include <UI/UIHpBar.h>
@@ -36,6 +37,8 @@ void AMonsterNpc::BeginPlay()
 		return;
 	}
 
+	
+	//죽음 처리
 	//UUIHpBar* HealthBarWidget = Cast<UUIHpBar>(mHP_WidgetComp->GetWidget());
 
 	//if (HealthBarWidget == nullptr)
@@ -70,6 +73,8 @@ void AMonsterNpc::BeginPlay()
 		SetAniState(NPCEnemyAIControlState::Idle);
 
 		WeaponMesh->SetStaticMesh(inst->GetMesh(TEXT("SM_Water3")));
+
+		GetNpcAnimInstance()->SetAllAnimation(mMonsterDT->MapAnimation);
 	}
 
 	Super::BeginPlay();
@@ -81,6 +86,8 @@ void AMonsterNpc::BeginPlay()
 	GetBlackboardComponent()->SetValueAsFloat(TEXT("AttackRange"), 200.0f);
 	FVector Pos = GetActorLocation();
 	GetBlackboardComponent()->SetValueAsVector(TEXT("OriginPosition"), Pos);
+
+
 }
 
 void AMonsterNpc::TakeDamageNpcBase(uint8 damageValue)
@@ -91,11 +98,70 @@ void AMonsterNpc::TakeDamageNpcBase(uint8 damageValue)
 
 	if (mHealthPoint < 0)
 	{
-		//죽음 처리
+		return;
+	}
+	else {
+
+		if (GetNpcAnimInstance()->IsPlaying(static_cast<int>(NPCEnemyAIControlState::Attack)) == true) {
+			
+		}
+		else if (GetNpcAnimInstance()->IsPlaying(static_cast<int>(NPCEnemyAIControlState::GetHit)) == true) {
+			
+		}
+		else {
+		SetAniState(NPCEnemyAIControlState::GetHit);
+		}
+	}
+}
+
+void AMonsterNpc::Destroyed()
+{
+	
+
+
+	UZedGameInstance* inst = Cast<UZedGameInstance>(GetWorld()->GetGameInstance());
+
+	if (inst == nullptr || inst->IsValidLowLevel() == false)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%S(%u) Inst == nullptr  inst->IsValidLowLevel() == false"), __FUNCTION__, __LINE__);
 		return;
 	}
 
-	SetAniState(NPCEnemyAIControlState::GetHit);
+	inst->DropItem(TEXT("Monster"), GetActorLocation());
+
+
+	Super::Destroyed();
+	//TSubclassOf<UObject> dropItemObj = inst->GetSubClassData(TEXT("DropItem"));
+	//for (int i = 0; i < 3; ++i)
+	//{
+	//	AActor* Actor = GetWorld()->SpawnActor<AActor>(dropItemObj);
+	//	Actor->SetActorLocation(GetActorLocation() + FVector(0, 0, 20.f));
+	//	ADropItem* dropItem = Cast<ADropItem>(Actor);
+
+	//	if (dropItem == nullptr || dropItem->IsValidLowLevel() == false)
+	//	{
+	//		UE_LOG(LogTemp, Error, TEXT("%S(%u)> dropItem == nullptr"), __FUNCTION__, __LINE__);
+	//		return;
+	//	}
+	//	//inst->GetItemDataTable()
+	//	//dropItemObj.
+
+
+	//	if (i == 0)
+	//	{
+	//		dropItem->Init(inst->GetItemDataTable("bracer01"));
+	//		mDropItemArray.Add(dropItem);
+	//	}
+	//	else if (i == 1) {
+	//		dropItem->Init(inst->GetItemDataTable("Crystal_01"));
+	//		mDropItemArray.Add(dropItem);
+	//	}
+	//	else if (i == 2) {
+	//		dropItem->Init(inst->GetItemDataTable("Gold"));
+	//		mDropItemArray.Add(dropItem);
+	//	}
+	//}
+
 
 }
 
@@ -104,6 +170,11 @@ void AMonsterNpc::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	UUIHpBar* HealthBarWidget = Cast<UUIHpBar>(mHP_WidgetComp->GetWidget());
+
+	if (mHealthPoint <= 0)
+	{
+		SetAniState(NPCEnemyAIControlState::Death);
+	}
 
 	/*if (HealthBarWidget->mHpProgressBar != nullptr) {
 		HealthBarWidget->mHpProgressBar->SetPercent(GetHpPercent());

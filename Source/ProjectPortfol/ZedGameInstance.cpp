@@ -11,6 +11,8 @@
 #include "Data/SubClassData.h"
 #include "Data/ItemDataTable.h"
 #include "Data/NpcDataTable.h"
+#include "Data/SoundDataTable.h"
+#include "Interactive/DropItem.h"
 
 FRandomStream UZedGameInstance::MainRandom;
 
@@ -111,6 +113,17 @@ UZedGameInstance::UZedGameInstance() {
 		if (DataTable.Succeeded())
 		{
 			mCrowNpcData = DataTable.Object;
+		}
+	}
+
+
+	{
+		FString DataPath = TEXT("/Script/Engine.DataTable'/Game/Data/DT_Sound.DT_Sound'");
+		ConstructorHelpers::FObjectFinder<UDataTable> DataTable(*DataPath);
+
+		if (DataTable.Succeeded())
+		{
+			mSoundData = DataTable.Object;
 		}
 	}
 
@@ -249,5 +262,57 @@ FNpcDataTable* UZedGameInstance::GetNpcDataTable(FName name)
 	}
 
 	return FindTable;
+}
+
+FSoundDataTable* UZedGameInstance::GetSoundDataTable(FName name)
+{
+	
+	if (nullptr == mSoundData)
+		{
+			return nullptr;
+		}
+
+	FSoundDataTable* FindTable = mSoundData->FindRow<FSoundDataTable>(name, name.ToString());
+
+	if (nullptr == FindTable)
+	{
+		return nullptr;
+	}
+
+	return FindTable;
+}
+
+void UZedGameInstance::DropItem(FName tagActorType, FVector dropLocation)
+{
+	TSubclassOf<UObject> dropItemObj = GetSubClassData(TEXT("DropItem"));
+	for (int i = 0; i < 3; ++i)
+	{
+		AActor* Actor = GetWorld()->SpawnActor<AActor>(dropItemObj);
+		Actor->SetActorLocation(dropLocation + FVector(0, 0, 20.f));
+		ADropItem* dropItem = Cast<ADropItem>(Actor);
+
+		if (dropItem == nullptr || dropItem->IsValidLowLevel() == false)
+		{
+			UE_LOG(LogTemp, Error, TEXT("%S(%u)> dropItem == nullptr"), __FUNCTION__, __LINE__);
+			return;
+		}
+		//inst->GetItemDataTable()
+		//dropItemObj.
+
+
+		if (i == 0)
+		{
+			dropItem->Init(GetItemDataTable("bracer01"));
+			//mDropItemArray.Add(dropItem);
+		}
+		else if (i == 1) {
+			dropItem->Init(GetItemDataTable("Crystal_01"));
+			//mDropItemArray.Add(dropItem);
+		}
+		else if (i == 2) {
+			dropItem->Init(GetItemDataTable("Gold"));
+			//mDropItemArray.Add(dropItem);
+		}
+	}
 }
 

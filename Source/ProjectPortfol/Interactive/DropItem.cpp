@@ -3,6 +3,9 @@
 
 #include "Interactive/DropItem.h"
 #include "NiagaraDataInterfaceArrayFunctionLibrary.h"
+#include "Kismet/GameplayStatics.h"
+#include <ZedGameInstance.h>
+#include <Data/SoundDataTable.h>
 
 ADropItem::ADropItem()
 {
@@ -58,23 +61,42 @@ bool ADropItem::Init(FItemDataTable* itemData)
 		mCount = 10;		//임시로 10개 생성  나중에 랜덤 생성 해야함.
 	}
 
+	UZedGameInstance* inst = Cast<UZedGameInstance>(GetWorld()->GetGameInstance());
+
+	if (inst == nullptr) {
+		return false;
+	}
+
+	FSoundDataTable* soundData = inst->GetSoundDataTable("mapSound");
+	//UGameplayStatics::PlaySoundAtLocation(GetWorld(), soundData->mAllSoundsMap[SoundName::DropSoundUnique], GetActorLocation());
+
 	switch (mRank)
 	{
-	case RankItem::SS:
+	case RankItem::SS: {
 		mNiagaraComp->SetColorParameter(TEXT("ArrColor_2"), FLinearColor(1.0f, 0.0f, 0.0f, 1.0f));
+		
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), soundData->mAllSoundsMap[SoundName::DropSoundUnique], GetActorLocation());
 		break;
-	case RankItem::S:
+	}
+	case RankItem::S: {
 		mNiagaraComp->SetColorParameter(TEXT("ArrColor_2"), FLinearColor(1.0f, 1.0f, 0.0f, 1.0f));
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), soundData->mAllSoundsMap[SoundName::DropSoundUnique], GetActorLocation());
 		break;
-	case RankItem::A:
+	}
+	case RankItem::A: {
 		mNiagaraComp->SetColorParameter(TEXT("ArrColor_2"), FLinearColor(1.0f, 1.0f, 1.0f, 0.8f));
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), soundData->mAllSoundsMap[SoundName::DropSoundNormal], GetActorLocation());
 		break;
-	case RankItem::Normal:
+	}
+	case RankItem::Normal: {
 		mNiagaraComp->SetColorParameter(TEXT("ArrColor_2"), FLinearColor(0.3f, 0.3f, 0.3f, 1.0f));
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), soundData->mAllSoundsMap[SoundName::DropSoundNormal], GetActorLocation());
 		break;
-	default:
+	}
+	default: {
 		mNiagaraComp->SetColorParameter(TEXT("ArrColor_2"), FLinearColor(0.2f, 0.2f, 0.2f, 0.4f));
 		break;
+	}
 	}
 
 	mCapsuleComponent->SetCapsuleSize(150.f, 150.f, true);

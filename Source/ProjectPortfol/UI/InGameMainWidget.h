@@ -26,6 +26,12 @@ public:
 		StatusWindowOnOff = StatusWindowOnOff == ESlateVisibility::Hidden ? ESlateVisibility::Visible : ESlateVisibility::Hidden;
 	}
 
+	void SetGameOverWindowOnOffSwitch()
+	{
+		mGameOverWindowOnOff = mGameOverWindowOnOff == ESlateVisibility::Hidden ? ESlateVisibility::Visible : ESlateVisibility::Hidden;
+	}
+	
+
 	ESlateVisibility GetStatusWindowOnOff()
 	{
 		return StatusWindowOnOff;
@@ -121,5 +127,8 @@ private:
 
 	UPROPERTY(Category = "UIzed", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		ESlateVisibility mStaminaUIOnOff = ESlateVisibility::Hidden;
+
+	UPROPERTY(Category = "UIzed", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		ESlateVisibility mGameOverWindowOnOff = ESlateVisibility::Hidden;
 
 };

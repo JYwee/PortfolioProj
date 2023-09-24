@@ -113,7 +113,14 @@ public:
 		return mAllAnimations;
 	}
 
-
+	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+		FORCEINLINE void SetIsMeleeAttProcess(bool meleeAttProcess) {
+		mIsMeleeAttProcess = meleeAttProcess;
+	}
+	UFUNCTION(BlueprintCallable, Category = "AMainCharacter")
+		FORCEINLINE bool IsMeleeAttProcessing() const {
+		return mIsMeleeAttProcess;
+	}
 
 	template<typename EnumType>
 	FORCEINLINE void SetAniState(EnumType aniState) {
@@ -211,6 +218,8 @@ private:
 			UPrimitiveComponent* OtherComp,
 			int32 OtherBodyIndex
 		);
+
+	bool mIsMeleeAttProcess = false;
 
 	bool mIsOverlapWithPlayerAtt = false;
 

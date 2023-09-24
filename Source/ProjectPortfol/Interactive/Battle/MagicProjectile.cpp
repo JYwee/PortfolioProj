@@ -6,6 +6,9 @@
 #include <MainCharacter.h>
 #include <Ai/BossCharacter.h>
 #include <Ai/MonsterNpc.h>
+#include <ZedGameInstance.h>
+#include <Data/SoundDataTable.h>
+#include "Kismet/GameplayStatics.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 
 // Sets default values
@@ -43,6 +46,16 @@ void AMagicProjectile::BeginPlay()
 	
 	mSphereComp->OnComponentBeginOverlap.AddDynamic(this, &AMagicProjectile::BeginOverLap);
 	OnDestroyed.AddDynamic(this, &AMagicProjectile::DestroyProjectile);
+
+	
+	UZedGameInstance* inst = Cast<UZedGameInstance>(GetWorld()->GetGameInstance());
+
+	if (inst == nullptr) {
+		return;
+	}
+
+	FSoundDataTable* soundData = inst->GetSoundDataTable("mapSound");
+	UGameplayStatics::PlaySoundAtLocation(GetWorld(), soundData->mAllSoundsMap[SoundName::Fireball], GetActorLocation());
 }
 
 // Called every frame
@@ -88,6 +101,15 @@ void AMagicProjectile::DestroyProjectile(AActor* _Destroy)
 
 	Actor->SetActorLocation(GetActorLocation());
 	Actor->SetActorRotation(GetActorRotation());
+
+	UZedGameInstance* inst = Cast<UZedGameInstance>(GetWorld()->GetGameInstance());
+
+	if (inst == nullptr) {
+		return;
+	}
+
+	FSoundDataTable* soundData = inst->GetSoundDataTable("mapSound");
+	UGameplayStatics::PlaySoundAtLocation(GetWorld(), soundData->mAllSoundsMap[SoundName::FireballHIT], GetActorLocation());
 }
 
 void AMagicProjectile::BeginOverLap(UPrimitiveComponent* OverlappedComponent, 

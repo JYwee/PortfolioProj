@@ -38,7 +38,15 @@ public:
 
 	struct FNpcDataTable* GetNpcDataTable(FName name);
 
+	struct FSoundDataTable* GetSoundDataTable(FName name);
+
+
 	static FRandomStream MainRandom;
+
+	UFUNCTION()
+		void DropItem(FName tagActorType, FVector dropLocation);
+
+	//UWorld* mMenuWorld;
 
 private:
 
@@ -56,6 +64,8 @@ private:
 	UDataTable* mObjInteractData;
 
 	UDataTable* mCrowNpcData;
+
+	UDataTable* mSoundData;
 
 	TArray<UStaticMesh*> ArrWeaponMesh;
 };

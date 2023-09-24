@@ -41,7 +41,11 @@ void UNpcAnimInstance::MontageEnd(UAnimMontage* aniMontage, bool inter)
 			character->SetAniState<NPCEnemyAIControlState>(NPCEnemyAIControlState::Idle);
 			//Montage_Play(AllAnimations[ZEDAniState::Idle], 1.0f);
 		}
-
+		if (mAllAnimations[static_cast<int>(NPCEnemyAIControlState::Death)] == aniMontage)
+		{
+			character->Destroy();
+			//Montage_Play(AllAnimations[ZEDAniState::Idle], 1.0f);
+		}
 		//if (mAllAnimations[static_cast<int>(NPCAniState::Jump)] == aniMontage)
 		//{
 		//	character->SetAniState<NPCAniState>(NPCAniState::Idle);
@@ -51,11 +55,25 @@ void UNpcAnimInstance::MontageEnd(UAnimMontage* aniMontage, bool inter)
 
 }
 
+void UNpcAnimInstance::AnimNotifyBegin(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointPayload)
+{
+	ANpcCharacter* character = Cast<ANpcCharacter>(GetOwningActor());
+	
+	if (NotifyName == TEXT("startattack")) {
+		character->SetIsMeleeAttProcess(true);
+	}
+	else if (NotifyName == TEXT("endattack")) {
+		character->SetIsMeleeAttProcess(false);
+	}
+}
+
 void UNpcAnimInstance::NativeBeginPlay()
 {
 	Super::NativeBeginPlay();
 
 	OnMontageBlendingOut.AddDynamic(this, &UNpcAnimInstance::MontageEnd);
+	OnPlayMontageNotifyBegin.AddDynamic(this, &UNpcAnimInstance::AnimNotifyBegin);
+
 
 	ANpcCharacter* character = Cast<ANpcCharacter>(GetOwningActor());
 

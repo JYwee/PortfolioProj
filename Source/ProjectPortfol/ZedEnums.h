@@ -16,6 +16,8 @@ enum class ZEDAniState : uint8
 	FrontRun  UMETA(DisplayName = "앞으로달리기"),
 	RightRun  UMETA(DisplayName = "옆으로달리기"),
 	SimpleMagicCasting UMETA(DisplayName = "주문 시전"),
+	GetHIT   UMETA(DisplayName = "피격"),
+	Death  UMETA(DisplayName = "죽음"),
 
 };
 
@@ -165,3 +167,18 @@ enum class NPCType : uint8
 	Trader UMETA(DisplayName = "거래상"),
 	
 };
+
+UENUM(BlueprintType)
+enum class SoundName : uint8
+{
+	None UMETA(DisplayName = "None"),
+	FootStep UMETA(DisplayName = "발자국"),
+	Attack UMETA(DisplayName = "밀리공격"),
+	Fireball UMETA(DisplayName = "우클릭마법"),
+	DropSoundNormal UMETA(DisplayName = "일반템드롭사운드"),
+	DropSoundUnique UMETA(DisplayName = "유니크드롭사운드"),
+	UIItemOpen  UMETA(DisplayName = "아이템창여는"),
+	UIItemClose  UMETA(DisplayName = "아이템창닫는"),
+	FireballHIT  UMETA(DisplayName = "파볼 히트"),
+};
+

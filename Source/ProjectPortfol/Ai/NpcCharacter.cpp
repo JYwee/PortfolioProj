@@ -92,12 +92,11 @@ void ANpcCharacter::BeginPlay()
 
 	Inst->AllNpcCharac.Add(this);
 	
+	
 
 	//
-	/*UAnimInstance* tmp = GetMesh()->GetAnimInstance();
-	mNpcAnimInstance = Cast<UNpcAnimInstance>(GetMesh()->GetAnimInstance());
-
-	mNpcAnimInstance->SetAllAnimations(mAllAnimations);*/
+	//UAnimInstance* tmp = GetMesh()->GetAnimInstance();
+	
 }
 
 // Called every frame
@@ -122,11 +121,7 @@ void ANpcCharacter::Tick(float DeltaTime)
 	}
 	}
 
-	if (mHealthPoint <= 0)
-	{
-		this->Destroy();
-	}
-
+	
 	if (mIsOverlapWithPlayerAtt == true)
 	{
 		AInGameMode* myGameMode = Cast<AInGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
@@ -171,9 +166,9 @@ void ANpcCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
-	/*mNpcAnimInstance = Cast<UNpcAnimInstance>(GetMesh()->GetAnimInstance());
+	mNpcAnimInstance = Cast<UNpcAnimInstance>(GetMesh()->GetAnimInstance());
 
-	mNpcAnimInstance->SetAllAnimations(mAllAnimations);*/
+	//mNpcAnimInstance->SetAllAnimations(mAllAnimations);
 }
 
 UAnimMontage* ANpcCharacter::GetAnimMontage(int index) const

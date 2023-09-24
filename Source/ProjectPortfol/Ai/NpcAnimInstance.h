@@ -32,13 +32,26 @@ public:
 		return static_cast<int>(mAniState);
 	}
 
-	//template<typename EnumType>
-	UFUNCTION(Category = "Anime", BlueprintCallable)
-		void SetAllAnimations(TMap<int , class UAnimMontage*>& allAnim) {
-		for (TPair<int, UAnimMontage*> Pair : allAnim)
-			{
-				mAllAnimations.Add(static_cast<int>(Pair.Key), Pair.Value);
-			}	
+	template<typename EnumType>
+	void SetAllAnimation(const TMap<EnumType, class UAnimMontage*>& mapAnimation)
+	{
+		for (TPair<EnumType, UAnimMontage*> Pair : mapAnimation)
+		{
+			mAllAnimations.Add(static_cast<int>(Pair.Key), Pair.Value);
+		}
+	}
+
+	UFUNCTION(Category = "Anime")
+		void AnimNotifyBegin(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointPayload);
+
+	UFUNCTION(Category = "Anime")
+	bool IsPlaying(int index) {
+		if (Montage_IsPlaying(mAllAnimations[index]) == false) {
+			return false;
+		}
+		else {
+			return true;
+		}	
 	}
 
 protected:
