@@ -38,6 +38,7 @@ void UBTTask_DD_IDLE::TickTask(UBehaviorTreeComponent& ownerComp, uint8* nodeMem
 			
 			GetBlackboardComponent(ownerComp)->SetValueAsObject(TEXT("TargetActor"), ResultActor);
 		//GetBlackboardComponent(ownerComp)->GetValueAsEnum(TEXT("Phase"));
+			
 			SetStateChange(ownerComp, BossDragonAIControlState::PhaseChange);
 			//bossChar->SetPhase()
 		}

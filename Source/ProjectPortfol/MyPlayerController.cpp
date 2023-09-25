@@ -641,7 +641,7 @@ ANpcCharacter* AMyPlayerController::Visibility_GetRenderedActors(ANpcCharacter* 
 {
 	
 	UE_LOG(LogTemp, Error, TEXT("%S(%u) %f, %f"), __FUNCTION__, __LINE__, npcCharacter->GetLastRenderTime(), MinRecentTime);
-	if (0.3f < MinRecentTime)
+	if (0.5f < MinRecentTime)
 	{
 
 		return nullptr;

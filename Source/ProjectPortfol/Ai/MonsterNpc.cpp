@@ -17,6 +17,7 @@ AMonsterNpc::AMonsterNpc()
 	Tags.Add("Monster");
 	
 	mHP_WidgetComp->SetupAttachment(GetMesh(), TEXT("HEAD_UI_Socket"));
+	//mLockOnWidgetComp->SetupAttachment(GetMesh(), TEXT("HEAD_UI_Socket"));
 
 	WeaponMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WeaponMesh"));
 

@@ -149,6 +149,7 @@ public:
 			UE_LOG(LogTemp, Error, TEXT("%S(%u) animInst == nullptr"), __FUNCTION__, __LINE__);
 			return;
 		}
+
 		mNpcAnimInstance = animInst;
 	}
 

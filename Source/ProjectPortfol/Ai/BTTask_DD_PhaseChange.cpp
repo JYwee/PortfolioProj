@@ -9,6 +9,14 @@ EBTNodeResult::Type UBTTask_DD_PhaseChange::ExecuteTask(UBehaviorTreeComponent& 
 {
 	//GetNpcCharacter(ownerComp)->SetAniState(NPCAniState::Idle);
 	GetNpcCharacter(ownerComp)->SetAniState(BossDragonAIControlState::PhaseChange);
+
+	if (GetNpcCharacter(ownerComp)->GetHpPercent() > 0.5f)
+	{
+		GetBossCharacter(ownerComp)->SetPhase(BossPhase::FIRST);
+	}
+	else {
+		GetBossCharacter(ownerComp)->SetPhase(BossPhase::SECOND);
+	}
 	//BossPhase myPhase = GetBossCharacter(ownerComp)->GetPhase();
 	//GetBlackboardComponent(ownerComp)->SetValueAsEnum(TEXT("Phase"), static_cast<uint8>(myPhase));
 

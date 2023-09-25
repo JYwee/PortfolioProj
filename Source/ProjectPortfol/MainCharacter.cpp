@@ -287,6 +287,26 @@ void AMainCharacter::BeginOverLapWithCap(UPrimitiveComponent* OverlappedComponen
 		mIsOverlapWihtEnemyAttack = true;
 		//TakeDamage(20);
 	}
+
+	if (OtherActor->ActorHasTag(TEXT("Boss")))
+	{
+		ANpcCharacter* enemyCharacter = Cast<ANpcCharacter>(OtherActor);
+		if (enemyCharacter->IsMeleeAttProcessing() == true) {
+			TakeDamage(100);
+			enemyCharacter->SetIsMeleeAttProcess(false);
+		}
+		mIsOverlapWihtEnemyAttack = true;
+		//ANpcCharacter* enemyCharacter = Cast<ANpcCharacter>(OtherActor);
+		//if (enemyCharacter->IsMeleeAttProcessing() == true) {
+		
+		/*	enemyCharacter->SetIsMeleeAttProcess(false);
+		}
+		else {
+
+		}*/
+		//mIsOverlapWihtEnemyAttack = true;
+		//TakeDamage(20);
+	}
 }
 void AMainCharacter::EndOverlapWithCap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {

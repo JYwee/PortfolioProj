@@ -3,6 +3,7 @@
 
 #include "NpcAnimInstance.h"
 #include "NpcCharacter.h"
+#include "BossCharacter.h"
 
 //template<typename EnumType>
 //bool UNpcAnimInstance::SetAllAnimations(TMap<EnumType, class UAnimMontage*> allAnim)
@@ -18,16 +19,33 @@ void UNpcAnimInstance::MontageEnd(UAnimMontage* aniMontage, bool inter)
 
 	if (character->Tags.Contains(TEXT("Boss")))
 	{
-		
+		ABossCharacter* boss = Cast<ABossCharacter>(character);
+		if (boss == nullptr){
+			UE_LOG(LogTemp, Error, TEXT("%S(%u) boss == nullptr"), __FUNCTION__, __LINE__);
+			return;
+		}
 		if (mAllAnimations[static_cast<int>(BossDragonAIControlState::PhaseChange)] == aniMontage)
 		{
-			character->SetAniState<BossDragonAIControlState>(BossDragonAIControlState::TakeOff);
-			Montage_Play(mAllAnimations[static_cast<int>(BossDragonAIControlState::TakeOff)], 1.0f);
+			character->SetAniState<BossDragonAIControlState>(BossDragonAIControlState::AttackMeleeCombo);
+			Montage_Play(mAllAnimations[static_cast<int>(BossDragonAIControlState::AttackMeleeCombo)], 1.0f);
 		}
 		else if (mAllAnimations[static_cast<int>(BossDragonAIControlState::TakeOff)] == aniMontage)
 		{
 			character->SetAniState<BossDragonAIControlState>(BossDragonAIControlState::IdleFlyStaionary);
 			Montage_Play(mAllAnimations[static_cast<int>(BossDragonAIControlState::IdleFlyStaionary)], 1.0f);
+		}
+		else if (mAllAnimations[static_cast<int>(BossDragonAIControlState::GetHit)] == aniMontage)
+		{
+			if (boss->GetPhase() == BossPhase::FIRST)
+			{
+				character->SetAniState<BossDragonAIControlState>(BossDragonAIControlState::Idle);
+				Montage_Play(mAllAnimations[static_cast<int>(BossDragonAIControlState::Idle)], 1.0f);
+			}
+			else if(boss->GetPhase() == BossPhase::SECOND){
+				character->SetAniState<BossDragonAIControlState>(BossDragonAIControlState::IdleFlyStaionary);
+				Montage_Play(mAllAnimations[static_cast<int>(BossDragonAIControlState::IdleFlyStaionary)], 1.0f);
+			}
+			
 		}
 	}
 

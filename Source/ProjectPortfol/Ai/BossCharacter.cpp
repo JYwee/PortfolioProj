@@ -4,6 +4,7 @@
 #include "BossCharacter.h"
 #include <ZedEnums.h>
 #include <ZedGameInstance.h>
+
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Components/WidgetComponent.h"
 #include "Components/ProgressBar.h"
@@ -27,6 +28,7 @@ ABossCharacter::ABossCharacter()
 	
 	
 	mHP_WidgetComp->SetupAttachment(GetMesh(),TEXT("HEAD_UI_Socket"));
+	//mLockOnWidgetComp->SetupAttachment(GetMesh(), TEXT("HEAD_UI_Socket"));
 
 	mMiniMapComp = CreateDefaultSubobject<UMiniMapComponent>(TEXT("MiniMapComp"));
 	mMiniMapComp->SetupAttachment(RootComponent);
@@ -92,7 +94,8 @@ void ABossCharacter::BeginPlay()
 	mPhase = BossPhase::None;
 	mFinalPhase = mCurBossData->FinalPhase;
 	mPostionOri = mCurBossData->PostionOri;
-
+	
+	
 
 	//UUIHpBar* HealthBarWidget = Cast<UUIHpBar>(mHP_WidgetComp->GetWidget());
 
@@ -121,7 +124,8 @@ void ABossCharacter::BeginPlay()
 	/*mBaseTurnRate = 65.f;
 	BaseLookUpRate = 65.f;*/
 
-	SetNpcAnimInstance(Cast<UNpcAnimInstance>(GetMesh()->GetAnimInstance()));
+	//SetNpcAnimInstance(Cast<UNpcAnimInstance>(GetMesh()->GetAnimInstance()));
+	GetNpcAnimInstance()->SetAllAnimation(mCurBossData->MapAnimation);
 
 	UUIHpBar* HealthBarWidget = Cast<UUIHpBar>(mHP_WidgetComp->GetWidget());
 	HealthBarWidget->mHpProgressBar = Cast<UProgressBar>(HealthBarWidget->GetWidgetFromName(TEXT("ProgBarHP")));;
