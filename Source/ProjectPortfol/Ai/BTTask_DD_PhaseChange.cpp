@@ -8,6 +8,8 @@
 EBTNodeResult::Type UBTTask_DD_PhaseChange::ExecuteTask(UBehaviorTreeComponent& ownerComp, uint8* nodeMemory)
 {
 	//GetNpcCharacter(ownerComp)->SetAniState(NPCAniState::Idle);
+	Super::ExecuteTask(ownerComp, nodeMemory);
+
 	GetNpcCharacter(ownerComp)->SetAniState(BossDragonAIControlState::PhaseChange);
 
 	if (GetNpcCharacter(ownerComp)->GetHpPercent() > 0.5f)

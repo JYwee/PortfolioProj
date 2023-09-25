@@ -4,10 +4,11 @@
 #include "BossCharacter.h"
 #include <ZedEnums.h>
 #include <ZedGameInstance.h>
-
+#include "Engine/SkeletalMeshSocket.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Components/WidgetComponent.h"
 #include "Components/ProgressBar.h"
+#include <UI/UIHpBar.h>
 #include <UI/UIHpBar.h>
 #include <UI/MiniMapComponent.h>
 #include "NpcAnimInstance.h"
@@ -72,7 +73,9 @@ void ABossCharacter::BeginPlay()
 		return;
 	}
 	
-	
+	GetMesh()->GetSocketByName("Head");
+	//GetMesh()->GetSocketByName("Head").;
+
 	mCurBossData = inst->GetBossDataTable(mBossName);
 
 	//GetMesh()->SetSkeletalMeshAsset(mCurBossData->Mesh);
