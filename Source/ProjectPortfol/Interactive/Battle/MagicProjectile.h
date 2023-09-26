@@ -65,6 +65,6 @@ private:
 			const FHitResult& SweepResult
 		);
 
-	//UPROPERTY(VisibleAnywhere, Category = Movement)
-	//	class UProjectileMovementComponent* mProjectileMovementComponent;
+	UPROPERTY(VisibleAnywhere, Category = Movement)
+		class UProjectileMovementComponent* mProjectileMovementComponent;
 };
