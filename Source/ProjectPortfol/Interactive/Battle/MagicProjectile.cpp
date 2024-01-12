@@ -26,17 +26,17 @@ AMagicProjectile::AMagicProjectile()
 	mNiagaraComp = CreateDefaultSubobject<UNiagaraComponent>(TEXT("NiagaraComponent"));
 	mNiagaraComp->SetupAttachment(RootComponent, TEXT("attachNigara"));
 
-	/*if (mProjectileMovementComponent != nullptr)
-	{
+	
+	
 		mProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovementComponent"));
 		mProjectileMovementComponent->SetUpdatedComponent(mSphereComp);
-		mProjectileMovementComponent->InitialSpeed = 1000.0f;
+		mProjectileMovementComponent->InitialSpeed = 30.0f;
 		mProjectileMovementComponent->MaxSpeed = 1000.0f;
 		mProjectileMovementComponent->bRotationFollowsVelocity = true;
 		mProjectileMovementComponent->bShouldBounce = false;
 		mProjectileMovementComponent->Bounciness = 0.3f;
-		mProjectileMovementComponent->ProjectileGravityScale = 9.0f;
-	}*/
+		mProjectileMovementComponent->ProjectileGravityScale = 2.0f;
+	
 }
 
 // Called when the game starts or when spawned
@@ -56,6 +56,19 @@ void AMagicProjectile::BeginPlay()
 
 	FSoundDataTable* soundData = inst->GetSoundDataTable("mapSound");
 	UGameplayStatics::PlaySoundAtLocation(GetWorld(), soundData->mAllSoundsMap[SoundName::Fireball], GetActorLocation());
+
+
+	if (mDirection == FVector::Zero())
+	{
+		AMyPlayerController* playerController = GetWorld()->GetFirstPlayerController<AMyPlayerController>();
+		SetActorRotation(playerController->GetMyCharacter()->GetFollowCameraRotator());
+		mDirection = playerController->GetMyCharacter()->GetFollowCameraRotator().Vector();
+	}
+	else {
+		mProjectileMovementComponent->AddForce(mDirection * mSpeed);
+		//mProjectileMovementComponent->ve
+		//AddActorWorldOffset(mDirection * DeltaTime * mSpeed);
+	}
 }
 
 // Called every frame
@@ -73,15 +86,7 @@ void AMagicProjectile::Tick(float DeltaTime)
 		return;
 	}
 	
-	if (mDirection == FVector::Zero())
-	{
-		AMyPlayerController* playerController = GetWorld()->GetFirstPlayerController<AMyPlayerController>();
-		SetActorRotation(playerController->GetMyCharacter()->GetFollowCameraRotator());
-		mDirection = playerController->GetMyCharacter()->GetFollowCameraRotator().Vector();
-	}
-	else {
-		AddActorWorldOffset(mDirection * DeltaTime * mSpeed);
-	}
+	
 	
 	
 	

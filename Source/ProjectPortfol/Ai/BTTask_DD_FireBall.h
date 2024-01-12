@@ -14,4 +14,13 @@ class PROJECTPORTFOL_API UBTTask_DD_FireBall : public UBTTask_DesertDragonBase
 {
 	GENERATED_BODY()
 	
+
+public:
+
+protected:
+
+	EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& ownerComp, uint8* nodeMemory);
+
+	void TickTask(UBehaviorTreeComponent& ownerComp, uint8* nodeMemory, float delataSeconds);
+
 };

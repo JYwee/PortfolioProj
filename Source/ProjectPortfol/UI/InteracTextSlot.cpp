@@ -56,6 +56,8 @@ void UInteracTextSlot::NativeOnListItemObjectSet(UObject* ListItemObject)
 		}
 		
 		mTextBlock->SetText(FText::FromString(item->mNameItem.ToString() + TEXT(" ") + mObjData->mObjData->InteractiveText.ToString()));
+
+		//mTextBlock->
 	}
 	else if (mObjData->mObjData->Tag_Obj.IsEqual(FName("InteracNPC"))) {
 		ACrowdNpc* npc = Cast<ACrowdNpc>(mObjData->mOnwerActor);
