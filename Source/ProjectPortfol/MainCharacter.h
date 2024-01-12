@@ -278,13 +278,11 @@ private:
 
 		UPROPERTY(Category = "AMainCharacter", BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 			ZEDAniState mAniState;
-		//ZEDAniState AniState;
 		
 		class UZedAnimInstance* mAnimInstance = nullptr;
 
 		UPROPERTY(Category = "AMainCharacter", BlueprintReadWrite, EditAnywhere, meta = (AllowPrivateAccess = "true"))
 			TMap<ZEDAniState, class UAnimMontage*> mAllAnimations;
-		//TMap<ZEDAniState, class UAnimMontage*> AllAnimations;
 
 		UPROPERTY(Category = "AMainCharacter", BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 			TArray<AActor*> mNearInteractObj;
